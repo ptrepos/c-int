@@ -159,32 +159,14 @@ static inline int mg_uint256_mul256x64(
 
 static inline void mg_uint256_mul128(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint256 *ret)
 {
-	unsigned c;
-	uint64_t lo, hi;
-	
-	lo = mg_uint64_mul(op1->word[0], op2->word[0], &hi);
-	
-	ret->word[0] = lo;
-	ret->word[1] = hi;
-	
-	lo = mg_uint64_mul(op1->word[1], op2->word[1], &hi);
-	
-	ret->word[2] = lo;
-	ret->word[3] = hi;
+	mg_uint128 lo, hi;
 
-	lo = mg_uint64_mul(op1->word[0], op2->word[1], &hi);
-	
-	c = 0;
-	c = mg_uint64_add(c, ret->word[1], lo, &ret->word[1]);
-	c = mg_uint64_add(c, ret->word[2], hi, &ret->word[2]);
-	c = mg_uint64_add(c, ret->word[3], 0, &ret->word[3]);
+	mg_uint128_mul_1(op1, op2, /*out*/&lo, /*out*/&hi);
 
-	lo = mg_uint64_mul(op1->word[1], op2->word[0], &hi);
-
-	c = 0;
-	c = mg_uint64_add(c, ret->word[1], lo, &ret->word[1]);
-	c = mg_uint64_add(c, ret->word[2], hi, &ret->word[2]);
-	c = mg_uint64_add(c, ret->word[3], 0, &ret->word[3]);
+	ret->word[0] = lo.word[0];
+	ret->word[1] = lo.word[1];
+	ret->word[2] = hi.word[0];
+	ret->word[3] = hi.word[1];
 }
 static inline void mg_uint256_mul_1(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high)
 {
@@ -339,7 +321,7 @@ static inline int mg_uint256_get_bit_size(const mg_uint256 *value)
 		return 1 * MG_UINT128_WORD_BITS + mg_uint64_get_bit_size(value->word[1]);
 	}
 	if(value->word[0] != 0) {
-		return mg_uint64_get_bit_size(value->word[1]);
+		return mg_uint64_get_bit_size(value->word[0]);
 	}
 	return 0;
 }

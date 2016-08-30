@@ -140,5 +140,11 @@
     <ClCompile Include="test\uint256_xor_test.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="test\uint256_get_bit_size.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="test\uint256_set_bit.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

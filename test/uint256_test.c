@@ -17,6 +17,8 @@ void mg_uint256_and_test();
 void mg_uint256_or_test();
 void mg_uint256_xor_test();
 void mg_uint256_not_test();
+void mg_uint256_get_bit_size_test();
+void mg_uint256_set_bit_test();
 
 void mg_uint256_test()
 {
@@ -35,6 +37,8 @@ void mg_uint256_test()
 	mg_uint256_or_test();
 	mg_uint256_xor_test();
 	mg_uint256_not_test();
+	mg_uint256_get_bit_size_test();
+	mg_uint256_set_bit_test();
 
 	printf("mg_uint256 test: %fs\n", (float)(clock() - tm) / CLOCKS_PER_SEC);
 }
