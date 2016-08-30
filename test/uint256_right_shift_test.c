@@ -20,6 +20,20 @@ static void right_shift_test(const char *text1, int shift, const char *ret)
 	mg_assert(strcmp(ret, strbuf) == 0);
 }
 
+static void right_shift_small_test(const char *text1, int shift, const char *ret)
+{
+	char strbuf[1024];
+	mg_uint256 v1, v2;
+
+	mg_uint256_test_hex_convert(text1, &v1);
+
+	mg_uint256_right_shift_small(&v1, shift, &v2);
+
+	mg_uint256_test_to_hex_string(&v2, strbuf);
+
+	mg_assert(strcmp(ret, strbuf) == 0);
+}
+
 void mg_uint256_right_shift_test()
 {
 	right_shift_test("FF", 1, "7F");
@@ -64,6 +78,18 @@ void mg_uint256_right_shift_test()
 
 	right_shift_test("8000000000000000000000000000000000000000000000000000000000000000", 255, "1");
 	right_shift_test("8000000000000000000000000000000000000000000000000000000000000000", 256, "0");
+
+	right_shift_small_test("FF", 1, "7F");
+	right_shift_small_test("FF000000000", 1, "7F800000000");
+	right_shift_small_test("FF00000000000000000", 1, "7F80000000000000000");
+	right_shift_small_test("FF000000000000000000000000000000000", 1, "7F800000000000000000000000000000000");
+	right_shift_small_test("FF00000000000000000000000000000000000000000", 1, "7F80000000000000000000000000000000000000000");
+
+	right_shift_small_test("FF00FF", 16, "FF");
+	right_shift_small_test("FF00FF0000", 16, "FF00FF");
+	right_shift_small_test("FF00FF0000000000000000", 16, "FF00FF000000000000");
+	right_shift_small_test("FF00FF0000000000000000000000000", 16, "FF00FF000000000000000000000");
+	right_shift_small_test("FF00FF0000000000000000000000000000000000000", 16, "FF00FF000000000000000000000000000000000");
 
 	printf("TEST mg_uint256_right_shift_test(): OK\n");
 }

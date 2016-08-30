@@ -20,6 +20,20 @@ static void left_shift_test(const char *text1, int shift, const char *ret)
 	mg_assert(strcmp(ret, strbuf) == 0);
 }
 
+static void left_shift_small_test(const char *text1, int shift, const char *ret)
+{
+	char strbuf[1024];
+	mg_uint256 v1, v2;
+
+	mg_uint256_test_hex_convert(text1, &v1);
+
+	mg_uint256_left_shift_small(&v1, shift, &v2);
+
+	mg_uint256_test_to_hex_string(&v2, strbuf);
+
+	mg_assert(strcmp(ret, strbuf) == 0);
+}
+
 void mg_uint256_left_shift_test()
 {
 	left_shift_test("FF", 1, "1FE");
@@ -71,6 +85,24 @@ void mg_uint256_left_shift_test()
 
 	left_shift_test("1", 255, "8000000000000000000000000000000000000000000000000000000000000000");
 	left_shift_test("1", 256, "0");
+
+	left_shift_small_test("FF", 1, "1FE");
+	left_shift_small_test("FF0000000000000000000", 1, "1FE0000000000000000000");
+	left_shift_small_test("FF000000000000000000000000000000", 1, "1FE000000000000000000000000000000");
+	left_shift_small_test("FF00000000000000000000000000000000000000", 1, "1FE00000000000000000000000000000000000000");
+	left_shift_small_test("FF0000000000000000000000000000000000000000000000", 1, "1FE0000000000000000000000000000000000000000000000");
+
+	left_shift_small_test("FF", 16, "FF0000");
+	left_shift_small_test("FF0000000000000000000", 16, "FF00000000000000000000000");
+	left_shift_small_test("FF000000000000000000000000000000", 16, "FF0000000000000000000000000000000000");
+	left_shift_small_test("FF00000000000000000000000000000000000000", 16, "FF000000000000000000000000000000000000000000");
+	left_shift_small_test("FF0000000000000000000000000000000000000000000000", 16, "FF00000000000000000000000000000000000000000000000000");
+
+	left_shift_small_test("FF", 20, "FF00000");
+	left_shift_small_test("FF0000000000000000000", 20, "FF000000000000000000000000");
+	left_shift_small_test("FF000000000000000000000000000000", 20, "FF00000000000000000000000000000000000");
+	left_shift_small_test("FF00000000000000000000000000000000000000", 20, "FF0000000000000000000000000000000000000000000");
+	left_shift_small_test("FF0000000000000000000000000000000000000000000000", 20, "FF000000000000000000000000000000000000000000000000000");
 
 	printf("TEST mg_uint256_left_shift_test(): OK\n");
 }
