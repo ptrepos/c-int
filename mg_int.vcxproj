@@ -166,8 +166,18 @@
     <ClCompile Include="test\uint128_test.c" />
     <ClCompile Include="test\uint128_div_test.c" />
     <ClCompile Include="test\uint128_xor_test.c" />
+    <ClCompile Include="test\uint256_add_test.c" />
+    <ClCompile Include="test\uint256_and_test.c" />
+    <ClCompile Include="test\uint256_div_pattern_test .c" />
     <ClCompile Include="test\uint256_div_performance.c" />
+    <ClCompile Include="test\uint256_div_test.c" />
+    <ClCompile Include="test\uint256_left_shift_test.c" />
+    <ClCompile Include="test\uint256_mul_test.c" />
+    <ClCompile Include="test\uint256_not_test.c" />
+    <ClCompile Include="test\uint256_or_test.c" />
+    <ClCompile Include="test\uint256_right_shift_test.c" />
     <ClCompile Include="test\uint256_test.c" />
+    <ClCompile Include="test\uint256_xor_test.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\generic64\include\magica\int.h" />

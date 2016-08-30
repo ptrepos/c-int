@@ -36,6 +36,7 @@ int mg_uint256_div(const mg_uint256 *op1, const mg_uint256 *op2, mg_uint256 *quo
 
 	if(op1_digits <= 0) {
 		mg_uint256_set_zero(quotient);
+		mg_uint256_set_zero(reminder);
 		goto _EXIT;
 	}
 
@@ -64,7 +65,7 @@ int mg_uint256_div(const mg_uint256 *op1, const mg_uint256 *op2, mg_uint256 *quo
 	if (err != 0)
 		goto _ERROR;
 
-	*reminder = *op1;
+	*reminder = _op1;
 	
 _EXIT:
 	return 0;
