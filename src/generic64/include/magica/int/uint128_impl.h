@@ -50,7 +50,7 @@ static inline int mg_uint128_compare(const mg_uint128 *op1, const mg_uint128 *op
 	return 0;
 }
 
-static inline bool mg_uint128_add(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret)
+static inline int mg_uint128_add(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret)
 {
 	unsigned char c;
 
@@ -58,10 +58,10 @@ static inline bool mg_uint128_add(const mg_uint128 *op1, const mg_uint128 *op2, 
 	c = mg_uint64_add(c, op1->word[0], op2->word[0], &ret->word[0]);
 	c = mg_uint64_add(c, op1->word[1], op2->word[1], &ret->word[1]);
 
-	return c != 0;
+	return c;
 }
 
-static inline bool mg_uint128_sub(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret)
+static inline int mg_uint128_sub(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret)
 {
 	unsigned char b;
 
@@ -69,7 +69,7 @@ static inline bool mg_uint128_sub(const mg_uint128 *op1, const mg_uint128 *op2, 
 	b = mg_uint64_sub(b, op1->word[0], op2->word[0], &ret->word[0]);
 	b = mg_uint64_sub(b, op1->word[1], op2->word[1], &ret->word[1]);
 
-	return b != 0;
+	return b;
 }
 
 static inline void mg_uint128_neg(const mg_uint128 *op1, mg_uint128 *ret)
@@ -121,7 +121,7 @@ static inline void mg_uint128_mul_1(
 	_hi->word[1] = buf[3];
 }
 
-static inline bool mg_uint128_mul(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret)
+static inline int mg_uint128_mul(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret)
 {
 	mg_uint128 hi;
 	

@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\c-decimal2\include\magica\decimal\mgcompat.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="src\generic64\include\magica\int\intop.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -39,6 +33,15 @@
     <ClInclude Include="test\mg_assert.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\generic64\include\magica\int\uint256_def.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\generic64\include\magica\int\uint256_impl.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\generic64\include\magica\int.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\generic64\uint128_div.c">
@@ -53,22 +56,13 @@
     <ClCompile Include="test\uint128_test.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="test\uint256_mul_test.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="test\uint128_div_test.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="test\uint256_div_pattern_test .c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="test\uint128_div_performance.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\uint128_conversion.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\div_kyusu.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="test\uint128_left_shift_test.c">
@@ -93,6 +87,27 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="test\uint128_set_bit.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generic64\uint256_mul_digits.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generic64\uint256_div.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="test\uint256_div_performance.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uint256_conversion.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="test\uint256_test.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="test\uint128_mul_test.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="test\uint128_div_pattern_test .c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

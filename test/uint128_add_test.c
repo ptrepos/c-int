@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <magica/int/uint128_def.h>
-#include <magica/int/uint128_impl.h>
+#include <magica/int.h>
 
 #include "mg_assert.h"
 
@@ -15,8 +14,8 @@ static void add_sub_test(const char *text1, const char *text2)
 	mg_uint128_test_convert(text1, &v1);
 	mg_uint128_test_convert(text2, &v2);
 
-	mg_assert(mg_uint128_add(&v1, &v2, /*out*/&v3) == false);
-	mg_assert(mg_uint128_sub(&v3, &v2, /*out*/&v1) == false);
+	mg_assert(mg_uint128_add(&v1, &v2, /*out*/&v3) == 0);
+	mg_assert(mg_uint128_sub(&v3, &v2, /*out*/&v1) == 0);
 
 	mg_uint128_test_to_string(&v1, strbuf);
 
@@ -25,17 +24,12 @@ static void add_sub_test(const char *text1, const char *text2)
 
 static void add_carry_test(const char *text1, const char *text2)
 {
-	char strbuf[1024];
 	mg_uint128 v1, v2, v3;
 
 	mg_uint128_test_convert(text1, &v1);
 	mg_uint128_test_convert(text2, &v2);
 
-	mg_assert(mg_uint128_add(&v1, &v2, /*out*/&v3) == true);
-
-	mg_uint128_test_to_string(&v1, strbuf);
-
-	mg_assert(strcmp(text1, strbuf) == 0);
+	mg_assert(mg_uint128_add(&v1, &v2, /*out*/&v3) != 0);
 }
 
 static void sub_borrow_test(const char *text1, const char *text2)
@@ -45,7 +39,7 @@ static void sub_borrow_test(const char *text1, const char *text2)
 	mg_uint128_test_convert(text1, &v1);
 	mg_uint128_test_convert(text2, &v2);
 
-	mg_assert(mg_uint128_sub(&v1, &v2, /*out*/&v3) == true);
+	mg_assert(mg_uint128_sub(&v1, &v2, /*out*/&v3) != 0);
 }
 
 void mg_uint128_add_test()

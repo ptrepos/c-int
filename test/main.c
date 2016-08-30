@@ -6,10 +6,13 @@ void mg_uint128_test();
 #include <stdint.h>
 #include <magica/int/uint64.h>
 
+void mg_uint128_test();
+void mg_uint256_test();
+
 int main(void)
 {
 	mg_uint128_test();
-	//mg_uint256_test();
+	mg_uint256_test();
 	
 	fgetc(stdin);
 

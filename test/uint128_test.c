@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <magica/int/uint128_def.h>
+#include <magica/int.h>
 
 #include "mg_assert.h"
 
@@ -29,7 +29,7 @@ void mg_uint128_test()
 	mg_uint128_div_test();
 	mg_uint128_div_pattern_test();
 #if defined(NDEBUG)
-	mg_uint128_div_performance();
+	//mg_uint128_div_performance();
 #endif
 	mg_uint128_left_shift_test();
 	mg_uint128_right_shift_test();

@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <magica/int/uint128_def.h>
-#include <magica/int/uint128_impl.h>
+#include <magica/int.h>
 
 #include "mg_assert.h"
 
@@ -40,7 +39,7 @@ static void div_test(const char *text1, const char *text2, const char *ret1, con
 	mg_assert(strcmp(ret1, strbuf2) == 0);
 	mg_assert(strcmp(ret2, strbuf1) == 0);
 
-	mg_uint128_div_goldschmidt(&v1, &v2, &v3, &v4);
+	mg_uint128_div_maclaurin(&v1, &v2, &v3, &v4);
 
 	mg_uint128_test_to_string(&v4, strbuf1);
 	mg_uint128_test_to_string(&v3, strbuf2);

@@ -146,18 +146,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\div_kyusu.c" />
     <ClCompile Include="src\generic64\uint128_div.c" />
+    <ClCompile Include="src\generic64\uint256_div.c" />
+    <ClCompile Include="src\generic64\uint256_mul_digits.c" />
     <ClCompile Include="src\uint128_conversion.c" />
+    <ClCompile Include="src\uint256_conversion.c" />
     <ClCompile Include="test\main.c" />
     <ClCompile Include="test\uint128_and_test.c" />
     <ClCompile Include="test\uint128_add_test.c" />
+    <ClCompile Include="test\uint128_div_pattern_test .c" />
     <ClCompile Include="test\uint128_div_performance.c" />
     <ClCompile Include="test\uint128_get_bit_size.c" />
     <ClCompile Include="test\uint128_left_shift_test.c" />
+    <ClCompile Include="test\uint128_mul_test.c" />
     <ClCompile Include="test\uint128_not_test.c" />
     <ClCompile Include="test\uint128_or_test.c" />
     <ClCompile Include="test\uint128_right_shift_test.c" />
@@ -165,14 +166,16 @@
     <ClCompile Include="test\uint128_test.c" />
     <ClCompile Include="test\uint128_div_test.c" />
     <ClCompile Include="test\uint128_xor_test.c" />
-    <ClCompile Include="test\uint256_div_pattern_test .c" />
-    <ClCompile Include="test\uint256_mul_test.c" />
+    <ClCompile Include="test\uint256_div_performance.c" />
+    <ClCompile Include="test\uint256_test.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\c-decimal2\include\magica\decimal\mgcompat.h" />
+    <ClInclude Include="src\generic64\include\magica\int.h" />
     <ClInclude Include="src\generic64\include\magica\int\intop.h" />
     <ClInclude Include="src\generic64\include\magica\int\uint128_def.h" />
     <ClInclude Include="src\generic64\include\magica\int\uint128_impl.h" />
+    <ClInclude Include="src\generic64\include\magica\int\uint256_def.h" />
+    <ClInclude Include="src\generic64\include\magica\int\uint256_impl.h" />
     <ClInclude Include="src\generic64\include\magica\int\uint64.h" />
     <ClInclude Include="src\include\magica\int\mgcompat.h" />
     <ClInclude Include="test\mg_assert.h" />

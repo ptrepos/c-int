@@ -46,7 +46,7 @@ MG_PRIVATE void mg_uint128_test_convert(const char *buf, mg_uint128 *value)
 
 	int i = 0;
 	while(buf[i] != 0) {
-		bool overflow = mg_uint128_mul(&v, &v10, /*out*/&tmp);
+		int overflow = mg_uint128_mul(&v, &v10, /*out*/&tmp);
 		assert(overflow == false);
 
 		mg_uint128_set(&n, buf[i] - '0');

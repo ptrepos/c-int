@@ -8,7 +8,6 @@
 #pragma once
 
 #include <stdint.h>
-#include <stdbool.h>
 #include <memory.h>
 #include <assert.h>
 
@@ -47,11 +46,12 @@ void mg_uint128_swap(mg_uint128 **a, mg_uint128 **b);
 /**
  * arithmetric functions
  */
-bool mg_uint128_add(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret);
-bool mg_uint128_sub(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret);
 void mg_uint128_neg(const mg_uint128 *op1, /*out*/mg_uint128 *ret);
-bool mg_uint128_mul(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret);
-void mg_uint128_mul_1(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *_lo, /*out*/mg_uint128 *_hi);
+
+int mg_uint128_add(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret);
+int mg_uint128_sub(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret);
+int mg_uint128_mul(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret);
+
 int mg_uint128_div(
 		const mg_uint128 *op1, 
 		const mg_uint128 *op2, 
@@ -72,11 +72,13 @@ int mg_uint128_div_long_division(
 		const mg_uint128 *op2, 
 		/*out*/mg_uint128 *quotient, 
 		/*out*/mg_uint128 *reminder);
-int mg_uint128_div_goldschmidt(
+int mg_uint128_div_maclaurin(
 		const mg_uint128 *op1, 
 		const mg_uint128 *op2, 
 		/*out*/mg_uint128 *quotient, 
 		/*out*/mg_uint128 *reminder);
+
+void mg_uint128_mul_1(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *_lo, /*out*/mg_uint128 *_hi);
 
 /**
  * bit operation functions

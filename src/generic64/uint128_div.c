@@ -35,7 +35,7 @@ int mg_uint128_div_long_division_impl(
 	int op2_digits, 
 	/*out*/mg_uint128 *quotient);
 
-MG_PRIVATE int mg_uint128_div_goldschmidt_impl(
+MG_PRIVATE int mg_uint128_div_maclaurin_impl(
 	mg_uint128 *op1,
 	const mg_uint128 *op2,
 	int op2_bits,
@@ -195,7 +195,7 @@ _ERROR:
 	return err;
 }
 
-MG_PRIVATE int mg_uint128_div_goldschmidt(
+MG_PRIVATE int mg_uint128_div_maclaurin(
 	const mg_uint128 *op1, 
 	const mg_uint128 *op2, 
 	/*out*/mg_uint128 *quotient, 
@@ -217,7 +217,7 @@ MG_PRIVATE int mg_uint128_div_goldschmidt(
 		goto _EXIT;
 	}
 
-	err = mg_uint128_div_goldschmidt_impl(
+	err = mg_uint128_div_maclaurin_impl(
 		/*inout*/&_op1,  
 		op2, op2_bits,
 		/*out*/quotient);
@@ -252,7 +252,7 @@ MG_PRIVATE int mg_uint128_div_recovering_method_impl(
 
 	mg_uint128_left_shift(op2, n, /*out*/&d);
 
-	if(mg_uint128_sub(op1, &d, /*out*/&tmp) == false) {
+	if(mg_uint128_sub(op1, &d, /*out*/&tmp) == 0) {
 		mg_uint128_set_bit(/*inout*/q, n);
 		*op1 = tmp;
 	}
@@ -261,7 +261,7 @@ MG_PRIVATE int mg_uint128_div_recovering_method_impl(
 	while(n >= 0) {
 		mg_uint128_right_shift_small(&d, 1, /*out*/&d1);
 
-		if(mg_uint128_sub(op1, &d1, /*out*/&tmp) == false) {
+		if(mg_uint128_sub(op1, &d1, /*out*/&tmp) == 0) {
 			mg_uint128_set_bit(/*inout*/q, n-1);
 			*op1 = tmp;
 		}
@@ -295,7 +295,7 @@ MG_PRIVATE int mg_uint128_div_srt_impl(
 
 	mg_uint128_left_shift(op2, n, /*out*/&d);
 
-	if(mg_uint128_sub(op1, &d, /*out*/&tmp) == false) {
+	if(mg_uint128_sub(op1, &d, /*out*/&tmp) == 0) {
 		mg_uint128_set_bit(/*inout*/q, n);
 		*op1 = tmp;
 	}
@@ -306,8 +306,8 @@ MG_PRIVATE int mg_uint128_div_srt_impl(
 		mg_uint128_right_shift_small(&d, 1, /*out*/&d2);
 		mg_uint128_add(&d1, &d2, /*out*/&d3);
 
-		if(mg_uint128_sub(op1, &d2, /*out*/&tmp2) == false) {
-			if(mg_uint128_sub(op1, &d3, /*out*/&tmp3) == false) {
+		if(mg_uint128_sub(op1, &d2, /*out*/&tmp2) == 0) {
+			if(mg_uint128_sub(op1, &d3, /*out*/&tmp3) == 0) {
 				mg_uint128_set_bit(/*inout*/q, n);
 				mg_uint128_set_bit(/*inout*/q, n-1);
 				*op1 = tmp3;
@@ -316,7 +316,7 @@ MG_PRIVATE int mg_uint128_div_srt_impl(
 				*op1 = tmp2;
 			}
 		} else {
-			if(mg_uint128_sub(op1, &d1, /*out*/&tmp1) == false) {
+			if(mg_uint128_sub(op1, &d1, /*out*/&tmp1) == 0) {
 				mg_uint128_set_bit(/*inout*/q, n-1);
 				*op1 = tmp1;
 			}
@@ -328,7 +328,7 @@ MG_PRIVATE int mg_uint128_div_srt_impl(
 	if(n >= 0) {
 		mg_uint128_right_shift_small(&d, 1, /*out*/&d1);
 
-		if(mg_uint128_sub(op1, &d1, &tmp) == false) {
+		if(mg_uint128_sub(op1, &d1, &tmp) == 0) {
 			mg_uint128_set_bit(/*out*/q, n);
 			*op1 = tmp;
 		}
@@ -408,9 +408,9 @@ MG_PRIVATE int mg_uint128_div_long_division_impl(
 
 		set_double(q, q_tmp, q_n);
 
-		bool overflow = mg_uint128_mul(op2, q, /*out*/qv);
+		int overflow = mg_uint128_mul(op2, q, /*out*/qv);
 
-		while(overflow || mg_uint128_sub(op1, qv, /*out*/&tmp) == true) {
+		while(overflow || mg_uint128_sub(op1, qv, /*out*/&tmp) != 0) {
 			q_tmp *= DOUBLE_CORRECT;
 			set_double(q, q_tmp, q_n);
 
@@ -430,7 +430,7 @@ _EXIT:
 //	return err;
 }
 
-MG_PRIVATE int mg_uint128_div_goldschmidt_impl(
+MG_PRIVATE int mg_uint128_div_maclaurin_impl(
 	mg_uint128 *op1,
 	const mg_uint128 *op2,
 	int op2_bits,
@@ -438,7 +438,7 @@ MG_PRIVATE int mg_uint128_div_goldschmidt_impl(
 {
 	//mg_decimal_error err;
 	mg_uint128 tmp, tmp2, tmp3, dummy;
-	bool overflow;
+	int overflow;
 	int bits = op2_bits;
 	
 	// x = 1 - (op2 / BASE)
@@ -452,9 +452,6 @@ MG_PRIVATE int mg_uint128_div_goldschmidt_impl(
 	mg_uint128 series = xn;	// 1Çè»ó™
 
 	// (1 + x^2)(1 + x^4)(1 + x^8)...(1 + x^2n)
-	mg_uint128 prev;
-	mg_uint128_set_zero(/*out*/&prev);
-
 	while(mg_uint128_is_zero(&xn) == 0) {
 		// x^2nåvéZ
 		mg_uint128_mul_1(&xn, &xn, /*out*/&dummy, /*out*/&tmp);
@@ -483,7 +480,7 @@ MG_PRIVATE int mg_uint128_div_goldschmidt_impl(
 
 	// qÇÃê∏ìxï‚ê≥
 	mg_uint128_set(&tmp2, 1);
-	while(mg_uint128_sub(&r, op2, &tmp) == false) {
+	while(mg_uint128_sub(&r, op2, &tmp) == 0) {
 		r = tmp;
 		mg_uint128_add(&q, &tmp2, /*out*/&tmp);
 		q = tmp;
