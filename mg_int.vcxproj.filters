@@ -18,12 +18,6 @@
     <ClInclude Include="src\generic64\include\magica\int\intop.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\generic64\include\magica\int\uint64.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="src\generic64\include\magica\int\uint128_def.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="src\generic64\include\magica\int\uint128_impl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -33,13 +27,19 @@
     <ClInclude Include="test\mg_assert.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\generic64\include\magica\int\uint256_def.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="src\generic64\include\magica\int\uint256_impl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\generic64\include\magica\int.h">
+    <ClInclude Include="src\include\magica\int\uint64.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\magica\int\uint128_def.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\magica\int\uint256_def.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\magica\int.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -93,9 +93,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\generic64\uint256_div.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="test\uint256_div_performance.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\uint256_conversion.c">

@@ -11,7 +11,7 @@
 #include <memory.h>
 #include <assert.h>
 
-#include <magica/int/uint128_def.h>
+#include <magica/int/uint128.h>
 
 #define MG_UINT256_SIZE	(4)
 #define MG_UINT256_WORD_BITS	(64)
