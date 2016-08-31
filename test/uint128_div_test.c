@@ -23,22 +23,6 @@ static void div_test(const char *text1, const char *text2, const char *ret1, con
 	mg_assert(strcmp(ret1, strbuf2) == 0);
 	mg_assert(strcmp(ret2, strbuf1) == 0);
 
-	mg_uint128_div_long_division(&v1, &v2, &v3, &v4);
-
-	mg_uint128_test_to_string(&v4, strbuf1);
-	mg_uint128_test_to_string(&v3, strbuf2);
-
-	mg_assert(strcmp(ret1, strbuf2) == 0);
-	mg_assert(strcmp(ret2, strbuf1) == 0);
-
-	mg_uint128_div_srt(&v1, &v2, &v3, &v4);
-
-	mg_uint128_test_to_string(&v4, strbuf1);
-	mg_uint128_test_to_string(&v3, strbuf2);
-
-	mg_assert(strcmp(ret1, strbuf2) == 0);
-	mg_assert(strcmp(ret2, strbuf1) == 0);
-
 	mg_uint128_div_maclaurin(&v1, &v2, &v3, &v4);
 
 	mg_uint128_test_to_string(&v4, strbuf1);

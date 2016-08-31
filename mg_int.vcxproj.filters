@@ -51,6 +51,21 @@
     <ClInclude Include="src\include\magica\int\uint32.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\generic32\include\magica\int\intop.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\generic32\include\magica\int\uint128_def.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\generic32\include\magica\int\uint128_impl.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\generic32\include\magica\int\uint256_def.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\generic32\include\magica\int\uint256_impl.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\generic64\uint128_div.c">
@@ -150,6 +165,24 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="test\uint256_div_performance.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generic32\uint128_div.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generic32\uint256_div.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generic32\uint256_mul_digits.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generic32\uint256_mul_digits_1.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generic32\uint128_mul_digits_1.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\generic32\uint128_mul_digits.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

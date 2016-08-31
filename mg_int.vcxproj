@@ -88,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>src/include;src/generic64/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src/include;src/generic32/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +118,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>src/include;src/generic64/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src/include;src/generic32/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,8 +146,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\generic64\uint128_div.c" />
-    <ClCompile Include="src\generic64\uint256_div.c" />
+    <ClCompile Include="src\generic32\uint128_div.c" />
+    <ClCompile Include="src\generic32\uint128_mul_digits.c" />
+    <ClCompile Include="src\generic32\uint128_mul_digits_1.c" />
+    <ClCompile Include="src\generic32\uint256_div.c" />
+    <ClCompile Include="src\generic32\uint256_mul_digits.c" />
+    <ClCompile Include="src\generic32\uint256_mul_digits_1.c" />
+    <ClCompile Include="src\generic64\uint128_div.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\generic64\uint256_div.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\uint128_conversion.c" />
     <ClCompile Include="src\uint256_conversion.c" />
     <ClCompile Include="test\main.c" />
@@ -181,6 +193,11 @@
     <ClCompile Include="test\uint256_xor_test.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\generic32\include\magica\int\intop.h" />
+    <ClInclude Include="src\generic32\include\magica\int\uint128_def.h" />
+    <ClInclude Include="src\generic32\include\magica\int\uint128_impl.h" />
+    <ClInclude Include="src\generic32\include\magica\int\uint256_def.h" />
+    <ClInclude Include="src\generic32\include\magica\int\uint256_impl.h" />
     <ClInclude Include="src\generic64\include\magica\int\intop.h" />
     <ClInclude Include="src\generic64\include\magica\int\uint128_def.h" />
     <ClInclude Include="src\generic64\include\magica\int\uint128_impl.h" />
@@ -205,10 +222,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename).obj</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nasm -f win64 %(Identity) -o $(IntDir)%(Filename).obj</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename).obj</Outputs>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -226,10 +241,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename).obj</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nasm -f win64 %(Identity) -o $(IntDir)%(Filename).obj</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename).obj</Outputs>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
