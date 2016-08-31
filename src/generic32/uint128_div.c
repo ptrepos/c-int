@@ -152,132 +152,30 @@ _ERROR:
 	return err;
 }
 
-MG_PRIVATE int mg_uint128_div_recovering_method_impl(
-	mg_uint128 *op1,
-	int op1_bits,
-	const mg_uint128 *op2,
-	int op2_bits,
-	/*out*/mg_uint128 *q)
-{
-	//mg_decimal_error err;
-	mg_uint128 d, d1, tmp;
-
-	if (op1_bits < op2_bits) {
-		mg_uint128_set_zero(/*out*/q);
-		goto _EXIT;
-	}
-	int n = op1_bits - op2_bits;
-
-	mg_uint128_set_zero(/*out*/q);
-
-	mg_uint128_left_shift(op2, n, /*out*/&d);
-
-	if(mg_uint128_sub(op1, &d, /*out*/&tmp) == 0) {
-		mg_uint128_set_bit(/*inout*/q, n);
-		*op1 = tmp;
-	}
-	n--;
-
-	while(n >= 0) {
-		mg_uint128_right_shift_small(&d, 1, /*out*/&d1);
-
-		if(mg_uint128_sub(op1, &d1, /*out*/&tmp) == 0) {
-			mg_uint128_set_bit(/*inout*/q, n-1);
-			*op1 = tmp;
-		}
-		d = d1;
-		n--;
-	}
-
-_EXIT:
-	return 0;
-	//_ERROR:
-	//	return err;
-}
-
-MG_PRIVATE int mg_uint128_div_srt_impl(
-	mg_uint128 *op1,
-	int op1_bits,
-	const mg_uint128 *op2,
-	int op2_bits,
-	/*out*/mg_uint128 *q)
-{
-	//mg_decimal_error err;
-	mg_uint128 d, d1, d2, d3, tmp, tmp1, tmp2, tmp3;
-
-	if (op1_bits < op2_bits) {
-		mg_uint128_set_zero(/*out*/q);
-		goto _EXIT;
-	}
-	int n = op1_bits - op2_bits;
-
-	mg_uint128_set_zero(/*out*/q);
-
-	mg_uint128_left_shift(op2, n, /*out*/&d);
-
-	if(mg_uint128_sub(op1, &d, /*out*/&tmp) == 0) {
-		mg_uint128_set_bit(/*inout*/q, n);
-		*op1 = tmp;
-	}
-	n--;
-
-	while(n >= 1) {
-		mg_uint128_right_shift_small(&d, 2, /*out*/&d1);
-		mg_uint128_right_shift_small(&d, 1, /*out*/&d2);
-		mg_uint128_add(&d1, &d2, /*out*/&d3);
-
-		if(mg_uint128_sub(op1, &d2, /*out*/&tmp2) == 0) {
-			if(mg_uint128_sub(op1, &d3, /*out*/&tmp3) == 0) {
-				mg_uint128_set_bit(/*inout*/q, n);
-				mg_uint128_set_bit(/*inout*/q, n-1);
-				*op1 = tmp3;
-			} else {
-				mg_uint128_set_bit(/*inout*/q, n);
-				*op1 = tmp2;
-			}
-		} else {
-			if(mg_uint128_sub(op1, &d1, /*out*/&tmp1) == 0) {
-				mg_uint128_set_bit(/*inout*/q, n-1);
-				*op1 = tmp1;
-			}
-		}
-		d = d1;
-		n -= 2;
-	}
-	
-	if(n >= 0) {
-		mg_uint128_right_shift_small(&d, 1, /*out*/&d1);
-
-		if(mg_uint128_sub(op1, &d1, &tmp) == 0) {
-			mg_uint128_set_bit(/*out*/q, n);
-			*op1 = tmp;
-		}
-		n--;
-	}
-
-_EXIT:
-	return 0;
-	//_ERROR:
-	//	return err;
-}
-
 typedef long double max_float_t;
 
-#define DOUBLE_RSHIFT_64		(5.4210108624275221700372640043497e-20)
-#define DOUBLE_LSHIFT_64		(18446744073709551616.0)
-#define DOUBLE_CORRECT			(0.99999995)
+#define DOUBLE_RSHIFT_32		(1.0/4294967296.0)
+#define DOUBLE_LSHIFT_32		(4294967296.0)
+#define DOUBLE_CORRECT			(0.9999)
 
-static inline void set_double(mg_uint128 *buf, max_float_t value, int n)
+static inline void set_double(mg_uint128 *op1, max_float_t value, int n)
 {
-	mg_uint128_set_zero(buf);
-
+	mg_uint128_set_zero(op1);
 	if (n == 0) {
-		buf->word[n] = (uint64_t) value;
+		op1->word[n] = (uint32_t) value;
+	} else if(n == 1) {
+		op1->word[n] = (uint32_t) value;
+		value -= op1->word[n];
+		value *= DOUBLE_LSHIFT_32;
+		op1->word[n - 1] = (uint32_t)value;
 	} else {
-		buf->word[n] = (uint64_t)value;
-		value -= buf->word[n];
-		value *= DOUBLE_LSHIFT_64;
-		buf->word[n - 1] = (uint64_t)value;
+		op1->word[n] = (uint32_t) value;
+		value -= op1->word[n];
+		value *= DOUBLE_LSHIFT_32;
+		op1->word[n - 1] = (uint32_t)value;
+		value -= op1->word[n - 1];
+		value *= DOUBLE_LSHIFT_32;
+		op1->word[n - 2] = (uint32_t)value;
 	}
 }
 
@@ -295,7 +193,7 @@ MG_PRIVATE int mg_uint128_div_long_division_impl(
 
 	max_float_t op2_v = (max_float_t)op2->word[op2_digits -1];
 	if(op2_digits >= 2)
-		op2_v += (max_float_t)op2->word[op2_digits-2] * DOUBLE_RSHIFT_64;
+		op2_v += (max_float_t)op2->word[op2_digits-2] * DOUBLE_RSHIFT_32;
 
 	mg_uint128_set_zero(/*out*/quotient);
 
@@ -314,7 +212,7 @@ MG_PRIVATE int mg_uint128_div_long_division_impl(
 
 		max_float_t op1_v = (max_float_t)op1->word[op1_digits-1];
 		if(op1_digits >= 2)
-			op1_v += (max_float_t)op1->word[op1_digits-2] * DOUBLE_RSHIFT_64;
+			op1_v += (max_float_t)op1->word[op1_digits-2] * DOUBLE_RSHIFT_32;
 
 		int q_n = op1_digits - op2_digits;
 		max_float_t q_tmp = op1_v / op2_v;
@@ -322,7 +220,7 @@ MG_PRIVATE int mg_uint128_div_long_division_impl(
 			q_tmp = 1.0;
 		}
 		// オーバーフロー防止
-		if(q_tmp >= DOUBLE_LSHIFT_64) {
+		if(q_tmp >= DOUBLE_LSHIFT_32) {
 			q_tmp *= DOUBLE_CORRECT;
 		}
 
