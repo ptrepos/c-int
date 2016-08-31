@@ -23,6 +23,9 @@ mg_uint256_mul_digits_1:
 	push		rdi
 	push		rsi
 	push		r12
+	push		r13
+	push		r14
+	push		r15
 
 	sub			rsp,	72
 	
@@ -34,7 +37,14 @@ mg_uint256_mul_digits_1:
 	movdqu		[rsp+16],	xmm1
 	movdqu		[rsp+32],	xmm1
 	movdqu		[rsp+48],	xmm1
+	
+	; ëÂÇ´Ç¢ï˚Çì‡ë§ÉãÅ[ÉvÇ÷
+	cmp			r11,	r9
+	jbe			_CALCURATE_LOOP
+	xchg		r10,	r8
+	xchg		r11,	r9
 
+_CALCURATE_LOOP:
 	xor			rcx,	rcx
 _LOOP_OP2:
 	xor			rsi,	rsi
@@ -58,11 +68,27 @@ _LOOP_OP1:
 	adc			r12,	[rdi+16]
 	setb		bl
 	
-	mov	[rdi+0],	rax
-	mov	[rdi+8],	rdx
-	mov	[rdi+16],	r12
+	mov			r13,	rax
+	mov			r14,	rdx
+	mov			r15,	r12
 
-	inc			rsi
+	mov			rax,	[r10+rsi*8+8]
+
+	; op1[i+1] * op2[j]
+	mul			qword [r8+rcx*8]
+	
+	add			rax,	r14
+	adc			rdx,	r15
+	mov			r12,	rbx
+	adc			r12,	[rdi+24]
+	setb		bl
+
+	mov	[rdi+0],	r13
+	mov	[rdi+8],	rax
+	mov	[rdi+16],	rdx
+	mov	[rdi+24],	r12
+
+	add			rsi,	2
 	cmp			rsi,	r11
 
 	jb			_LOOP_OP1;
@@ -87,6 +113,9 @@ _LOOP_OP1:
 
 	add			rsp,	72
 	
+	pop			r15
+	pop			r14
+	pop			r13
 	pop			r12
 	pop			rsi
 	pop			rdi
