@@ -182,12 +182,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\generic64\include\magica\int\intop.h" />
+    <ClInclude Include="src\generic64\include\magica\int\uint128_def.h" />
     <ClInclude Include="src\generic64\include\magica\int\uint128_impl.h" />
+    <ClInclude Include="src\generic64\include\magica\int\uint256_def.h" />
     <ClInclude Include="src\generic64\include\magica\int\uint256_impl.h" />
     <ClInclude Include="src\include\magica\int.h" />
     <ClInclude Include="src\include\magica\int\mgcompat.h" />
     <ClInclude Include="src\include\magica\int\uint128.h" />
     <ClInclude Include="src\include\magica\int\uint256.h" />
+    <ClInclude Include="src\include\magica\int\uint32.h" />
     <ClInclude Include="src\include\magica\int\uint64.h" />
     <ClInclude Include="test\mg_assert.h" />
   </ItemGroup>

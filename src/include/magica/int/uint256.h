@@ -12,17 +12,7 @@
 #include <assert.h>
 
 #include <magica/int/uint128.h>
-
-#define MG_UINT256_SIZE	(4)
-#define MG_UINT256_WORD_BITS	(64)
-
-/**
- * 256bit integer implementation for 64bit.
- */
-typedef struct mg_uint256
-{
-	uint64_t word[MG_UINT256_SIZE];
-} mg_uint256;
+#include <magica/int/uint256_def.h>
 
 /** 
  * value setter function.

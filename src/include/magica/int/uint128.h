@@ -11,18 +11,7 @@
 #include <memory.h>
 #include <assert.h>
 
-#define MG_UINT128_SIZE			(2)
-#define MG_UINT128_WORD_BITS	(64)
-
-typedef struct mg_uint256 mg_uint256;
-
-/**
- * 256bit integer implementation for 64bit.
- */
-typedef struct mg_uint128
-{
-	uint64_t word[MG_UINT128_SIZE];
-} mg_uint128;
+#include <magica/int/uint128_def.h>
 
 /** 
  * value setter function.
