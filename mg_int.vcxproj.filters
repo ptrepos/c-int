@@ -89,9 +89,6 @@
     <ClCompile Include="test\uint128_set_bit.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\generic64\uint256_mul_digits.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\generic64\uint256_div.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -143,5 +140,12 @@
     <ClCompile Include="test\uint256_set_bit.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="test\uint256_div_performance.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\x64-win64\uint256_mul_digits_1.nas" />
+    <CustomBuild Include="src\x64-win64\uint256_mul_digits.nas" />
   </ItemGroup>
 </Project>
