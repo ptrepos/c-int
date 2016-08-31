@@ -29,6 +29,6 @@ MG_PRIVATE void mg_uint256_mul_digits_1(const mg_uint256 *op1, int op1_words, co
 		}
 	}
 
-	memcpy(low->word, buf, sizeof(buf[0]) * MG_UINT256_SIZE);
-	memcpy(high->word, buf + 8, sizeof(buf[0]) * MG_UINT256_SIZE);
+	memcpy(&low->word[0], &buf[0], sizeof(buf[0]) * MG_UINT256_SIZE);
+	memcpy(&high->word[0], &buf[MG_UINT256_SIZE], sizeof(buf[0]) * MG_UINT256_SIZE);
 }

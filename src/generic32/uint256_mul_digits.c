@@ -34,5 +34,6 @@ MG_PRIVATE int mg_uint256_mul_digits(const mg_uint256 *op1, int op1_words, const
 	}
 
 	memcpy(&ret->word[0], buf, sizeof(buf[0]) * MG_UINT256_SIZE);
+
 	return 0;
 }

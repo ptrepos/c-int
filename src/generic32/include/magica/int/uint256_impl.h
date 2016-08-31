@@ -126,7 +126,7 @@ static inline void mg_uint256_neg(const mg_uint256 *op1, mg_uint256 *ret)
 	c = mg_uint32_add(c, ret->word[1], 0, &ret->word[1]);
 	c = mg_uint32_add(c, ret->word[2], 0, &ret->word[2]);
 	c = mg_uint32_add(c, ret->word[3], 0, &ret->word[3]);
-	c = mg_uint32_add(c, ret->word[4], 1, &ret->word[4]);
+	c = mg_uint32_add(c, ret->word[4], 0, &ret->word[4]);
 	c = mg_uint32_add(c, ret->word[5], 0, &ret->word[5]);
 	c = mg_uint32_add(c, ret->word[6], 0, &ret->word[6]);
 	c = mg_uint32_add(c, ret->word[7], 0, &ret->word[7]);
@@ -254,7 +254,7 @@ static inline void mg_uint256_left_shift(const mg_uint256 *op1, int shift, /*out
 		buf[4 + words] = (op1->word[3] >> (MG_UINT256_WORD_BITS - bits)) | (op1->word[4] << bits);
 		buf[5 + words] = (op1->word[4] >> (MG_UINT256_WORD_BITS - bits)) | (op1->word[5] << bits);
 		buf[6 + words] = (op1->word[5] >> (MG_UINT256_WORD_BITS - bits)) | (op1->word[6] << bits);
-		buf[7 + words] = (op1->word[6] >> (MG_UINT256_WORD_BITS - bits));
+		buf[7 + words] = (op1->word[6] >> (MG_UINT256_WORD_BITS - bits)) | (op1->word[7] << bits);
 	}
 	else {
 		buf[0 + words] = op1->word[0];

@@ -20,6 +20,11 @@ static void div_test(const char *text1, const char *text2, const char *ret1, con
 	mg_uint256_test_to_string(&v4, strbuf1);
 	mg_uint256_test_to_string(&v3, strbuf2);
 
+	mg_uint256_div_maclaurin(&v1, &v2, /*quotient*/&v3, /*reminder*/&v4);
+
+	mg_uint256_test_to_string(&v4, strbuf1);
+	mg_uint256_test_to_string(&v3, strbuf2);
+
 	mg_assert(strcmp(ret1, strbuf2) == 0);
 	mg_assert(strcmp(ret2, strbuf1) == 0);
 }
@@ -345,6 +350,7 @@ void mg_uint256_div_test()
 	div_mul_test("10000000", "10000000");
 	div_mul_test("10000", "10000000");
 	div_mul_test("10", "10000000");
+	div_mul_test("99999999999999999999999999999999999999999999999999999999999999999999", "999999999999999999999");
 
 	printf("TEST mg_uint256_div(): OK\n");
 }
