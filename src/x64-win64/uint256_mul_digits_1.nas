@@ -3,15 +3,14 @@
 
 section .text
 
-mg_uint256_mul_digits_1:
+; void mg_uint256_mul_digits_1();
 ;	rcx			op1				const mg_uint256 *
 ;	rdx			op1_digits		int
 ;	r8			op2				const mg_uint256 *
 ;	r9			op2_digits		int
 ;	[rbp+48]	low				mg_uint256 *
 ;	[rbp+56]	high			mg_uint256 *
-
-
+mg_uint256_mul_digits_1:
 	push		rbp
 	mov			rbp, rsp
 	

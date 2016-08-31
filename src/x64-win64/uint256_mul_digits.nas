@@ -3,7 +3,7 @@
 
 section .text
 
-mg_uint256_mul_digits:
+; int mg_uint256_mul_digits();
 ;	rcx			op1				const mg_uint256 *
 ;	rdx			op1_digits		int
 ;	r8			op2				const mg_uint256 *
@@ -11,6 +11,7 @@ mg_uint256_mul_digits:
 ;	[rbp+48]	ret				mg_uint256 *
 ;
 ;	return		unoverflow: 0, overflow: 1
+mg_uint256_mul_digits:
 	push		rbp
 	mov			rbp, rsp
 	
