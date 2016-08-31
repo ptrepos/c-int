@@ -6,6 +6,7 @@
 */
 #pragma once
 
+#include <magica/int/uint32.h>
 #include <magica/int/uint64.h>
 #include <magica/int/uint256.h>
 
@@ -342,28 +343,28 @@ static inline void mg_uint256_right_shift_small(const mg_uint256 *op1, int shift
 static inline int mg_uint256_get_bit_size(const mg_uint256 *value)
 {
 	if(value->word[7] != 0) {
-		return 7 * MG_UINT256_WORD_BITS + mg_uint64_get_bit_size(value->word[7]);
+		return 7 * MG_UINT256_WORD_BITS + mg_uint32_get_bit_size(value->word[7]);
 	}
 	if(value->word[6] != 0) {
-		return 6 * MG_UINT256_WORD_BITS + mg_uint64_get_bit_size(value->word[6]);
+		return 6 * MG_UINT256_WORD_BITS + mg_uint32_get_bit_size(value->word[6]);
 	}
 	if(value->word[5] != 0) {
-		return 5 * MG_UINT256_WORD_BITS + mg_uint64_get_bit_size(value->word[5]);
+		return 5 * MG_UINT256_WORD_BITS + mg_uint32_get_bit_size(value->word[5]);
 	}
 	if(value->word[4] != 0) {
-		return 4 * MG_UINT256_WORD_BITS + mg_uint64_get_bit_size(value->word[4]);
+		return 4 * MG_UINT256_WORD_BITS + mg_uint32_get_bit_size(value->word[4]);
 	}
 	if(value->word[3] != 0) {
-		return 3 * MG_UINT256_WORD_BITS + mg_uint64_get_bit_size(value->word[3]);
+		return 3 * MG_UINT256_WORD_BITS + mg_uint32_get_bit_size(value->word[3]);
 	}
 	if(value->word[2] != 0) {
-		return 2 * MG_UINT256_WORD_BITS + mg_uint64_get_bit_size(value->word[2]);
+		return 2 * MG_UINT256_WORD_BITS + mg_uint32_get_bit_size(value->word[2]);
 	}
 	if(value->word[1] != 0) {
-		return 1 * MG_UINT256_WORD_BITS + mg_uint64_get_bit_size(value->word[1]);
+		return 1 * MG_UINT256_WORD_BITS + mg_uint32_get_bit_size(value->word[1]);
 	}
 	if(value->word[0] != 0) {
-		return mg_uint64_get_bit_size(value->word[0]);
+		return mg_uint32_get_bit_size(value->word[0]);
 	}
 	return 0;
 }

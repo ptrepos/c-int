@@ -6,6 +6,7 @@
  */
 #pragma once
 
+#include <magica/int/uint32.h>
 #include <magica/int/uint64.h>
 #include <magica/int/uint128.h>
 
@@ -244,16 +245,16 @@ static inline void mg_uint128_get_bits(/*inout*/mg_uint128 *op1, int op2)
 static inline int mg_uint128_get_bit_size(const mg_uint128 *value)
 {
 	if(value->word[3] != 0) {
-		return 3 * MG_UINT128_WORD_BITS + mg_uint64_get_bit_size(value->word[3]);
+		return 3 * MG_UINT128_WORD_BITS + mg_uint32_get_bit_size(value->word[3]);
 	}
 	if(value->word[2] != 0) {
-		return 2 * MG_UINT128_WORD_BITS + mg_uint64_get_bit_size(value->word[2]);
+		return 2 * MG_UINT128_WORD_BITS + mg_uint32_get_bit_size(value->word[2]);
 	}
 	if(value->word[1] != 0) {
-		return 1 * MG_UINT128_WORD_BITS + mg_uint64_get_bit_size(value->word[1]);
+		return 1 * MG_UINT128_WORD_BITS + mg_uint32_get_bit_size(value->word[1]);
 	}
 	if(value->word[0] != 0) {
-		return mg_uint64_get_bit_size(value->word[0]);
+		return mg_uint32_get_bit_size(value->word[0]);
 	}
 	return 0;
 }

@@ -18,7 +18,8 @@ int mg_uint256_div_long_division(
 	int op2_digits, 
 	mg_uint256 *quotient);
 
-MG_PRIVATE int mg_uint256_div_maclaurin_impl(
+// ƒ}ƒNƒ[ƒŠƒ““WŠJ‚Å‹t”‚ğ‹‚ß‚ÄŠ|‚¯‚é
+int mg_uint256_div_maclaurin_impl(
 	mg_uint256 *op1,
 	const mg_uint256 *op2,
 	int op2_bits,
