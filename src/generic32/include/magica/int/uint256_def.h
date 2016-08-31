@@ -18,3 +18,9 @@ typedef struct mg_uint256
 {
 	uint32_t word[MG_UINT256_SIZE];
 } mg_uint256;
+
+#define MG_UINT256_DIGITS_32	(1)
+#define MG_UINT256_DIGITS_64	(2)
+#define MG_UINT256_DIGITS_128	(4)
+#define MG_UINT256_DIGITS_192	(6)
+#define MG_UINT256_DIGITS_256	(8)
