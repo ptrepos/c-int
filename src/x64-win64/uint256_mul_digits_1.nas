@@ -102,30 +102,28 @@ _MUL_2xN_LOOP_OP2:
 	; op1[i] * op2[j]
 	mul		qword [r8+r10*8]
 
-	add		rax,	[rdi+0]
-	adc		rdx,	[rdi+8]
-	mov		r11,	rbx
-	adc		r11,	[rdi+16]
+	mov		r11,	rax
+	add		r11,	[rdi+0]
+	mov		r12,	rdx
+	adc		r12,	[rdi+8]
+	mov		r13,	rbx
+	adc		r13,	[rdi+16]
 	setb	bl
 	
-	mov		r12,	rax
-	mov		r13,	rdx
-	mov		r14,	r11
-
 	mov		rax,	[rcx+8]
 
 	; op1[i+1] * op2[j]
 	mul		qword [r8+r10*8]
 	
-	add		rax,	r13
-	adc		rdx,	r14
-	mov		r11,	rbx
-	adc		r11,	[rdi+24]
+	add		r12,	rax
+	adc		r13,	rdx
+	mov		r14,	rbx
+	adc		r14,	[rdi+24]
 
-	mov		[rdi+0],	r12
-	mov		[rdi+8],	rax
-	mov		[rdi+16],	rdx
-	mov		[rdi+24],	r11
+	mov		[rdi+0],	r11
+	mov		[rdi+8],	r12
+	mov		[rdi+16],	r13
+	mov		[rdi+24],	r14
 
 	inc			r10
 	cmp			r10,	r9
@@ -167,31 +165,25 @@ _MUL_3xN_LOOP_OP2:
 	; op1[0] * op2[j]
 	mul		qword [r8+r10*8]
 
-	add		rax,	[rdi+0]
-	adc		rdx,	[rdi+8]
-	mov		r11,	rbx
-	adc		r11,	[rdi+16]
+	mov		r11,	rax
+	add		r11,	[rdi+0]
+	mov		r12,	rdx
+	adc		r12,	[rdi+8]
+	mov		r13,	rbx
+	adc		r13,	[rdi+16]
 	setb	bl
 	
-	mov		r12,	rax
-	mov		r13,	rdx
-	mov		r14,	r11
-
 	; op1[1]
 	mov		rax,	[rcx+8]
 
 	; op1[1] * op2[j]
 	mul		qword [r8+r10*8]
 	
-	add		rax,	r13
-	adc		rdx,	r14
-	mov		r11,	rbx
-	adc		r11,	[rdi+24]
+	add		r12,	rax
+	adc		r13,	rdx
+	mov		r14,	rbx
+	adc		r14,	[rdi+24]
 	setb	bl
-
-	mov		r13,	rax
-	mov		r14,	rdx
-	mov		r15,	r11
 	
 	; op1[2]
 	mov		rax,	[rcx+16]
@@ -199,16 +191,16 @@ _MUL_3xN_LOOP_OP2:
 	; op1[2] * op2[j]
 	mul		qword [r8+r10*8]
 	
-	add		rax,	r14
-	adc		rdx,	r15
-	mov		r11,	rbx
-	adc		r11,	[rdi+32]
+	add		r13,	rax
+	adc		r14,	rdx
+	mov		r15,	rbx
+	adc		r15,	[rdi+32]
 
-	mov		[rdi+0],	r12
-	mov		[rdi+8],	r13
-	mov		[rdi+16],	rax
-	mov		[rdi+24],	rdx
-	mov		[rdi+32],	r11
+	mov		[rdi+0],	r11
+	mov		[rdi+8],	r12
+	mov		[rdi+16],	r13
+	mov		[rdi+24],	r14
+	mov		[rdi+32],	r15
 
 	inc			r10
 	cmp			r10,	r9
@@ -250,15 +242,13 @@ _MUL_4xN_LOOP_OP2:
 	; op1[0] * op2[j]
 	mul		qword [r8+r10*8]
 
-	add		rax,	[rdi+0]
-	adc		rdx,	[rdi+8]
-	mov		r11,	rbx
-	adc		r11,	[rdi+16]
+	mov		r11,	rax
+	add		r11,	[rdi+0]
+	mov		r12,	rdx
+	adc		r12,	[rdi+8]
+	mov		r13,	rbx
+	adc		r13,	[rdi+16]
 	setb	bl
-	
-	mov		r12,	rax
-	mov		r13,	rdx
-	mov		r14,	r11
 
 	; op1[1]
 	mov		rax,	[rcx+8]
@@ -266,31 +256,23 @@ _MUL_4xN_LOOP_OP2:
 	; op1[1] * op2[j]
 	mul		qword [r8+r10*8]
 	
-	add		rax,	r13
-	adc		rdx,	r14
-	mov		r11,	rbx
-	adc		r11,	[rdi+24]
+	add		r12,	rax
+	adc		r13,	rdx
+	mov		r14,	rbx
+	adc		r14,	[rdi+24]
 	setb	bl
 
-	mov		r13,	rax
-	mov		r14,	rdx
-	mov		r15,	r11
-	
 	; op1[2]
 	mov		rax,	[rcx+16]
 
 	; op1[2] * op2[j]
 	mul		qword [r8+r10*8]
 	
-	add		rax,	r14
-	adc		rdx,	r15
-	mov		r11,	rbx
-	adc		r11,	[rdi+32]
+	add		r13,	rax
+	adc		r14,	rdx
+	mov		r15,	rbx
+	adc		r15,	[rdi+32]
 	setb	bl
-
-	mov		r14,	rax
-	mov		r15,	rdx
-	mov		rsi,	r11
 
 	; op1[3]
 	mov		rax,	[rcx+24]
@@ -298,17 +280,17 @@ _MUL_4xN_LOOP_OP2:
 	; op1[3] * op2[j]
 	mul		qword [r8+r10*8]
 	
-	add		rax,	r15
-	adc		rdx,	rsi
-	mov		r11,	rbx
-	adc		r11,	[rdi+40]
+	add		r14,	rax
+	adc		r15,	rdx
+	mov		rsi,	rbx
+	adc		rsi,	[rdi+40]
 
-	mov		[rdi+0],	r12
-	mov		[rdi+8],	r13
-	mov		[rdi+16],	r14
-	mov		[rdi+24],	rax
-	mov		[rdi+32],	rdx
-	mov		[rdi+40],	r11
+	mov		[rdi+0],	r11
+	mov		[rdi+8],	r12
+	mov		[rdi+16],	r13
+	mov		[rdi+24],	r14
+	mov		[rdi+32],	r15
+	mov		[rdi+40],	rsi
 
 	inc			r10
 	cmp			r10,	r9
@@ -316,7 +298,6 @@ _MUL_4xN_LOOP_OP2:
 	jb			_MUL_4xN_LOOP_OP2
 	
 	jmp			_EXIT
-
 
 ;----------------------------------------------------------------
 ; EXIT
