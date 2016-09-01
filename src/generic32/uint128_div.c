@@ -226,14 +226,14 @@ MG_PRIVATE int mg_uint128_div_long_division_impl(
 
 		set_double(q, q_tmp, q_n);
 
-		int overflow = mg_uint256_mul_digits(
+		int overflow = mg_uint128_mul_digits(
 			op2, op2_digits, q, q_n + 1, /*out*/qv);
 
 		while(overflow || mg_uint128_sub(op1, qv, /*out*/&tmp) != 0) {
 			q_tmp *= DOUBLE_CORRECT;
 			set_double(q, q_tmp, q_n);
 
-			overflow = mg_uint256_mul_digits(
+			overflow = mg_uint128_mul_digits(
 				op2, op2_digits, q, q_n + 1, /*out*/qv);
 		}
 		*op1 = tmp;

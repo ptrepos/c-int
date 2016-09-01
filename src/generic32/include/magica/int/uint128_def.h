@@ -22,5 +22,3 @@ typedef struct mg_uint128
 #define MG_UINT128_DIGITS_32	(1)
 #define MG_UINT128_DIGITS_64	(2)
 #define MG_UINT128_DIGITS_128	(4)
-#define MG_UINT128_DIGITS_192	(6)
-#define MG_UINT128_DIGITS_256	(8)
