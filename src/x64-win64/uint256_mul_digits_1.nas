@@ -1,5 +1,8 @@
 	bits 64
 	global mg_uint256_mul_digits_1
+	
+section .data
+	JmpTable:	dq	_MUL_0x0, _MUL_1x1, _MUL_2xN, _MUL_3xN, _MUL_4xN, 0, 0, 0
 
 section .text
 
@@ -20,16 +23,9 @@ mg_uint256_mul_digits_1:
 	xchg		rcx,	r8
 	xchg		rdx,	r9
 _MUL_BODY:
-	test		rdx,	rdx
-	jz			_MUL_0x0
-	dec			rdx
-	jz			_MUL_1x1
-	dec			rdx
-	jz			_MUL_2xN
-	dec			rdx
-	jz			_MUL_3xN
-	dec			rdx
-	jz			_MUL_4xN
+	and			rdx,		0x7
+	lea			rax,		[REL JmpTable]
+	jmp			[rax+rdx*8]
 
 ;----------------------------------------------------------------
 ; multiply 0 * N
