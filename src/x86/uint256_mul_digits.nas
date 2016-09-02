@@ -14,17 +14,12 @@ section .text
 _mg_uint256_mul_digits:
 	push		ebp
 	mov			ebp, esp
-	
-	; [esp]		buf		72byte
-	; ecx		j
-	; esi		i
-	; ebx		carry
 
 	push		ebx
 	push		edi
 	push		esi
 
-	sub			esp,	72
+	sub			esp,	80
 	
 	pxor		xmm1, 		xmm1
 	movdqu		[esp],		xmm1
@@ -37,27 +32,29 @@ _LOOP_OP2:
 	xor			esi,	esi
 	xor			ebx,	ebx
 
+	lea			edi,	[esp+ecx*4]
 _LOOP_OP1:
-	; k = i + j
-	lea			edx,	[ecx+esi]
-	; &buf[k]
-	lea			edi,	[esp+edx*4]
-
 	; op1[i]
 	mov			edx,	[ebp+8]
 
 	; op2[j]
 	mov			eax,	[ebp+16]
 	mov			eax,	[eax+ecx*4]
-
+	
 	; op1[i] * op2[j]
 	mul			dword [edx+esi*4]
 	
-	add			[edi+0],	eax
-	adc			[edi+4],	edx
-	adc			[edi+8],	ebx
+	add			eax,		[edi+0]
+	adc			edx,		[edi+4]
+	adc			ebx,		[edi+8]
+	mov			[edi+0],	eax	
+	mov			[edi+4],	edx	
+	mov			[edi+8],	ebx	
+	mov			ebx,		0
 	setb		bl
-
+	
+	lea			edi,	[edi+4]
+	
 	inc			esi
 	cmp			esi,	[ebp+12]
 
@@ -97,7 +94,7 @@ _NOT_OVERFLOW:
 	movdqu		[edi+16],		xmm2
 _NOT_OVERFLOW_END:
 
-	add			esp,	72
+	add			esp,	80
 
 	pop			esi
 	pop			edi

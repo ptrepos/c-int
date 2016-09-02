@@ -35,11 +35,8 @@ _LOOP_OP2:
 	xor			esi,	esi
 	xor			ebx,	ebx
 
+	lea			edi,	[esp+ecx*4]
 _LOOP_OP1:
-	; k = i + j
-	lea			edx,	[ecx+esi]
-	; &buf[k]
-	lea			edi,	[esp+edx*4]
 
 	; op1[i]
 	mov			edx,	[ebp+8]
@@ -51,10 +48,16 @@ _LOOP_OP1:
 	; op1[i] * op2[j]
 	mul			dword [edx+esi*4]
 	
-	add			[edi+0],	eax
-	adc			[edi+4],	edx
-	adc			[edi+8],	ebx
+	add			eax,		[edi+0]
+	adc			edx,		[edi+4]
+	adc			ebx,		[edi+8]
+	mov			[edi+0],	eax	
+	mov			[edi+4],	edx	
+	mov			[edi+8],	ebx	
+	mov			ebx,		0
 	setb		bl
+	
+	lea			edi,	[edi+4]
 
 	inc			esi
 	cmp			esi,	[ebp+12]
