@@ -3,49 +3,51 @@
 section .text
 
 ;int mg_uint128_mul_digits()
-;	[ebp+8]		op1				const mg_uint128 *
-;	[ebp+12]	op1_digits		int
-;	[ebp+16]	op2				const mg_uint128 *
-;	[ebp+20]	op2_digits		int
-;	[ebp+24]	ret				mg_uint128 *
-;
-;	return		unoverflow: 0, overflow: 1
+; RETURN
+;   unoverflow: 0, overflow: 1
+
+; PARAMETERS
+%define OP1				ebp+8		; const mg_uint128 *
+%define OP1_DIGITS		ebp+12		; int
+%define OP2				ebp+16		; const mg_uint128 *
+%define OP2_DIGITS		ebp+20		; int
+%define RET_VALUE		ebp+24		; mg_uint128 *
+
+; LOCAL
+%define BUFFER			esp			; uint32_t[9]
+
+%define STACK_SIZE		40
 
 _mg_uint128_mul_digits:
 	push		ebp
 	mov			ebp, esp
 	
-	; [esp]		buf		40byte
-	; ecx		j
-	; esi		i
-	; ebx		carry
-
 	push		ebx
 	push		edi
 	push		esi
 
-	sub			esp,	40
+	sub			esp, STACK_SIZE
 	
-	pxor		xmm1, 		xmm1
-	movdqu		[esp],		xmm1
-	movdqu		[esp+16],	xmm1
+	pxor		xmm1, xmm1
+	movdqu		[BUFFER], xmm1
+	movdqu		[BUFFER+16], xmm1
 
-	xor			ecx,	ecx
+	xor			ecx, ecx
 _LOOP_OP2:
-	xor			esi,	esi
-	xor			ebx,	ebx
+	xor			esi, esi
+	xor			ebx, ebx
 
-	lea			edi,	[esp+ecx*4]
+	lea			edi, [BUFFER+ecx*4]
 _LOOP_OP1:
 
-	; op1[i]
-	mov			edx,	[ebp+8]
+	; OP1[i]
+	mov			edx, [OP1]
 
-	; op2[j]
-	mov			eax,	[ebp+16]
-	mov			eax,	[eax+ecx*4]
+	; OP2[j]
+	mov			eax, [OP2]
+	mov			eax, [eax+ecx*4]
 
-	; op1[i] * op2[j]
+	; OP1[i] * OP2[j]
 	mul			dword [edx+esi*4]
 	
 	add			eax,		[edi+0]
@@ -60,19 +62,19 @@ _LOOP_OP1:
 	lea			edi,	[edi+4]
 
 	inc			esi
-	cmp			esi,	[ebp+12]
+	cmp			esi,	[OP1_DIGITS]
 
 	jb			_LOOP_OP1;
 	
 	inc			ecx
-	cmp			ecx,	[ebp+20]
+	cmp			ecx,	[OP2_DIGITS]
 
 	jb			_LOOP_OP2;
 
-	mov			eax,	dword [esp+16]
-	mov			ebx,	dword [esp+20]
-	or			eax,	dword [esp+24]
-	or			ebx,	dword [esp+28]
+	mov			eax,	dword [BUFFER+16]
+	mov			ebx,	dword [BUFFER+20]
+	or			eax,	dword [BUFFER+24]
+	or			ebx,	dword [BUFFER+28]
 	or			eax,	ebx
 
 	jz			_NOT_OVERFLOW;
@@ -86,9 +88,9 @@ _NOT_OVERFLOW:
 	xor			eax,	eax
 
 	; copy buffer
-	mov			edi,			dword [ebp+24]
+	mov			edi,			dword [RET_VALUE]
 
-	movdqu		xmm1,			[esp]
+	movdqu		xmm1,			[BUFFER]
 	movdqu		[edi+0],		xmm1
 _NOT_OVERFLOW_END:
 

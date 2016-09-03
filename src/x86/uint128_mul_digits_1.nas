@@ -2,50 +2,50 @@
 
 section .text
 
-;int mg_uint128_mul_digits()
-;	[ebp+8]		op1				const mg_uint128 *
-;	[ebp+12]	op1_digits		int
-;	[ebp+16]	op2				const mg_uint128 *
-;	[ebp+20]	op2_digits		int
-;	[ebp+24]	low				mg_uint128 *
-;	[ebp+24]	high			mg_uint128 *
-;
+;void mg_uint128_mul_digits_1()
+; PARAMETERS
+%define OP1				ebp+8		; const mg_uint128 *
+%define OP1_DIGITS		ebp+12		; int
+%define OP2				ebp+16		; const mg_uint128 *
+%define OP2_DIGITS		ebp+20		; int
+%define LOW_VALUE		ebp+24		; mg_uint128 *
+%define HIGH_VALUE		ebp+28		; mg_uint128 *
+
+; LOCAL
+%define BUFFER			esp			; uint32_t[9]
+
+%define STACK_SIZE		40
 
 _mg_uint128_mul_digits_1:
 	push		ebp
 	mov			ebp, esp
 	
-	; [esp]		buf		40byte
-	; ecx		j
-	; esi		i
-	; ebx		carry
-
 	push		ebx
 	push		edi
 	push		esi
 
-	sub			esp,	40
+	sub			esp, STACK_SIZE
 	
-	pxor		xmm1, 		xmm1
-	movdqu		[esp],		xmm1
-	movdqu		[esp+16],	xmm1
+	pxor		xmm1, xmm1
+	movdqu		[BUFFER], xmm1
+	movdqu		[BUFFER+16], xmm1
 
-	xor			ecx,	ecx
+	xor			ecx, ecx
 _LOOP_OP2:
-	xor			esi,	esi
-	xor			ebx,	ebx
+	xor			esi, esi
+	xor			ebx, ebx
 
-	lea			edi,	[esp+ecx*4]
+	lea			edi, [BUFFER+ecx*4]
 _LOOP_OP1:
 
-	; op1[i]
-	mov			edx,	[ebp+8]
+	; OP1[i]
+	mov			edx, [OP1]
 
-	; op2[j]
-	mov			eax,	[ebp+16]
-	mov			eax,	[eax+ecx*4]
+	; OP2[j]
+	mov			eax, [OP2]
+	mov			eax, [eax+ecx*4]
 
-	; op1[i] * op2[j]
+	; OP1[i] * OP2[j]
 	mul			dword [edx+esi*4]
 	
 	add			eax,		[edi+0]
@@ -60,26 +60,26 @@ _LOOP_OP1:
 	lea			edi,	[edi+4]
 
 	inc			esi
-	cmp			esi,	[ebp+12]
+	cmp			esi,	[OP1_DIGITS]
 
 	jb			_LOOP_OP1;
 	
 	inc			ecx
-	cmp			ecx,	[ebp+20]
+	cmp			ecx,	[OP2_DIGITS]
 
 	jb			_LOOP_OP2;
 
 	; copy buffer
-	mov			edi,			dword [ebp+24]
-	mov			esi,			dword [ebp+28]
+	mov			edi,			dword [LOW_VALUE]
+	mov			esi,			dword [HIGH_VALUE]
 
-	movdqu		xmm0,			[esp]
-	movdqu		xmm1,			[esp+16]
+	movdqu		xmm0,			[BUFFER]
+	movdqu		xmm1,			[BUFFER+16]
 	movdqu		[edi+0],		xmm0
 	movdqu		[esi+0],		xmm1
 _NOT_OVERFLOW_END:
 
-	add			esp,	40
+	add			esp,	STACK_SIZE
 
 	pop			esi
 	pop			edi
