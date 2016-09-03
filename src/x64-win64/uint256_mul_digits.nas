@@ -7,13 +7,21 @@ section .data
 section .text
 
 ; int mg_uint256_mul_digits();
-;	rcx			op1				const mg_uint256 *
-;	rdx			op1_digits		int
-;	r8			op2				const mg_uint256 *
-;	r9			op2_digits		int
-;	[rbp+48]	ret				mg_uint256 *
-;
-;	return		unoverflow: 0, overflow: 1
+; RETURN
+;    unoverflow: 0, overflow: 1
+
+; PARAMETERS
+%define OP1				rbp+16		; const mg_uint256 *
+%define OP1_DIGITS		rbp+24		; int
+%define OP2				rbp+32		; const mg_uint256 *
+%define OP2_DIGITS		rbp+40		; int
+%define RET_VALUE		rbp+48		; mg_uint256 *
+
+; LOCAL
+%define BUFFER			rsp			; uint64_t[9]
+
+%define STACK_SIZE		72
+
 mg_uint256_mul_digits:
 	push		rbp
 	mov			rbp, rsp
@@ -32,7 +40,7 @@ _MUL_BODY:
 ; multiply 0 * N
 ;----------------------------------------------------------------
 _MUL_0x0:
-	mov		r10,		qword [rbp+48]
+	mov		r10,		qword [RET_VALUE]
 
 	pxor	xmm0,		xmm0
 	movdqu	[r10],		xmm0
@@ -53,7 +61,7 @@ _MUL_1x1:
 	; op1[i] * op2[j]
 	mul		qword [r8]
 	
-	mov		r10,		qword [rbp+48]
+	mov		r10,		qword [RET_VALUE]
 
 	pxor	xmm0,		xmm0
 	mov		[r10],		rax
@@ -78,20 +86,20 @@ _MUL_2xN:
 	push	r14
 	push	r15
 	
-	sub		rsp,	72
+	sub		rsp,	STACK_SIZE
 	
 	pxor	xmm0,		xmm0
-	movdqu	[rsp],		xmm0
-	movdqu	[rsp+16],	xmm0
-	movdqu	[rsp+32],	xmm0
-	movdqu	[rsp+48],	xmm0
+	movdqu	[BUFFER],		xmm0
+	movdqu	[BUFFER+16],	xmm0
+	movdqu	[BUFFER+32],	xmm0
+	movdqu	[BUFFER+48],	xmm0
 
 	xor		r10,	r10
 _MUL_2xN_LOOP_OP2:
 	xor		rbx,	rbx
 
 	; &buf[k]
-	lea		rdi,	[rsp+r10*8]
+	lea		rdi,	[BUFFER+r10*8]
 
 	; op1[i]
 	mov		rax,	[rcx]
@@ -143,20 +151,20 @@ _MUL_3xN:
 	push	r14
 	push	r15
 	
-	sub		rsp,	72
+	sub		rsp,	STACK_SIZE
 	
 	pxor	xmm0,		xmm0
-	movdqu	[rsp],		xmm0
-	movdqu	[rsp+16],	xmm0
-	movdqu	[rsp+32],	xmm0
-	movdqu	[rsp+48],	xmm0
+	movdqu	[BUFFER],		xmm0
+	movdqu	[BUFFER+16],	xmm0
+	movdqu	[BUFFER+32],	xmm0
+	movdqu	[BUFFER+48],	xmm0
 
 	xor		r10,	r10
 _MUL_3xN_LOOP_OP2:
 	xor		rbx,	rbx
 
 	; &buf[k]
-	lea		rdi,	[rsp+r10*8]
+	lea		rdi,	[BUFFER+r10*8]
 
 	; op1[0]
 	mov		rax,	[rcx]
@@ -226,20 +234,20 @@ _MUL_4xN:
 	push	r14
 	push	r15
 	
-	sub		rsp,	72
+	sub		rsp,	STACK_SIZE
 	
 	pxor	xmm0,		xmm0
-	movdqu	[rsp],		xmm0
-	movdqu	[rsp+16],	xmm0
-	movdqu	[rsp+32],	xmm0
-	movdqu	[rsp+48],	xmm0
+	movdqu	[BUFFER],		xmm0
+	movdqu	[BUFFER+16],	xmm0
+	movdqu	[BUFFER+32],	xmm0
+	movdqu	[BUFFER+48],	xmm0
 
 	xor		r10,	r10
 _MUL_4xN_LOOP_OP2:
 	xor		rbx,	rbx
 
 	; &buf[k]
-	lea		rdi,	[rsp+r10*8]
+	lea		rdi,	[BUFFER+r10*8]
 
 	; op1[0]
 	mov		rax,	[rcx]
@@ -319,32 +327,32 @@ _MUL_4xN_LOOP_OP2:
 ; EXIT
 ;----------------------------------------------------------------
 _EXIT:
-	mov			rax,	qword [rsp+32]
-	mov			rbx,	qword [rsp+40]
-	or			rax,	qword [rsp+48]
-	or			rbx,	qword [rsp+56]
-	or			rax,	rbx
+	mov			rax, qword [BUFFER+32]
+	mov			rbx, qword [BUFFER+40]
+	or			rax, qword [BUFFER+48]
+	or			rbx, qword [BUFFER+56]
+	or			rax, rbx
 
 	jz			_NOT_OVERFLOW;
 	
 	; return overflow
-	mov			rax,	1
+	mov			rax, 1
 	
 	jmp			_NOT_OVERFLOW_END;
 _NOT_OVERFLOW:
 	; return not overflow
-	xor			rax,	rax
+	xor			rax, rax
 
 	; copy buffer
-	mov			rdi,			qword [rbp+48]
+	mov			rdi, qword [RET_VALUE]
 
-	movdqu		xmm0,			[rsp]
-	movdqu		xmm1,			[rsp+16]
-	movdqu		[rdi],			xmm0
-	movdqu		[rdi+16],		xmm1
+	movdqu		xmm0, [BUFFER]
+	movdqu		xmm1, [BUFFER+16]
+	movdqu		[rdi], xmm0
+	movdqu		[rdi+16], xmm1
 _NOT_OVERFLOW_END:
 
-	add			rsp,	72
+	add			rsp, STACK_SIZE
 	
 	pop			r15
 	pop			r14
@@ -354,6 +362,6 @@ _NOT_OVERFLOW_END:
 	pop			rdi
 	pop			rbx
 
-	mov			rsp,	rbp
+	mov			rsp, rbp
 	pop			rbp
 	ret

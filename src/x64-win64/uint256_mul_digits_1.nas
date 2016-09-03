@@ -7,12 +7,19 @@ section .data
 section .text
 
 ; void mg_uint256_mul_digits_1();
-;	rcx			op1				const mg_uint256 *
-;	rdx			op1_digits		int
-;	r8			op2				const mg_uint256 *
-;	r9			op2_digits		int
-;	[rbp+48]	low				mg_uint256 *
-;	[rbp+56]	high			mg_uint256 *
+; PARAMETERS
+%define OP1				rbp+16		; const mg_uint256 *
+%define OP1_DIGITS		rbp+24		; int
+%define OP2				rbp+32		; const mg_uint256 *
+%define OP2_DIGITS		rbp+40		; int
+%define LOW_VALUE		rbp+48		; mg_uint256 *
+%define HIGH_VALUE		rbp+56		; mg_uint256 *
+
+; LOCAL
+%define BUFFER			rsp			; uint64_t[9]
+
+%define STACK_SIZE		72
+
 mg_uint256_mul_digits_1:
 	push		rbp
 	mov			rbp, rsp
@@ -31,8 +38,8 @@ _MUL_BODY:
 ; multiply 0 * N
 ;----------------------------------------------------------------
 _MUL_0x0:
-	mov		r10,		qword [rbp+48]
-	mov		r11,		qword [rbp+56]
+	mov		r10,		qword [LOW_VALUE]
+	mov		r11,		qword [HIGH_VALUE]
 
 	pxor	xmm0,		xmm0
 	movdqu	[r10],		xmm0
@@ -54,8 +61,8 @@ _MUL_1x1:
 	; op1[i] * op2[j]
 	mul		qword [r8]
 	
-	mov		r10,		qword [rbp+48]
-	mov		r11,		qword [rbp+56]
+	mov		r10,		qword [LOW_VALUE]
+	mov		r11,		qword [HIGH_VALUE]
 
 	pxor	xmm0,		xmm0
 	mov		[r10],		rax
@@ -81,20 +88,20 @@ _MUL_2xN:
 	push	r14
 	push	r15
 	
-	sub		rsp,	72
+	sub		rsp,	STACK_SIZE
 	
 	pxor	xmm0,		xmm0
-	movdqu	[rsp],		xmm0
-	movdqu	[rsp+16],	xmm0
-	movdqu	[rsp+32],	xmm0
-	movdqu	[rsp+48],	xmm0
+	movdqu	[BUFFER],		xmm0
+	movdqu	[BUFFER+16],	xmm0
+	movdqu	[BUFFER+32],	xmm0
+	movdqu	[BUFFER+48],	xmm0
 
 	xor		r10,	r10
 _MUL_2xN_LOOP_OP2:
 	xor		rbx,	rbx
 
 	; &buf[k]
-	lea		rdi,	[rsp+r10*8]
+	lea		rdi,	[BUFFER+r10*8]
 
 	; op1[i]
 	mov		rax,	[rcx]
@@ -146,20 +153,20 @@ _MUL_3xN:
 	push	r14
 	push	r15
 	
-	sub		rsp,	72
+	sub		rsp,	STACK_SIZE
 	
 	pxor	xmm0,		xmm0
-	movdqu	[rsp],		xmm0
-	movdqu	[rsp+16],	xmm0
-	movdqu	[rsp+32],	xmm0
-	movdqu	[rsp+48],	xmm0
+	movdqu	[BUFFER],		xmm0
+	movdqu	[BUFFER+16],	xmm0
+	movdqu	[BUFFER+32],	xmm0
+	movdqu	[BUFFER+48],	xmm0
 
 	xor		r10,	r10
 _MUL_3xN_LOOP_OP2:
 	xor		rbx,	rbx
 
 	; &buf[k]
-	lea		rdi,	[rsp+r10*8]
+	lea		rdi,	[BUFFER+r10*8]
 
 	; op1[0]
 	mov		rax,	[rcx]
@@ -229,7 +236,7 @@ _MUL_4xN:
 	push	r14
 	push	r15
 	
-	sub		rsp,	72
+	sub		rsp,	STACK_SIZE
 	
 	pxor	xmm0,		xmm0
 	movdqu	[rsp],		xmm0
@@ -242,7 +249,7 @@ _MUL_4xN_LOOP_OP2:
 	xor		rbx,	rbx
 
 	; &buf[k]
-	lea		rdi,	[rsp+r10*8]
+	lea		rdi,	[BUFFER+r10*8]
 
 	; op1[0]
 	mov		rax,	[rcx]
@@ -323,19 +330,19 @@ _MUL_4xN_LOOP_OP2:
 ;----------------------------------------------------------------
 _EXIT:
 	; copy buffer
-	mov			rdi,			qword [rbp+48]
-	mov			rsi,			qword [rbp+56]
+	mov			rdi,			qword [LOW_VALUE]
+	mov			rsi,			qword [HIGH_VALUE]
 
-	movdqu		xmm0,			[rsp]
-	movdqu		xmm1,			[rsp+16]
-	movdqu		xmm2,			[rsp+32]
-	movdqu		xmm3,			[rsp+48]
+	movdqu		xmm0,			[BUFFER]
+	movdqu		xmm1,			[BUFFER+16]
+	movdqu		xmm2,			[BUFFER+32]
+	movdqu		xmm3,			[BUFFER+48]
 	movdqu		[rdi],			xmm0
 	movdqu		[rdi+16],		xmm1
 	movdqu		[rsi],			xmm2
 	movdqu		[rsi+16],		xmm3
 
-	add			rsp,	72
+	add			rsp,	STACK_SIZE
 	
 	pop			r15
 	pop			r14
