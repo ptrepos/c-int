@@ -241,8 +241,7 @@ static inline void mg_uint256_left_shift(const mg_uint256 *op1, int shift, /*out
 		buf[2 + words] = (op1->word[1] >> (MG_UINT256_WORD_BITS - bits)) | (op1->word[2] << bits);
 		buf[3 + words] = (op1->word[2] >> (MG_UINT256_WORD_BITS - bits)) | (op1->word[3] << bits);
 		buf[4 + words] = (op1->word[3] >> (MG_UINT256_WORD_BITS - bits));
-	}
-	else {
+	} else {
 		buf[0 + words] = op1->word[0];
 		buf[1 + words] = op1->word[1];
 		buf[2 + words] = op1->word[2];
@@ -271,12 +270,11 @@ static inline void mg_uint256_right_shift(const mg_uint256 *op1, int shift, mg_u
 	int bits = shift % MG_UINT256_WORD_BITS;
 
 	if (bits != 0) {
-		buf[4 - words] = (op1->word[0] >> shift) | (op1->word[1] << (MG_UINT256_WORD_BITS - shift));
-		buf[5 - words] = (op1->word[1] >> shift) | (op1->word[2] << (MG_UINT256_WORD_BITS - shift));
-		buf[6 - words] = (op1->word[2] >> shift) | (op1->word[3] << (MG_UINT256_WORD_BITS - shift));
-		buf[7 - words] = (op1->word[3] >> shift);
-	}
-	else {
+		buf[4 - words] = (op1->word[0] >> bits) | (op1->word[1] << (MG_UINT256_WORD_BITS - shift));
+		buf[5 - words] = (op1->word[1] >> bits) | (op1->word[2] << (MG_UINT256_WORD_BITS - bits));
+		buf[6 - words] = (op1->word[2] >> bits) | (op1->word[3] << (MG_UINT256_WORD_BITS - bits));
+		buf[7 - words] = (op1->word[3] >> bits);
+	} else {
 		buf[4 - words] = op1->word[0];
 		buf[5 - words] = op1->word[1];
 		buf[6 - words] = op1->word[2];

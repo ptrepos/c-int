@@ -202,10 +202,10 @@ static inline void mg_uint128_right_shift(const mg_uint128 *op1, int shift, /*ou
 	int bits = shift % MG_UINT128_WORD_BITS;
 
 	if (bits != 0) {
-		buf[4 - words] = (op1->word[0] >> shift) | (op1->word[1] << (MG_UINT128_WORD_BITS - shift));
-		buf[5 - words] = (op1->word[1] >> shift) | (op1->word[2] << (MG_UINT128_WORD_BITS - shift));
-		buf[6 - words] = (op1->word[2] >> shift) | (op1->word[3] << (MG_UINT128_WORD_BITS - shift));
-		buf[7 - words] = (op1->word[3] >> shift);
+		buf[4 - words] = (op1->word[0] >> bits) | (op1->word[1] << (MG_UINT128_WORD_BITS - bits));
+		buf[5 - words] = (op1->word[1] >> bits) | (op1->word[2] << (MG_UINT128_WORD_BITS - bits));
+		buf[6 - words] = (op1->word[2] >> bits) | (op1->word[3] << (MG_UINT128_WORD_BITS - bits));
+		buf[7 - words] = (op1->word[3] >> bits);
 	}
 	else {
 		buf[4 - words] = op1->word[0];
