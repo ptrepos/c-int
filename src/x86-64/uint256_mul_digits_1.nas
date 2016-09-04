@@ -98,7 +98,7 @@ _MUL_2xN_LOOP_OP2:
 	xor		rbx,	rbx
 
 	; &buf[k]
-	lea		r10,	[BUFFER+r8*8]
+	lea		r10,	[BUFFER+r9*8]
 
 	; op1[0]
 	mov		rax, [rdi]
@@ -163,7 +163,7 @@ _MUL_3xN_LOOP_OP2:
 	xor		rbx, rbx
 
 	; &buf[k]
-	lea		r10, [BUFFER+r10*8]
+	lea		r10, [BUFFER+r9*8]
 
 	; op1[0]
 	mov		rax, [rdi]
@@ -229,7 +229,7 @@ _MUL_4xN:
 	
 	pxor	xmm0, xmm0
 	movdqu	[BUFFER], xmm0
-	movdqu	[BUFFER+16], mm0
+	movdqu	[BUFFER+16], xmm0
 	movdqu	[BUFFER+32], xmm0
 	movdqu	[BUFFER+48], xmm0
 

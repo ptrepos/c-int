@@ -66,7 +66,7 @@ _MUL_1x1:
 	
 	xor		rax, rax
 
-	mov		rsp,	rbp
+	mov		rsp, rbp
 	pop		rbp
 	ret
 
@@ -94,33 +94,33 @@ _MUL_2xN:
 	
 	xor		r9, r9
 _MUL_2xN_LOOP_OP2:
-	xor		rbx,	rbx
+	xor		rbx, rbx
 
 	; &buf[k]
-	lea		r10,	[BUFFER+r8*8]
+	lea		r10, [BUFFER+r9*8]
 
 	; op1[0]
 	mov		rax, [rdi]
 	; op1[0] * op2[j]
 	mul		qword [r8+r9*8]
 
-	mov		r11,	rax
-	add		r11,	[r10+0]
-	mov		r12,	rdx
-	adc		r12,	[r10+8]
-	mov		r13,	rbx
-	adc		r13,	[r10+16]
+	mov		r11, rax
+	add		r11, [r10+0]
+	mov		r12, rdx
+	adc		r12, [r10+8]
+	mov		r13, rbx
+	adc		r13, [r10+16]
 	setb	bl
 	
 	; op1[1]
-	mov		rax,	[rdi+8]
+	mov		rax, [rdi+8]
 	; op1[1] * op2[j]
 	mul		qword [r8+r9*8]
 	
-	add		r12,	rax
-	adc		r13,	rdx
-	mov		r14,	rbx
-	adc		r14,	[r10+24]
+	add		r12, rax
+	adc		r13, rdx
+	mov		r14, rbx
+	adc		r14, [r10+24]
 
 	mov		[r10+0], r11
 	mov		[r10+8], r12
@@ -161,7 +161,7 @@ _MUL_3xN_LOOP_OP2:
 	xor		rbx, rbx
 
 	; &buf[k]
-	lea		r10, [BUFFER+r10*8]
+	lea		r10, [BUFFER+r9*8]
 
 	; op1[0]
 	mov		rax, [rdi]
@@ -226,7 +226,7 @@ _MUL_4xN:
 	
 	pxor	xmm0, xmm0
 	movdqu	[BUFFER], xmm0
-	movdqu	[BUFFER+16], mm0
+	movdqu	[BUFFER+16], xmm0
 	movdqu	[BUFFER+32], xmm0
 	movdqu	[BUFFER+48], xmm0
 
@@ -240,7 +240,7 @@ _MUL_4xN_LOOP_OP2:
 	lea		r10, [BUFFER+r9*8]
 
 	; op1[0]
-	mov		rax,[rdi]
+	mov		rax, [rdi]
 
 	; op1[0] * op2[j]
 	mul		qword [r8+r9*8]
