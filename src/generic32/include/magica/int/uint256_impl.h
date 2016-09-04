@@ -10,6 +10,8 @@
 #include <magica/int/uint64.h>
 #include <magica/int/uint256.h>
 
+#include <magica/int/uint128_impl.h>
+
 #include "intop.h"
 
 static inline void mg_uint256_set_zero(mg_uint256 *op1)
