@@ -11,11 +11,11 @@ section .text
 ;    unoverflow: 0, overflow: 1
 
 ; PARAMETERS
-;%define OP1			rdi		; rdi	const mg_uint256 *
-;%define OP1_DIGITS		rsi		; rsi	int
-;%define OP2			rdx		; rdx	const mg_uint256 *
-;%define OP2_DIGITS		rcx		; rcx	int
-;%define RET_VALUE_		r8		; r8	mg_uint256 *
+;%define OP1			rdi		; const mg_uint256 *
+;%define OP1_DIGITS		rsi		; int
+;%define OP2			rdx		; const mg_uint256 *
+;%define OP2_DIGITS		rcx		; int
+;%define RET_VALUE_		r8		; mg_uint256 *
 
 ; LOCAL
 %define BUFFER			rsp			; uint64_t[9]
@@ -329,14 +329,14 @@ _NOT_OVERFLOW:
 	movdqu		[rdi+16], xmm1
 _NOT_OVERFLOW_END:
 
-	add			rsp, STACK_SIZE
+	add		rsp, STACK_SIZE
 	
-	pop			r15
-	pop			r14
-	pop			r13
-	pop			r12
-	pop			rbx
+	pop		r15
+	pop		r14
+	pop		r13
+	pop		r12
+	pop		rbx
 
-	mov			rsp, rbp
-	pop			rbp
+	mov		rsp, rbp
+	pop		rbp
 	ret

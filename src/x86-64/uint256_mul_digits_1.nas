@@ -8,12 +8,11 @@ section .text
 
 ; void mg_uint256_mul_digits_1();
 ; PARAMETERS
-;%define OP1			rbp+16		; rdi	const mg_uint256 *
-;%define OP1_DIGITS		rbp+24		; rsi	int
-;%define OP2			rbp+32		; rdx	const mg_uint256 *
-;%define OP2_DIGITS		rbp+40		; rcx	int
-;%define LOW_VALUE_		rbp+48		; r8	mg_uint256 *
-;%define HIGH_VALUE_	rbp+56		; r9	mg_uint256 *
+;%define OP1			rdi		; const mg_uint256 *
+;%define OP1_DIGITS		rsi		; int
+;%define OP2			rdx		; const mg_uint256 *
+;%define OP2_DIGITS		rcx		; int
+;%define RET_VALUE_		r8		; mg_uint256 *
 
 ; LOCAL
 %define BUFFER			rsp			; uint64_t[9]
@@ -330,8 +329,6 @@ _EXIT:
 	pop			r14
 	pop			r13
 	pop			r12
-	pop			rsi
-	pop			rdi
 	pop			rbx
 
 	mov			rsp,	rbp
