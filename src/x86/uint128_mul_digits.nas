@@ -15,7 +15,7 @@ section .text
 
 ; LOCAL
 %define BUFFER			esp			; uint32_t[9]
-%define OP2_PTR			esp+40		; int
+%define OP2_INDEX		esp+40		; int
 
 %define STACK_SIZE		44
 
@@ -49,51 +49,45 @@ _mg_uint128_mul_digits:
 	mov			[OP1], ebx
 	mov			[OP2], ecx
 _MUL_BODY:
-	; DIGITS‚Ìƒ|ƒCƒ“ƒ^‰»
-	mov			eax,	[OP1]
-	mov			ebx,	[OP1_DIGITS]
-	lea			ebx,	[eax+ebx*4]
-	mov			ecx,	[OP2]
-	mov			edx,	[OP2_DIGITS]
-	lea			edx,	[ecx+edx*4]
 
-	mov			[OP1_DIGITS], ebx
-	mov			[OP2_DIGITS], edx
-
-	mov			ecx, [OP2]
+	xor			ecx, ecx
 _LOOP_OP2:
-	lea			edi, [BUFFER+ecx*4] 
+	lea			edi, [BUFFER+ecx*4]
 
-	mov			[OP2_PTR], ecx
+	mov			[OP2_INDEX], ecx
 	mov			eax, [OP2]
 	mov			ecx, [eax+ecx*4]
 
-	mov			esi, [OP1]
+	xor			esi, esi
 	xor			ebx, ebx
 _LOOP_OP1:
+	; OP1[i]
+	mov			edx, [OP1]
+
 	; OP2[j]
 	mov			eax, ecx
+
 	; OP1[i] * OP2[j]
-	mul			dword [esi]
+	mul			dword [edx+esi*4]
 	
-	add			eax, [edi+0]
-	adc			edx, [edi+4]
-	adc			ebx, [edi+8]
-	mov			[edi+0], eax	
-	mov			[edi+4], edx	
-	mov			[edi+8], ebx	
-	mov			ebx,  0
+	add			eax,		[edi+0]
+	adc			edx,		[edi+4]
+	adc			ebx,		[edi+8]
+	mov			[edi+0],	eax	
+	mov			[edi+4],	edx	
+	mov			[edi+8],	ebx	
+	mov			ebx,		0
 	setb		bl
 	
-	lea			edi, [edi+4]
+	lea			edi,	[edi+4]
 
-	lea			esi, [esi+4]
-	cmp			esi, [OP1_DIGITS]
+	inc			esi
+	cmp			esi,	[OP1_DIGITS]
 
 	jb			_LOOP_OP1;
 	
-	mov			ecx, [OP2_PTR]
-	lea			ecx, [ecx+4]
+	mov			ecx, [OP2_INDEX]
+	inc			ecx
 	cmp			ecx, [OP2_DIGITS]
 
 	jb			_LOOP_OP2;
