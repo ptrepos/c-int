@@ -8,17 +8,19 @@ section .text
 
 ; void mg_uint256_mul_digits_1();
 ; PARAMETERS
-%define OP1				rbp+16		; rdi	const mg_uint256 *
-%define OP1_DIGITS		rbp+24		; rsi	int
-%define OP2				rbp+32		; rdx	const mg_uint256 *
-%define OP2_DIGITS		rbp+40		; rcx	int
-%define LOW_VALUE		rbp+48		; r8	mg_uint256 *
-%define HIGH_VALUE		rbp+56		; r9	mg_uint256 *
+;%define OP1			rbp+16		; rdi	const mg_uint256 *
+;%define OP1_DIGITS		rbp+24		; rsi	int
+;%define OP2			rbp+32		; rdx	const mg_uint256 *
+;%define OP2_DIGITS		rbp+40		; rcx	int
+;%define LOW_VALUE_		rbp+48		; r8	mg_uint256 *
+;%define HIGH_VALUE_	rbp+56		; r9	mg_uint256 *
 
 ; LOCAL
 %define BUFFER			rsp			; uint64_t[9]
+%define LOW_VALUE		rsp+72		; mg_uint256 *
+%define HIGH_VALUE		rsp+80		; mg_uint256 *
 
-%define STACK_SIZE		72
+%define STACK_SIZE		88
 
 mg_uint256_mul_digits_1:
 	push		rbp
@@ -80,9 +82,6 @@ _MUL_2xN:
 	push	r14
 	push	r15
 	
-	mov		[LOW_VALUE], r8
-	mov		[HIGH_VALUE], r9
-	
 	sub		rsp, STACK_SIZE
 	
 	pxor	xmm0, xmm0
@@ -90,6 +89,9 @@ _MUL_2xN:
 	movdqu	[BUFFER+16], xmm0
 	movdqu	[BUFFER+32], xmm0
 	movdqu	[BUFFER+48], xmm0
+	
+	mov		[LOW_VALUE], r8
+	mov		[HIGH_VALUE], r9
 	
 	mov		r8, rdx
 	
@@ -145,9 +147,6 @@ _MUL_3xN:
 	push	r14
 	push	r15
 	
-	mov		[LOW_VALUE], r8
-	mov		[HIGH_VALUE], r9
-	
 	sub		rsp, STACK_SIZE
 	
 	pxor	xmm0, xmm0
@@ -155,6 +154,9 @@ _MUL_3xN:
 	movdqu	[BUFFER+16], xmm0
 	movdqu	[BUFFER+32], xmm0
 	movdqu	[BUFFER+48], xmm0
+	
+	mov		[LOW_VALUE], r8
+	mov		[HIGH_VALUE], r9
 	
 	mov		r8, rdx
 
@@ -222,9 +224,6 @@ _MUL_4xN:
 	push	r14
 	push	r15
 	
-	mov		[LOW_VALUE], r8
-	mov		[HIGH_VALUE], r9
-	
 	sub		rsp, STACK_SIZE
 	
 	pxor	xmm0, xmm0
@@ -232,7 +231,10 @@ _MUL_4xN:
 	movdqu	[BUFFER+16], xmm0
 	movdqu	[BUFFER+32], xmm0
 	movdqu	[BUFFER+48], xmm0
-
+	
+	mov		[LOW_VALUE], r8
+	mov		[HIGH_VALUE], r9
+	
 	mov		r8, rdx
 	
 	xor		r9, r9
