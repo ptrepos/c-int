@@ -60,7 +60,7 @@ void mg_uint128_div_pattern_test()
 			mg_assert(mg_uint128_compare(&op1, &value1) == 0);
 		}
 
-		printf("%lld\r", i);
+		printf("%llu\r", i);
 	}
 	
 	printf("TEST mg_uint128_div() pattern: OK\n");
