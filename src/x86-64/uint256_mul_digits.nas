@@ -11,11 +11,11 @@ section .text
 ;    unoverflow: 0, overflow: 1
 
 ; PARAMETERS
-%define OP1				rbp+16		rdi	; const mg_uint256 *
-%define OP1_DIGITS		rbp+24		rsi	; int
-%define OP2				rbp+32		rdx	; const mg_uint256 *
-%define OP2_DIGITS		rbp+40		rcx	; int
-%define RET_VALUE		rbp+48		r8	; mg_uint256 *
+%define OP1				rbp+16		; rdi	const mg_uint256 *
+%define OP1_DIGITS		rbp+24		; rsi	int
+%define OP2				rbp+32		; rdx	const mg_uint256 *
+%define OP2_DIGITS		rbp+40		; rcx	int
+%define RET_VALUE		rbp+48		; r8	mg_uint256 *
 
 ; LOCAL
 %define BUFFER			rsp			; uint64_t[9]
