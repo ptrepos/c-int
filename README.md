@@ -822,6 +822,7 @@ void mg_uint256_mul_1(
 ```
 
 値を乗算します。
+
 `const mg_uint256 *op1`
 : 乗数1
 
