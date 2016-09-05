@@ -12,25 +12,25 @@
 
 #include "intop.h"
 
-static inline void mg_uint128_set_zero(mg_uint128 *op1)
+static inline void mg_uint128_set_zero(mg_uint128 *dest)
 {
-	op1->word[0] = 0;
-	op1->word[1] = 0;
-	op1->word[2] = 0;
-	op1->word[3] = 0;
+	dest->word[0] = 0;
+	dest->word[1] = 0;
+	dest->word[2] = 0;
+	dest->word[3] = 0;
 }
 
-static inline void mg_uint128_set(mg_uint128 *op1, uint64_t value)
+static inline void mg_uint128_set(mg_uint128 *dest, uint64_t value)
 {
-	op1->word[0] = (uint32_t)value;
-	op1->word[1] = (uint32_t)(value >> 32);
-	op1->word[2] = 0;
-	op1->word[3] = 0;
+	dest->word[0] = (uint32_t)value;
+	dest->word[1] = (uint32_t)(value >> 32);
+	dest->word[2] = 0;
+	dest->word[3] = 0;
 }
 
-static inline uint64_t mg_uint128_get_uint64(const mg_uint128 *op1)
+static inline uint64_t mg_uint128_get_uint64(const mg_uint128 *value)
 {
-	return (uint64_t)op1->word[0] | ((uint64_t)op1->word[1] << 32);
+	return (uint64_t)value->word[0] | ((uint64_t)value->word[1] << 32);
 }
 
 static inline void mg_uint128_swap(mg_uint128 **a, mg_uint128 **b)
@@ -40,21 +40,21 @@ static inline void mg_uint128_swap(mg_uint128 **a, mg_uint128 **b)
 	*b = tmp;
 }
 
-static inline int mg_uint128_is_zero(const mg_uint128 *op1)
+static inline int mg_uint128_is_zero(const mg_uint128 *value)
 {
-	return (op1->word[3] | op1->word[2] | op1->word[1] | op1->word[0]) == 0;
+	return (value->word[3] | value->word[2] | value->word[1] | value->word[0]) == 0;
 }
 
-static inline int mg_uint128_compare(const mg_uint128 *op1, const mg_uint128 *op2)
+static inline int mg_uint128_compare(const mg_uint128 *value1, const mg_uint128 *value2)
 {
-	if (op1->word[3] != op2->word[3])
-		return op1->word[3] < op2->word[3] ? -1 : 1;
-	if (op1->word[2] != op2->word[2])
-		return op1->word[2] < op2->word[2] ? -1 : 1;
-	if (op1->word[1] != op2->word[1])
-		return op1->word[1] < op2->word[1] ? -1 : 1;
-	if (op1->word[0] != op2->word[0])
-		return op1->word[0] < op2->word[0] ? -1 : 1;
+	if (value1->word[3] != value2->word[3])
+		return value1->word[3] < value2->word[3] ? -1 : 1;
+	if (value1->word[2] != value2->word[2])
+		return value1->word[2] < value2->word[2] ? -1 : 1;
+	if (value1->word[1] != value2->word[1])
+		return value1->word[1] < value2->word[1] ? -1 : 1;
+	if (value1->word[0] != value2->word[0])
+		return value1->word[0] < value2->word[0] ? -1 : 1;
 	return 0;
 }
 

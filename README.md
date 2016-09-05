@@ -39,7 +39,7 @@ mg_uint128を表現するワードのビット数です。
 #### mg_uint128_set_zero()
 ```
 void mg_uint128_set_zero(
-		mg_uint128 *op1);
+		mg_uint128 *dest);
 ```
 
 0をセットします。
@@ -53,7 +53,7 @@ void mg_uint128_set_zero(
 #### mg_uint128_set()
 ```
 void mg_uint128_set(
-		mg_uint128 *op1,
+		mg_uint128 *dest,
 		uint64_t value);
 ```
 
@@ -71,7 +71,7 @@ void mg_uint128_set(
 #### mg_uint128_set_bit()
 ```
 void mg_uint128_set_bit(
-		mg_uint128 *op1,
+		mg_uint128 *dest,
 		int bit_index);
 ```
 
@@ -89,7 +89,7 @@ void mg_uint128_set_bit(
 #### mg_uint128_get_uint64()
 ```
 uint64_t mg_uint128_get_uint64(
-		const mg_uint128 *op1);
+		const mg_uint128 *value);
 ```
 
 64bit符号なし整数を取得します。
@@ -104,7 +104,7 @@ uint64_t mg_uint128_get_uint64(
 #### mg_uint128_is_zero()
 ```
 int mg_uint128_is_zero(
-		const mg_uint128 *op1);
+		const mg_uint128 *value);
 ```
 
 値がゼロであるかどうか判定します。
@@ -118,16 +118,16 @@ int mg_uint128_is_zero(
 #### mg_uint128_compare()
 ```
 int mg_uint128_compare(
-		const mg_uint128 *op1, 
-		const mg_uint128 *op2);
+		const mg_uint128 *value1, 
+		const mg_uint128 *value2);
 ```
 
 値を比較し、大小一致を示す値を返します。
 
-`const mg_uint128 *op1`
+`const mg_uint128 *value1`
 : 値を判定するオブジェクト
 
-`const mg_uint128 *op`
+`const mg_uint128 *value2`
 : 値を判定するオブジェクト
 
 戻り値(`int`)
@@ -223,7 +223,6 @@ int mg_uint128_mul(
 ```
 
 値を乗算します。
-乗数のワード桁数が分かっている場合、こちらを使います。
 乗算結果が128bitの範囲に収まらない場合、
 戻り値としてオーバーフローを返します。
 
@@ -249,7 +248,6 @@ void mg_uint128_mul_1(
 ```
 
 値を乗算します。
-乗数のワード桁数が分かっている場合、こちらを使います。
 `const mg_uint128 *op1`
 : 乗数1
 
@@ -799,7 +797,6 @@ int mg_uint256_mul(
 ```
 
 値を乗算します。
-乗数のワード桁数が分かっている場合、こちらを使います。
 乗算結果が256bitの範囲に収まらない場合、
 戻り値としてオーバーフローを返します。
 
@@ -825,7 +822,6 @@ void mg_uint256_mul_1(
 ```
 
 値を乗算します。
-乗数のワード桁数が分かっている場合、こちらを使います。
 `const mg_uint256 *op1`
 : 乗数1
 

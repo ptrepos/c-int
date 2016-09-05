@@ -14,39 +14,39 @@
 
 #include "intop.h"
 
-static inline void mg_uint256_set_zero(/*out*/mg_uint256 *ret)
+static inline void mg_uint256_set_zero(/*out*/mg_uint256 *dest)
 {
-	ret->word[0] = 0;
-	ret->word[1] = 0;
-	ret->word[2] = 0;
-	ret->word[3] = 0;
+	dest->word[0] = 0;
+	dest->word[1] = 0;
+	dest->word[2] = 0;
+	dest->word[3] = 0;
 }
 
-static inline void mg_uint256_set(/*out*/mg_uint256 *ret, uint64_t value)
+static inline void mg_uint256_set(/*out*/mg_uint256 *dest, uint64_t value)
 {
-	ret->word[0] = value;
-	ret->word[1] = 0;
-	ret->word[2] = 0;
-	ret->word[3] = 0;
+	dest->word[0] = value;
+	dest->word[1] = 0;
+	dest->word[2] = 0;
+	dest->word[3] = 0;
 }
 
-static inline void mg_uint256_set128(/*out*/mg_uint256 *ret, const mg_uint128 *value)
+static inline void mg_uint256_set128(/*out*/mg_uint256 *dest, const mg_uint128 *value)
+{
+	dest->word[0] = value->word[0];
+	dest->word[1] = value->word[1];
+	dest->word[2] = 0;
+	dest->word[3] = 0;
+}
+
+static inline uint64_t mg_uint256_get_uint64(const mg_uint256 *value)
+{
+	return value->word[0];
+}
+
+static inline void mg_uint256_get_uint128(const mg_uint256 *value, mg_uint128 *ret)
 {
 	ret->word[0] = value->word[0];
 	ret->word[1] = value->word[1];
-	ret->word[2] = 0;
-	ret->word[3] = 0;
-}
-
-static inline uint64_t mg_uint256_get_uint64(const mg_uint256 *op1)
-{
-	return op1->word[0];
-}
-
-static inline void mg_uint256_get_uint128(const mg_uint256 *op1, mg_uint128 *ret)
-{
-	ret->word[0] = op1->word[0];
-	ret->word[1] = op1->word[1];
 }
 
 static inline void mg_uint256_swap(mg_uint256 **a, mg_uint256 **b)
@@ -56,21 +56,21 @@ static inline void mg_uint256_swap(mg_uint256 **a, mg_uint256 **b)
 	*b = tmp;
 }
 
-static inline int mg_uint256_is_zero(const mg_uint256 *op1)
+static inline int mg_uint256_is_zero(const mg_uint256 *value)
 {
-	return (op1->word[3] | op1->word[2] | op1->word[1] | op1->word[0]) == 0;
+	return (value->word[3] | value->word[2] | value->word[1] | value->word[0]) == 0;
 }
 
-static inline int mg_uint256_compare(const mg_uint256 *op1, const mg_uint256 *op2)
+static inline int mg_uint256_compare(const mg_uint256 *value1, const mg_uint256 *value2)
 {
-	if(op1->word[3] != op2->word[3]) 
-		return op1->word[3] < op2->word[3] ? -1: 1;
-	if(op1->word[2] != op2->word[2]) 
-		return op1->word[2] < op2->word[2] ? -1: 1;
-	if (op1->word[1] != op2->word[1])
-		return op1->word[1] < op2->word[1] ? -1 : 1;
-	if (op1->word[0] != op2->word[0])
-		return op1->word[0] < op2->word[0] ? -1 : 1;
+	if(value1->word[3] != value2->word[3]) 
+		return value1->word[3] < value2->word[3] ? -1: 1;
+	if(value1->word[2] != value2->word[2]) 
+		return value1->word[2] < value2->word[2] ? -1: 1;
+	if (value1->word[1] != value2->word[1])
+		return value1->word[1] < value2->word[1] ? -1 : 1;
+	if (value1->word[0] != value2->word[0])
+		return value1->word[0] < value2->word[0] ? -1 : 1;
 	return 0;
 }
 

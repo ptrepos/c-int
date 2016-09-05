@@ -16,16 +16,16 @@
 /** 
  * value setter function.
  */
-static inline void mg_uint128_set_zero(mg_uint128 *op1);
-static inline void mg_uint128_set(mg_uint128 *op1, uint64_t value);
-static inline void mg_uint128_set_bit(mg_uint128 *op1, int bit_index);
-static inline uint64_t mg_uint128_get_uint64(const mg_uint128 *op1);
+static inline void mg_uint128_set_zero(mg_uint128 *dest);
+static inline void mg_uint128_set(mg_uint128 *dest, uint64_t value);
+static inline void mg_uint128_set_bit(mg_uint128 *dest, int bit_index);
+static inline uint64_t mg_uint128_get_uint64(const mg_uint128 *value);
 
 /** 
  * comparison functions
  */
-static inline int mg_uint128_is_zero(const mg_uint128 *op1);
-static inline int mg_uint128_compare(const mg_uint128 *op1, const mg_uint128 *op2);
+static inline int mg_uint128_is_zero(const mg_uint128 *value);
+static inline int mg_uint128_compare(const mg_uint128 *value1, const mg_uint128 *value2);
 
 /** 
  * swap pointer
