@@ -6,6 +6,7 @@
 
 #include "mg_assert.h"
 
+void mg_uint128_convert_test();
 void mg_uint128_add_test();
 void mg_uint128_mul_test();
 void mg_uint128_div_test();
@@ -24,6 +25,7 @@ void mg_uint128_test()
 {
 	clock_t tm = clock();
 
+	mg_uint128_convert_test();
 	mg_uint128_add_test();
 	mg_uint128_mul_test();
 	mg_uint128_div_test();

@@ -173,6 +173,12 @@
     <ClCompile Include="test\uint128_div_pattern_test.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="test\uint128_convert_test.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="test\uint256_convert_test.c">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\x64-win64\uint256_mul_digits_1.nas" />
