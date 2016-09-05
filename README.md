@@ -37,6 +37,11 @@ mg_uint128を表現するワードのビット数です。
 ### 関数
 
 #### mg_uint128_set_zero()
+```
+void mg_uint128_set_zero(
+		mg_uint128 *op1);
+```
+
 0をセットします。
 
 `/*out*/ mg_uint128 *dest`
@@ -46,6 +51,12 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_set()
+```
+void mg_uint128_set(
+		mg_uint128 *op1,
+		uint64_t value);
+```
+
 64bit符号なし整数をセットします。
 
 `/*out*/ mg_uint128 *dest`
@@ -58,6 +69,12 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_set_bit()
+```
+void mg_uint128_set_bit(
+		mg_uint128 *op1,
+		int bit_index);
+```
+
 指定したビットに1を立てます。
 
 `/*out*/ mg_uint128 *dest`
@@ -70,6 +87,11 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_get_uint64()
+```
+uint64_t mg_uint128_get_uint64(
+		const mg_uint128 *op1);
+```
+
 64bit符号なし整数を取得します。
 
 `const mg_uint128 *value`
@@ -80,6 +102,11 @@ mg_uint128を表現するワードのビット数です。
 
 
 #### mg_uint128_is_zero()
+```
+int mg_uint128_is_zero(
+		const mg_uint128 *op1);
+```
+
 値がゼロであるかどうか判定します。
 
 `const mg_uint128 *value`
@@ -89,6 +116,12 @@ mg_uint128を表現するワードのビット数です。
 : 0でない場合は0、それ以外の場合は1を返す。
 
 #### mg_uint128_compare()
+```
+int mg_uint128_compare(
+		const mg_uint128 *op1, 
+		const mg_uint128 *op2);
+```
+
 値を比較し、大小一致を示す値を返します。
 
 `const mg_uint128 *op1`
@@ -101,6 +134,12 @@ mg_uint128を表現するワードのビット数です。
 : `op1 < op2: -1, op1 == op2: 0, op1 > op2: 1`
 
 #### mg_uint128_swap()
+```
+void mg_uint128_swap(
+		mg_uint128 **a, 
+		mg_uint128 **b);
+```
+
 値を交換します。
 
 `/*out*/ mg_uint128 **a`
@@ -113,6 +152,12 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_neg()
+```
+void mg_uint128_neg(
+		const mg_uint128 *op1, 
+		/*out*/mg_uint128 *ret);
+```
+
 値を2の補数化します。
 (符号なし整数ですが符号の反転です・・・)
 
@@ -126,6 +171,13 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_add()
+```
+int mg_uint128_add(
+		const mg_uint128 *op1, 
+		const mg_uint128 *op2, 
+		/*out*/mg_uint128 *ret);
+```
+
 値を加算します。
 
 `const mg_uint128 *op1`
@@ -141,6 +193,13 @@ mg_uint128を表現するワードのビット数です。
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint128_sub()
+```
+int mg_uint128_sub(
+		const mg_uint128 *op1, 
+		const mg_uint128 *op2, 
+		/*out*/mg_uint128 *ret);
+```
+
 値を減算します。
 
 `const mg_uint128 *op1`
@@ -156,6 +215,13 @@ mg_uint128を表現するワードのビット数です。
 : アンダーフロー時: 1, それ以外: 0
 
 #### mg_uint128_mul()
+```
+int mg_uint128_mul(
+		const mg_uint128 *op1, 
+		const mg_uint128 *op2, 
+		/*out*/mg_uint128 *ret);
+```
+
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
 乗算結果が128bitの範囲に収まらない場合、
@@ -174,6 +240,14 @@ mg_uint128を表現するワードのビット数です。
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint128_mul_1()
+```
+void mg_uint128_mul_1(
+		const mg_uint128 *op1, 
+		const mg_uint128 *op2, 
+		/*out*/mg_uint128 *_lo, 
+		/*out*/mg_uint128 *_hi);
+```
+
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
 `const mg_uint128 *op1`
@@ -192,6 +266,15 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_mul_digits()
+```
+int mg_uint128_mul_digits(
+		const mg_uint128 *op1, 
+		int op1_digits, 
+		const mg_uint128 *op2, 
+		int op2_digits, 
+		/*out*/mg_uint128 *ret);
+```
+
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
 乗算結果が128bitの範囲に収まらない場合、
@@ -216,6 +299,16 @@ mg_uint128を表現するワードのビット数です。
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint128_mul_digits_1()
+```
+void mg_uint128_mul_digits_1(
+		const mg_uint128 *op1, 
+		int op1_words, 
+		const mg_uint128 *op2, 
+		int op2_words, 
+		/*out*/mg_uint128 *low, 
+		/*out*/mg_uint128 *high);
+```
+
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
 
@@ -241,6 +334,14 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_div()
+```
+int mg_uint128_div(
+		const mg_uint128 *op1, 
+		const mg_uint128 *op2, 
+		/*out*/mg_uint128 *quotient, 
+		/*out*/mg_uint128 *reminder);
+```
+
 値を除算します。
 
 `const mg_uint128 *op1`
@@ -259,6 +360,13 @@ mg_uint128を表現するワードのビット数です。
 : 正常終了の場合: 0, ゼロによる除算の場合: 1
 
 #### mg_uint128_and()
+```
+void mg_uint128_and(
+		const mg_uint128 *op1, 
+		const mg_uint128 *op2, 
+		/*out*/mg_uint128 *ret);
+```
+
 値のビット論理積を取ります。
 
 `const mg_uint128 *op1`
@@ -274,6 +382,13 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_or()
+```
+void mg_uint128_or(
+		const mg_uint128 *op1, 
+		const mg_uint128 *op2, 
+		/*out*/mg_uint128 *ret);
+```
+
 値のビット論理和を取ります。
 
 `const mg_uint128 *op1`
@@ -288,6 +403,13 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_xor()
+```
+void mg_uint128_xor(
+		const mg_uint128 *op1, 
+		const mg_uint128 *op2, 
+		/*out*/mg_uint128 *ret);
+```
+
 値のビット排他的論理和を取ります。
 
 `const mg_uint128 *op1`
@@ -302,6 +424,12 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_not()
+```
+void mg_uint128_not(
+		const mg_uint128 *op1, 
+		/*out*/mg_uint128 *ret);
+```
+
 値のビットを否定します。
 
 `const mg_uint128 *op1`
@@ -314,6 +442,13 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_left_shift()
+```
+void mg_uint128_left_shift(
+		const mg_uint128 *op1, 
+		int shift, 
+		/*out*/mg_uint128 *ret);
+```
+
 値のビットを左シフトします。
 
 `const mg_uint128 *op1`
@@ -329,6 +464,13 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_left_shift_small()
+```
+void mg_uint128_left_shift_small(
+		const mg_uint128 *op1, 
+		int shift, 
+		/*out*/mg_uint128 *ret);
+```
+
 値のビットを左シフトします。
 シフトするビット数が1ワードを超えないような小さいシフト専用です。
 
@@ -346,6 +488,13 @@ mg_uint128を表現するワードのビット数です。
 
 
 #### mg_uint128_right_shift()
+```
+void mg_uint128_right_shift(
+		const mg_uint128 *op1, 
+		int shift, 
+		/*out*/mg_uint128 *ret);
+```
+
 値のビットを右シフトします。
 
 `const mg_uint128 *op1`
@@ -363,6 +512,13 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_right_shift_small()
+```
+void mg_uint128_right_shift_small(
+		const mg_uint128 *op1, 
+		int shift, 
+		/*out*/mg_uint128 *ret);
+```
+
 値のビットを右シフトします。
 シフトするビット数が1ワードを超えないような小さいシフト専用です。
 
@@ -379,6 +535,10 @@ mg_uint128を表現するワードのビット数です。
 : なし
 
 #### mg_uint128_get_bit_size()
+```
+int mg_uint128_get_bit_size(
+		const mg_uint128 *value);
+```
 
 `const mg_uint128 *value`
 : ビット数を計算する値
