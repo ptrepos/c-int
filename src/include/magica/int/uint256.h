@@ -43,6 +43,9 @@ static inline void mg_uint256_neg(const mg_uint256 *op1, /*out*/mg_uint256 *ret)
 static inline int mg_uint256_add(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret);
 static inline int mg_uint256_sub(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret);
 static inline int mg_uint256_mul(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret);
+static inline void mg_uint256_mul_1(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high);
+void mg_uint256_mul_digits_1(const mg_uint256 *op1, int op1_words, const mg_uint256 *op2, int op2_words, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high);
+int mg_uint256_mul_digits(const mg_uint256 *op1, int op1_digits, const mg_uint256 *op2, int op2_digits, /*out*/mg_uint256 *ret);
 
 int mg_uint256_div(
 		const mg_uint256 *op1, 
@@ -56,10 +59,7 @@ int mg_uint256_div_maclaurin(
 	/*out*/mg_uint256 *quotient,
 	/*out*/mg_uint256 *reminder);
 
-static inline void mg_uint256_mul_1(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high);
 static inline void mg_uint256_mul128(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint256 *ret);
-void mg_uint256_mul_digits_1(const mg_uint256 *op1, int op1_words, const mg_uint256 *op2, int op2_words, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high);
-int mg_uint256_mul_digits(const mg_uint256 *op1, int op1_digits, const mg_uint256 *op2, int op2_digits, /*out*/mg_uint256 *ret);
 static inline int mg_uint256_mul256x64(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret);
 
 /**
@@ -77,7 +77,6 @@ static inline void mg_uint256_right_shift(const mg_uint256 *op1, int shift, /*ou
 static inline void mg_uint256_right_shift_small(const mg_uint256 *op1, int shift, /*out*/mg_uint256 *ret);
 
 static inline int mg_uint256_get_bit_size(const mg_uint256 *value);
-static inline void mg_uint256_set_bit(mg_uint256 *op1, int bit_index);
 
 /**
  * convert functions
