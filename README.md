@@ -397,6 +397,7 @@ void mg_uint128_or(
 
 `/*out*/ mg_uint128 *ret`
 : 結果を格納するオブジェクト
+
 戻り値(void)
 : なし
 
@@ -418,6 +419,7 @@ void mg_uint128_xor(
 
 `/*out*/ mg_uint128 *ret`
 : 結果を格納するオブジェクト
+
 戻り値(void)
 : なし
 
@@ -506,6 +508,7 @@ void mg_uint128_right_shift(
 
 `/*out*/ mg_uint128 *ret`
 : 結果を格納するオブジェクト
+
 戻り値(void)
 : なし
 
@@ -972,6 +975,7 @@ void mg_uint256_or(
 
 `/*out*/ mg_uint256 *ret`
 : 結果を格納するオブジェクト
+
 戻り値(void)
 : なし
 
@@ -993,6 +997,7 @@ void mg_uint256_xor(
 
 `/*out*/ mg_uint256 *ret`
 : 結果を格納するオブジェクト
+
 戻り値(void)
 : なし
 
@@ -1081,6 +1086,7 @@ void mg_uint256_right_shift(
 
 `/*out*/ mg_uint256 *ret`
 : 結果を格納するオブジェクト
+
 戻り値(void)
 : なし
 
