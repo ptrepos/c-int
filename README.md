@@ -578,6 +578,11 @@ mg_uint256を表現するワードのビット数です。
 ### 関数
 
 #### mg_uint256_set_zero()
+```
+void mg_uint256_set_zero(
+		mg_uint256 *dest);
+```
+
 0をセットします。
 
 `/*out*/ mg_uint256 *dest`
@@ -587,6 +592,12 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_set()
+```
+void mg_uint256_set(
+		mg_uint256 *dest,
+		uint64_t value);
+```
+
 64bit符号なし整数をセットします。
 
 `/*out*/ mg_uint256 *dest`
@@ -598,7 +609,31 @@ mg_uint256を表現するワードのビット数です。
 戻り値(`void`)
 : なし
 
+#### mg_uint256_set128()
+```
+void mg_uint256_set128(
+		mg_uint256 *dest, 
+		const mg_uint128 *value);
+```
+
+128bit符号なし整数をセットします。
+
+`/*out*/ mg_uint256 *dest`
+: 値をセットされるオブジェクト
+
+`const mg_uint128 *value`
+: セットする値
+
+戻り値(`void`)
+: なし
+
 #### mg_uint256_set_bit()
+```
+void mg_uint256_set_bit(
+		mg_uint256 *dest, 
+		int bit_index);
+```
+
 指定したビットに1を立てます。
 
 `/*out*/ mg_uint256 *dest`
@@ -611,6 +646,11 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_get_uint64()
+```
+uint64_t mg_uint256_get_uint64(
+		const mg_uint256 *value);
+```
+
 64bit符号なし整数を取得します。
 
 `const mg_uint256 *value`
@@ -619,9 +659,13 @@ mg_uint256を表現するワードのビット数です。
 戻り値(`uint64_t`)
 : 取得される64bit符号なし整数
 
-
-
 #### mg_uint256_get_uint128()
+```
+void mg_uint256_get_uint128(
+		const mg_uint256 *value, 
+		mg_uint128 *ret);
+```
+
 128bit符号なし整数を取得します。
 
 `const mg_uint256 *value`
@@ -634,6 +678,11 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_is_zero()
+```
+int mg_uint256_is_zero(
+		const mg_uint256 *value);
+```
+
 値がゼロであるかどうか判定します。
 
 `const mg_uint256 *value`
@@ -643,18 +692,30 @@ mg_uint256を表現するワードのビット数です。
 : 0でない場合は0、それ以外の場合は1を返す。
 
 #### mg_uint256_compare()
+```
+int mg_uint256_compare(
+		const mg_uint256 *value1, 
+		const mg_uint256 *value2);
+```
+
 値を比較し、大小一致を示す値を返します。
 
-`const mg_uint256 *op1`
+`const mg_uint256 *value1`
 : 値を判定するオブジェクト
 
-`const mg_uint256 *op`
+`const mg_uint256 *value2`
 : 値を判定するオブジェクト
 
 戻り値(`int`)
 : `op1 < op2: -1, op1 == op2: 0, op1 > op2: 1`
 
 #### mg_uint256_swap()
+```
+void mg_uint256_swap(
+		mg_uint256 **a, 
+		mg_uint256 **b);
+```
+
 値を交換します。
 
 `/*out*/ mg_uint256 **a`
@@ -667,6 +728,12 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_neg()
+```
+void mg_uint256_neg(
+		const mg_uint256 *op1, 
+		/*out*/mg_uint256 *ret);
+```
+
 値を2の補数化します。
 (符号なし整数ですが符号の反転です・・・)
 
@@ -680,6 +747,13 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_add()
+```
+int mg_uint256_add(
+		const mg_uint256 *op1, 
+		const mg_uint256 *op2, 
+		/*out*/mg_uint256 *ret);
+```
+
 値を加算します。
 
 `const mg_uint256 *op1`
@@ -695,6 +769,13 @@ mg_uint256を表現するワードのビット数です。
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint256_sub()
+```
+int mg_uint256_sub(
+		const mg_uint256 *op1, 
+		const mg_uint256 *op2, 
+		/*out*/mg_uint256 *ret);
+```
+
 値を減算します。
 
 `const mg_uint256 *op1`
@@ -710,6 +791,13 @@ mg_uint256を表現するワードのビット数です。
 : アンダーフロー時: 1, それ以外: 0
 
 #### mg_uint256_mul()
+```
+int mg_uint256_mul(
+		const mg_uint256 *op1,
+		const mg_uint256 *op2,
+		/*out*/mg_uint256 *ret);
+```
+
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
 乗算結果が256bitの範囲に収まらない場合、
@@ -728,6 +816,14 @@ mg_uint256を表現するワードのビット数です。
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint256_mul_1()
+```
+void mg_uint256_mul_1(
+		const mg_uint256 *op1, 
+		const mg_uint256 *op2, 
+		/*out*/mg_uint256 *low, 
+		/*out*/mg_uint256 *high);
+```
+
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
 `const mg_uint256 *op1`
@@ -746,6 +842,15 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_mul_digits()
+```
+int mg_uint256_mul_digits(
+		const mg_uint256 *op1, 
+		int op1_digits, 
+		const mg_uint256 *op2, 
+		int op2_digits, 
+		/*out*/mg_uint256 *ret);
+```
+
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
 乗算結果が256bitの範囲に収まらない場合、
@@ -770,6 +875,16 @@ mg_uint256を表現するワードのビット数です。
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint256_mul_digits_1()
+```
+void mg_uint256_mul_digits_1(
+		const mg_uint256 *op1, 
+		int op1_digits, 
+		const mg_uint256 *op2, 
+		int op2_digits, 
+		/*out*/mg_uint256 *low, 
+		/*out*/mg_uint256 *high);
+```
+
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
 
@@ -795,6 +910,14 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_div()
+```
+int mg_uint256_div(
+		const mg_uint256 *op1, 
+		const mg_uint256 *op2, 
+		/*out*/mg_uint256 *quotient, 
+		/*out*/mg_uint256 *reminder);
+```
+
 値を除算します。
 
 `const mg_uint256 *op1`
@@ -813,6 +936,13 @@ mg_uint256を表現するワードのビット数です。
 : 正常終了の場合: 0, ゼロによる除算の場合: 1
 
 #### mg_uint256_and()
+```
+void mg_uint256_and(
+		const mg_uint256 *op1, 
+		const mg_uint256 *op2, 
+		/*out*/mg_uint256 *ret);
+```
+
 値のビット論理積を取ります。
 
 `const mg_uint256 *op1`
@@ -828,6 +958,13 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_or()
+```
+void mg_uint256_or(
+		const mg_uint256 *op1, 
+		const mg_uint256 *op2, 
+		/*out*/mg_uint256 *ret);
+```
+
 値のビット論理和を取ります。
 
 `const mg_uint256 *op1`
@@ -842,6 +979,13 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_xor()
+```
+void mg_uint256_xor(
+		const mg_uint256 *op1, 
+		const mg_uint256 *op2, 
+		/*out*/mg_uint256 *ret);
+```
+
 値のビット排他的論理和を取ります。
 
 `const mg_uint256 *op1`
@@ -856,6 +1000,12 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_not()
+```
+void mg_uint256_not(
+		const mg_uint256 *op1, 
+		/*out*/mg_uint256 *ret);
+```
+
 値のビットを否定します。
 
 `const mg_uint256 *op1`
@@ -868,6 +1018,13 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_left_shift()
+```
+void mg_uint256_left_shift(
+		const mg_uint256 *op1, 
+		int shift, 
+		/*out*/mg_uint256 *ret);
+```
+
 値のビットを左シフトします。
 
 `const mg_uint256 *op1`
@@ -883,6 +1040,13 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_left_shift_small()
+```
+void mg_uint256_left_shift_small(
+		const mg_uint256 *op1, 
+		int shift, 
+		/*out*/mg_uint256 *ret);
+```
+
 値のビットを左シフトします。
 シフトするビット数が1ワードを超えないような小さいシフト専用です。
 
@@ -900,6 +1064,13 @@ mg_uint256を表現するワードのビット数です。
 
 
 #### mg_uint256_right_shift()
+```
+void mg_uint256_right_shift(
+		const mg_uint256 *op1, 
+		int shift, 
+		/*out*/mg_uint256 *ret);
+```
+
 値のビットを右シフトします。
 
 `const mg_uint256 *op1`
@@ -917,6 +1088,13 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_right_shift_small()
+```
+void mg_uint256_right_shift_small(
+		const mg_uint256 *op1, 
+		int shift, 
+		/*out*/mg_uint256 *ret);
+```
+
 値のビットを右シフトします。
 シフトするビット数が1ワードを超えないような小さいシフト専用です。
 
@@ -933,6 +1111,10 @@ mg_uint256を表現するワードのビット数です。
 : なし
 
 #### mg_uint256_get_bit_size()
+```
+int mg_uint256_get_bit_size(
+		const mg_uint256 *value);
+```
 
 `const mg_uint256 *value`
 : ビット数を計算する値

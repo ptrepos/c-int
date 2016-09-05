@@ -17,18 +17,18 @@
 /** 
  * value setter function.
  */
-static inline void mg_uint256_set_zero(mg_uint256 *ret);
-static inline void mg_uint256_set(mg_uint256 *ret, uint64_t value);
-static inline void mg_uint256_set128(mg_uint256 *ret, const mg_uint128 *value);
-static inline void mg_uint256_set_bit(mg_uint256 *op1, int bit_index);
-static inline uint64_t mg_uint256_get_uint64(const mg_uint256 *op1);
-static inline void mg_uint256_get_uint128(const mg_uint256 *op1, mg_uint128 *ret);
+static inline void mg_uint256_set_zero(mg_uint256 *dest);
+static inline void mg_uint256_set(mg_uint256 *dest, uint64_t value);
+static inline void mg_uint256_set128(mg_uint256 *dest, const mg_uint128 *value);
+static inline void mg_uint256_set_bit(mg_uint256 *dest, int bit_index);
+static inline uint64_t mg_uint256_get_uint64(const mg_uint256 *value);
+static inline void mg_uint256_get_uint128(const mg_uint256 *value, mg_uint128 *ret);
 
 /** 
  * comparison functions
  */
-static inline int mg_uint256_is_zero(const mg_uint256 *op1);
-static inline int mg_uint256_compare(const mg_uint256 *op1, const mg_uint256 *op2);
+static inline int mg_uint256_is_zero(const mg_uint256 *value);
+static inline int mg_uint256_compare(const mg_uint256 *value1, const mg_uint256 *value2);
 
 /** 
  * swap pointer
@@ -44,8 +44,8 @@ static inline int mg_uint256_add(const mg_uint256 *op1, const mg_uint256 *op2, /
 static inline int mg_uint256_sub(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret);
 static inline int mg_uint256_mul(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret);
 static inline void mg_uint256_mul_1(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high);
-void mg_uint256_mul_digits_1(const mg_uint256 *op1, int op1_words, const mg_uint256 *op2, int op2_words, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high);
 int mg_uint256_mul_digits(const mg_uint256 *op1, int op1_digits, const mg_uint256 *op2, int op2_digits, /*out*/mg_uint256 *ret);
+void mg_uint256_mul_digits_1(const mg_uint256 *op1, int op1_digits, const mg_uint256 *op2, int op2_digits, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high);
 
 int mg_uint256_div(
 		const mg_uint256 *op1, 
