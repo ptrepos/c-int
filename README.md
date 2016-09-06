@@ -1,4 +1,4 @@
-﻿# c-int
+# c-int
 C言語による符号なし128bit整数、符号なし256bit整数の実装の利便性/性能の改善プロジェクトです。
 本成果はc-decimal等のプロジェクトで使用しています。
 
@@ -6,10 +6,10 @@ C言語による符号なし128bit整数、符号なし256bit整数の実装の�
 また、C99以降の記法に依存しており。
 gccでは-std=c99オプションを付ける必用があります。
 
-mg_uint128
+mg_uint128型
 : 128ビット符号なし整数
 
-mg_uint256
+mg_uint256型
 : 256ビット符号なし整数
 
 ## mg_uint128型
@@ -22,7 +22,7 @@ mg_uint128を表現するワードのサイズです。
 #### MG_UINT128_WORD_BITS
 mg_uint128を表現するワードのビット数です。
 
-#### MG_UINT128_DIGITS
+#### MG_UINT128_DIGITS_XXX
 計算対象が下記ビット時のワード桁数を示す定数です。
 
 `MG_UINT128_DIGITS_32`
@@ -558,7 +558,7 @@ mg_uint256を表現するワードのサイズです。
 #### MG_UINT256_WORD_BITS
 mg_uint256を表現するワードのビット数です。
 
-#### MG_UINT256_DIGITS
+#### MG_UINT256_DIGITS_XXX
 計算対象が下記ビット時のワード桁数を示す定数です。
 
 `MG_UINT256_DIGITS_32`
@@ -1124,4 +1124,3 @@ int mg_uint256_get_bit_size(
 
 戻り値(int)
 : valueで指し示すオブジェクトのビット桁数
-
