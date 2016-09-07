@@ -1,4 +1,4 @@
-# c-int
+﻿# c-int
 C言語による符号なし128bit整数、符号なし256bit整数の実装の利便性/性能の改善プロジェクトです。
 本成果はc-decimal等のプロジェクトで使用しています。
 
@@ -37,10 +37,10 @@ mg_uint128を表現するワードのビット数です。
 ### 関数
 
 #### mg_uint128_set_zero()
-```
-void mg_uint128_set_zero(
-		mg_uint128 *dest);
-```
+
+	void mg_uint128_set_zero(
+			mg_uint128 *dest);
+
 
 0をセットします。
 
@@ -51,11 +51,11 @@ void mg_uint128_set_zero(
 : なし
 
 #### mg_uint128_set()
-```
-void mg_uint128_set(
-		mg_uint128 *dest,
-		uint64_t value);
-```
+
+	void mg_uint128_set(
+			mg_uint128 *dest,
+			uint64_t value);
+
 
 64bit符号なし整数をセットします。
 
@@ -69,11 +69,11 @@ void mg_uint128_set(
 : なし
 
 #### mg_uint128_set_bit()
-```
-void mg_uint128_set_bit(
-		mg_uint128 *dest,
-		int bit_index);
-```
+
+	void mg_uint128_set_bit(
+			mg_uint128 *dest,
+			int bit_index);
+
 
 指定したビットに1を立てます。
 
@@ -87,10 +87,10 @@ void mg_uint128_set_bit(
 : なし
 
 #### mg_uint128_get_uint64()
-```
+
 uint64_t mg_uint128_get_uint64(
 		const mg_uint128 *value);
-```
+
 
 64bit符号なし整数を取得します。
 
@@ -102,10 +102,10 @@ uint64_t mg_uint128_get_uint64(
 
 
 #### mg_uint128_is_zero()
-```
-int mg_uint128_is_zero(
-		const mg_uint128 *value);
-```
+
+	int mg_uint128_is_zero(
+			const mg_uint128 *value);
+
 
 値がゼロであるかどうか判定します。
 
@@ -116,11 +116,11 @@ int mg_uint128_is_zero(
 : 0でない場合は0、それ以外の場合は1を返す。
 
 #### mg_uint128_compare()
-```
-int mg_uint128_compare(
-		const mg_uint128 *value1, 
-		const mg_uint128 *value2);
-```
+
+	int mg_uint128_compare(
+			const mg_uint128 *value1, 
+			const mg_uint128 *value2);
+
 
 値を比較し、大小一致を示す値を返します。
 
@@ -134,11 +134,11 @@ int mg_uint128_compare(
 : `op1 < op2: -1, op1 == op2: 0, op1 > op2: 1`
 
 #### mg_uint128_swap()
-```
-void mg_uint128_swap(
-		mg_uint128 **a, 
-		mg_uint128 **b);
-```
+
+	void mg_uint128_swap(
+			mg_uint128 **a, 
+			mg_uint128 **b);
+
 
 値を交換します。
 
@@ -152,11 +152,11 @@ void mg_uint128_swap(
 : なし
 
 #### mg_uint128_neg()
-```
-void mg_uint128_neg(
-		const mg_uint128 *op1, 
-		/*out*/mg_uint128 *ret);
-```
+
+	void mg_uint128_neg(
+			const mg_uint128 *op1, 
+			/*out*/mg_uint128 *ret);
+
 
 値を2の補数化します。
 (符号なし整数ですが符号の反転です・・・)
@@ -171,12 +171,12 @@ void mg_uint128_neg(
 : なし
 
 #### mg_uint128_add()
-```
-int mg_uint128_add(
-		const mg_uint128 *op1, 
-		const mg_uint128 *op2, 
-		/*out*/mg_uint128 *ret);
-```
+
+	int mg_uint128_add(
+			const mg_uint128 *op1, 
+			const mg_uint128 *op2, 
+			/*out*/mg_uint128 *ret);
+
 
 値を加算します。
 
@@ -193,12 +193,12 @@ int mg_uint128_add(
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint128_sub()
-```
-int mg_uint128_sub(
-		const mg_uint128 *op1, 
-		const mg_uint128 *op2, 
-		/*out*/mg_uint128 *ret);
-```
+
+	int mg_uint128_sub(
+			const mg_uint128 *op1, 
+			const mg_uint128 *op2, 
+			/*out*/mg_uint128 *ret);
+
 
 値を減算します。
 
@@ -215,12 +215,12 @@ int mg_uint128_sub(
 : アンダーフロー時: 1, それ以外: 0
 
 #### mg_uint128_mul()
-```
-int mg_uint128_mul(
-		const mg_uint128 *op1, 
-		const mg_uint128 *op2, 
-		/*out*/mg_uint128 *ret);
-```
+
+	int mg_uint128_mul(
+			const mg_uint128 *op1, 
+			const mg_uint128 *op2, 
+			/*out*/mg_uint128 *ret);
+
 
 値を乗算します。
 乗算結果が128bitの範囲に収まらない場合、
@@ -239,13 +239,13 @@ int mg_uint128_mul(
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint128_mul_1()
-```
-void mg_uint128_mul_1(
-		const mg_uint128 *op1, 
-		const mg_uint128 *op2, 
-		/*out*/mg_uint128 *_lo, 
-		/*out*/mg_uint128 *_hi);
-```
+
+	void mg_uint128_mul_1(
+			const mg_uint128 *op1, 
+			const mg_uint128 *op2, 
+			/*out*/mg_uint128 *_lo, 
+			/*out*/mg_uint128 *_hi);
+
 
 値を乗算します。
 `const mg_uint128 *op1`
@@ -264,14 +264,14 @@ void mg_uint128_mul_1(
 : なし
 
 #### mg_uint128_mul_digits()
-```
-int mg_uint128_mul_digits(
-		const mg_uint128 *op1, 
-		int op1_digits, 
-		const mg_uint128 *op2, 
-		int op2_digits, 
-		/*out*/mg_uint128 *ret);
-```
+
+	int mg_uint128_mul_digits(
+			const mg_uint128 *op1, 
+			int op1_digits, 
+			const mg_uint128 *op2, 
+			int op2_digits, 
+			/*out*/mg_uint128 *ret);
+
 
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
@@ -297,15 +297,15 @@ int mg_uint128_mul_digits(
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint128_mul_digits_1()
-```
-void mg_uint128_mul_digits_1(
-		const mg_uint128 *op1, 
-		int op1_words, 
-		const mg_uint128 *op2, 
-		int op2_words, 
-		/*out*/mg_uint128 *low, 
-		/*out*/mg_uint128 *high);
-```
+
+	void mg_uint128_mul_digits_1(
+			const mg_uint128 *op1, 
+			int op1_words, 
+			const mg_uint128 *op2, 
+			int op2_words, 
+			/*out*/mg_uint128 *low, 
+			/*out*/mg_uint128 *high);
+
 
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
@@ -332,13 +332,13 @@ void mg_uint128_mul_digits_1(
 : なし
 
 #### mg_uint128_div()
-```
-int mg_uint128_div(
-		const mg_uint128 *op1, 
-		const mg_uint128 *op2, 
-		/*out*/mg_uint128 *quotient, 
-		/*out*/mg_uint128 *reminder);
-```
+
+	int mg_uint128_div(
+			const mg_uint128 *op1, 
+			const mg_uint128 *op2, 
+			/*out*/mg_uint128 *quotient, 
+			/*out*/mg_uint128 *reminder);
+
 
 値を除算します。
 
@@ -358,12 +358,12 @@ int mg_uint128_div(
 : 正常終了の場合: 0, ゼロによる除算の場合: 1
 
 #### mg_uint128_and()
-```
-void mg_uint128_and(
-		const mg_uint128 *op1, 
-		const mg_uint128 *op2, 
-		/*out*/mg_uint128 *ret);
-```
+
+	void mg_uint128_and(
+			const mg_uint128 *op1, 
+			const mg_uint128 *op2, 
+			/*out*/mg_uint128 *ret);
+
 
 値のビット論理積を取ります。
 
@@ -380,12 +380,12 @@ void mg_uint128_and(
 : なし
 
 #### mg_uint128_or()
-```
-void mg_uint128_or(
-		const mg_uint128 *op1, 
-		const mg_uint128 *op2, 
-		/*out*/mg_uint128 *ret);
-```
+
+	void mg_uint128_or(
+			const mg_uint128 *op1, 
+			const mg_uint128 *op2, 
+			/*out*/mg_uint128 *ret);
+
 
 値のビット論理和を取ります。
 
@@ -402,12 +402,12 @@ void mg_uint128_or(
 : なし
 
 #### mg_uint128_xor()
-```
-void mg_uint128_xor(
-		const mg_uint128 *op1, 
-		const mg_uint128 *op2, 
-		/*out*/mg_uint128 *ret);
-```
+
+	void mg_uint128_xor(
+			const mg_uint128 *op1, 
+			const mg_uint128 *op2, 
+			/*out*/mg_uint128 *ret);
+
 
 値のビット排他的論理和を取ります。
 
@@ -424,11 +424,11 @@ void mg_uint128_xor(
 : なし
 
 #### mg_uint128_not()
-```
-void mg_uint128_not(
-		const mg_uint128 *op1, 
-		/*out*/mg_uint128 *ret);
-```
+
+	void mg_uint128_not(
+			const mg_uint128 *op1, 
+			/*out*/mg_uint128 *ret);
+
 
 値のビットを否定します。
 
@@ -442,12 +442,12 @@ void mg_uint128_not(
 : なし
 
 #### mg_uint128_left_shift()
-```
-void mg_uint128_left_shift(
-		const mg_uint128 *op1, 
-		int shift, 
-		/*out*/mg_uint128 *ret);
-```
+
+	void mg_uint128_left_shift(
+			const mg_uint128 *op1, 
+			int shift, 
+			/*out*/mg_uint128 *ret);
+
 
 値のビットを左シフトします。
 
@@ -464,12 +464,12 @@ void mg_uint128_left_shift(
 : なし
 
 #### mg_uint128_left_shift_small()
-```
-void mg_uint128_left_shift_small(
-		const mg_uint128 *op1, 
-		int shift, 
-		/*out*/mg_uint128 *ret);
-```
+
+	void mg_uint128_left_shift_small(
+			const mg_uint128 *op1, 
+			int shift, 
+			/*out*/mg_uint128 *ret);
+
 
 値のビットを左シフトします。
 シフトするビット数が1ワードを超えないような小さいシフト専用です。
@@ -488,12 +488,12 @@ void mg_uint128_left_shift_small(
 
 
 #### mg_uint128_right_shift()
-```
-void mg_uint128_right_shift(
-		const mg_uint128 *op1, 
-		int shift, 
-		/*out*/mg_uint128 *ret);
-```
+
+	void mg_uint128_right_shift(
+			const mg_uint128 *op1, 
+			int shift, 
+			/*out*/mg_uint128 *ret);
+
 
 値のビットを右シフトします。
 
@@ -513,12 +513,12 @@ void mg_uint128_right_shift(
 : なし
 
 #### mg_uint128_right_shift_small()
-```
-void mg_uint128_right_shift_small(
-		const mg_uint128 *op1, 
-		int shift, 
-		/*out*/mg_uint128 *ret);
-```
+
+	void mg_uint128_right_shift_small(
+			const mg_uint128 *op1, 
+			int shift, 
+			/*out*/mg_uint128 *ret);
+
 
 値のビットを右シフトします。
 シフトするビット数が1ワードを超えないような小さいシフト専用です。
@@ -536,10 +536,10 @@ void mg_uint128_right_shift_small(
 : なし
 
 #### mg_uint128_get_bit_size()
-```
-int mg_uint128_get_bit_size(
-		const mg_uint128 *value);
-```
+
+	int mg_uint128_get_bit_size(
+			const mg_uint128 *value);
+
 
 `const mg_uint128 *value`
 : ビット数を計算する値
@@ -579,10 +579,10 @@ mg_uint256を表現するワードのビット数です。
 ### 関数
 
 #### mg_uint256_set_zero()
-```
-void mg_uint256_set_zero(
-		mg_uint256 *dest);
-```
+
+	void mg_uint256_set_zero(
+			mg_uint256 *dest);
+
 
 0をセットします。
 
@@ -593,11 +593,11 @@ void mg_uint256_set_zero(
 : なし
 
 #### mg_uint256_set()
-```
-void mg_uint256_set(
-		mg_uint256 *dest,
-		uint64_t value);
-```
+
+	void mg_uint256_set(
+			mg_uint256 *dest,
+			uint64_t value);
+
 
 64bit符号なし整数をセットします。
 
@@ -611,11 +611,11 @@ void mg_uint256_set(
 : なし
 
 #### mg_uint256_set128()
-```
-void mg_uint256_set128(
-		mg_uint256 *dest, 
-		const mg_uint128 *value);
-```
+
+	void mg_uint256_set128(
+			mg_uint256 *dest, 
+			const mg_uint128 *value);
+
 
 128bit符号なし整数をセットします。
 
@@ -629,11 +629,11 @@ void mg_uint256_set128(
 : なし
 
 #### mg_uint256_set_bit()
-```
-void mg_uint256_set_bit(
-		mg_uint256 *dest, 
-		int bit_index);
-```
+
+	void mg_uint256_set_bit(
+			mg_uint256 *dest, 
+			int bit_index);
+
 
 指定したビットに1を立てます。
 
@@ -647,10 +647,10 @@ void mg_uint256_set_bit(
 : なし
 
 #### mg_uint256_get_uint64()
-```
-uint64_t mg_uint256_get_uint64(
-		const mg_uint256 *value);
-```
+
+	uint64_t mg_uint256_get_uint64(
+			const mg_uint256 *value);
+
 
 64bit符号なし整数を取得します。
 
@@ -661,11 +661,11 @@ uint64_t mg_uint256_get_uint64(
 : 取得される64bit符号なし整数
 
 #### mg_uint256_get_uint128()
-```
-void mg_uint256_get_uint128(
-		const mg_uint256 *value, 
-		mg_uint128 *ret);
-```
+
+	void mg_uint256_get_uint128(
+			const mg_uint256 *value, 
+			mg_uint128 *ret);
+
 
 128bit符号なし整数を取得します。
 
@@ -679,10 +679,10 @@ void mg_uint256_get_uint128(
 : なし
 
 #### mg_uint256_is_zero()
-```
-int mg_uint256_is_zero(
-		const mg_uint256 *value);
-```
+
+	int mg_uint256_is_zero(
+			const mg_uint256 *value);
+
 
 値がゼロであるかどうか判定します。
 
@@ -693,11 +693,11 @@ int mg_uint256_is_zero(
 : 0でない場合は0、それ以外の場合は1を返す。
 
 #### mg_uint256_compare()
-```
-int mg_uint256_compare(
-		const mg_uint256 *value1, 
-		const mg_uint256 *value2);
-```
+
+	int mg_uint256_compare(
+			const mg_uint256 *value1, 
+			const mg_uint256 *value2);
+
 
 値を比較し、大小一致を示す値を返します。
 
@@ -711,11 +711,11 @@ int mg_uint256_compare(
 : `op1 < op2: -1, op1 == op2: 0, op1 > op2: 1`
 
 #### mg_uint256_swap()
-```
-void mg_uint256_swap(
-		mg_uint256 **a, 
-		mg_uint256 **b);
-```
+
+	void mg_uint256_swap(
+			mg_uint256 **a, 
+			mg_uint256 **b);
+
 
 値を交換します。
 
@@ -729,11 +729,11 @@ void mg_uint256_swap(
 : なし
 
 #### mg_uint256_neg()
-```
-void mg_uint256_neg(
-		const mg_uint256 *op1, 
-		/*out*/mg_uint256 *ret);
-```
+
+	void mg_uint256_neg(
+			const mg_uint256 *op1, 
+			/*out*/mg_uint256 *ret);
+
 
 値を2の補数化します。
 (符号なし整数ですが符号の反転です・・・)
@@ -748,12 +748,12 @@ void mg_uint256_neg(
 : なし
 
 #### mg_uint256_add()
-```
-int mg_uint256_add(
-		const mg_uint256 *op1, 
-		const mg_uint256 *op2, 
-		/*out*/mg_uint256 *ret);
-```
+
+	int mg_uint256_add(
+			const mg_uint256 *op1, 
+			const mg_uint256 *op2, 
+			/*out*/mg_uint256 *ret);
+
 
 値を加算します。
 
@@ -770,12 +770,12 @@ int mg_uint256_add(
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint256_sub()
-```
-int mg_uint256_sub(
-		const mg_uint256 *op1, 
-		const mg_uint256 *op2, 
-		/*out*/mg_uint256 *ret);
-```
+
+	int mg_uint256_sub(
+			const mg_uint256 *op1, 
+			const mg_uint256 *op2, 
+			/*out*/mg_uint256 *ret);
+
 
 値を減算します。
 
@@ -792,12 +792,12 @@ int mg_uint256_sub(
 : アンダーフロー時: 1, それ以外: 0
 
 #### mg_uint256_mul()
-```
-int mg_uint256_mul(
-		const mg_uint256 *op1,
-		const mg_uint256 *op2,
-		/*out*/mg_uint256 *ret);
-```
+
+	int mg_uint256_mul(
+			const mg_uint256 *op1,
+			const mg_uint256 *op2,
+			/*out*/mg_uint256 *ret);
+
 
 値を乗算します。
 乗算結果が256bitの範囲に収まらない場合、
@@ -816,13 +816,13 @@ int mg_uint256_mul(
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint256_mul_1()
-```
-void mg_uint256_mul_1(
-		const mg_uint256 *op1, 
-		const mg_uint256 *op2, 
-		/*out*/mg_uint256 *low, 
+
+	void mg_uint256_mul_1(
+			const mg_uint256 *op1, 
+			const mg_uint256 *op2, 
+			/*out*/mg_uint256 *low, 
 		/*out*/mg_uint256 *high);
-```
+
 
 値を乗算します。
 
@@ -842,14 +842,14 @@ void mg_uint256_mul_1(
 : なし
 
 #### mg_uint256_mul_digits()
-```
-int mg_uint256_mul_digits(
-		const mg_uint256 *op1, 
-		int op1_digits, 
-		const mg_uint256 *op2, 
-		int op2_digits, 
-		/*out*/mg_uint256 *ret);
-```
+
+	int mg_uint256_mul_digits(
+			const mg_uint256 *op1, 
+			int op1_digits, 
+			const mg_uint256 *op2, 
+			int op2_digits, 
+			/*out*/mg_uint256 *ret);
+
 
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
@@ -875,15 +875,15 @@ int mg_uint256_mul_digits(
 : オーバーフロー時: 1, それ以外: 0
 
 #### mg_uint256_mul_digits_1()
-```
-void mg_uint256_mul_digits_1(
-		const mg_uint256 *op1, 
-		int op1_digits, 
-		const mg_uint256 *op2, 
-		int op2_digits, 
-		/*out*/mg_uint256 *low, 
-		/*out*/mg_uint256 *high);
-```
+
+	void mg_uint256_mul_digits_1(
+			const mg_uint256 *op1, 
+			int op1_digits, 
+			const mg_uint256 *op2, 
+			int op2_digits, 
+			/*out*/mg_uint256 *low, 
+			/*out*/mg_uint256 *high);
+
 
 値を乗算します。
 乗数のワード桁数が分かっている場合、こちらを使います。
@@ -910,13 +910,13 @@ void mg_uint256_mul_digits_1(
 : なし
 
 #### mg_uint256_div()
-```
-int mg_uint256_div(
-		const mg_uint256 *op1, 
-		const mg_uint256 *op2, 
-		/*out*/mg_uint256 *quotient, 
-		/*out*/mg_uint256 *reminder);
-```
+
+	int mg_uint256_div(
+			const mg_uint256 *op1, 
+			const mg_uint256 *op2, 
+			/*out*/mg_uint256 *quotient, 
+			/*out*/mg_uint256 *reminder);
+
 
 値を除算します。
 
@@ -936,12 +936,12 @@ int mg_uint256_div(
 : 正常終了の場合: 0, ゼロによる除算の場合: 1
 
 #### mg_uint256_and()
-```
-void mg_uint256_and(
-		const mg_uint256 *op1, 
-		const mg_uint256 *op2, 
-		/*out*/mg_uint256 *ret);
-```
+
+	void mg_uint256_and(
+			const mg_uint256 *op1, 
+			const mg_uint256 *op2, 
+			/*out*/mg_uint256 *ret);
+
 
 値のビット論理積を取ります。
 
@@ -958,12 +958,12 @@ void mg_uint256_and(
 : なし
 
 #### mg_uint256_or()
-```
-void mg_uint256_or(
-		const mg_uint256 *op1, 
-		const mg_uint256 *op2, 
-		/*out*/mg_uint256 *ret);
-```
+
+	void mg_uint256_or(
+			const mg_uint256 *op1, 
+			const mg_uint256 *op2, 
+			/*out*/mg_uint256 *ret);
+
 
 値のビット論理和を取ります。
 
@@ -980,12 +980,12 @@ void mg_uint256_or(
 : なし
 
 #### mg_uint256_xor()
-```
-void mg_uint256_xor(
-		const mg_uint256 *op1, 
-		const mg_uint256 *op2, 
-		/*out*/mg_uint256 *ret);
-```
+
+	void mg_uint256_xor(
+			const mg_uint256 *op1, 
+			const mg_uint256 *op2, 
+			/*out*/mg_uint256 *ret);
+
 
 値のビット排他的論理和を取ります。
 
@@ -1002,11 +1002,11 @@ void mg_uint256_xor(
 : なし
 
 #### mg_uint256_not()
-```
-void mg_uint256_not(
-		const mg_uint256 *op1, 
-		/*out*/mg_uint256 *ret);
-```
+
+	void mg_uint256_not(
+			const mg_uint256 *op1, 
+			/*out*/mg_uint256 *ret);
+
 
 値のビットを否定します。
 
@@ -1020,12 +1020,12 @@ void mg_uint256_not(
 : なし
 
 #### mg_uint256_left_shift()
-```
-void mg_uint256_left_shift(
-		const mg_uint256 *op1, 
-		int shift, 
-		/*out*/mg_uint256 *ret);
-```
+
+	void mg_uint256_left_shift(
+			const mg_uint256 *op1, 
+			int shift, 
+			/*out*/mg_uint256 *ret);
+
 
 値のビットを左シフトします。
 
@@ -1042,12 +1042,12 @@ void mg_uint256_left_shift(
 : なし
 
 #### mg_uint256_left_shift_small()
-```
-void mg_uint256_left_shift_small(
-		const mg_uint256 *op1, 
-		int shift, 
-		/*out*/mg_uint256 *ret);
-```
+
+	void mg_uint256_left_shift_small(
+			const mg_uint256 *op1, 
+			int shift, 
+			/*out*/mg_uint256 *ret);
+
 
 値のビットを左シフトします。
 シフトするビット数が1ワードを超えないような小さいシフト専用です。
@@ -1066,12 +1066,12 @@ void mg_uint256_left_shift_small(
 
 
 #### mg_uint256_right_shift()
-```
-void mg_uint256_right_shift(
-		const mg_uint256 *op1, 
-		int shift, 
-		/*out*/mg_uint256 *ret);
-```
+
+	void mg_uint256_right_shift(
+			const mg_uint256 *op1, 
+			int shift, 
+			/*out*/mg_uint256 *ret);
+
 
 値のビットを右シフトします。
 
@@ -1091,12 +1091,12 @@ void mg_uint256_right_shift(
 : なし
 
 #### mg_uint256_right_shift_small()
-```
-void mg_uint256_right_shift_small(
-		const mg_uint256 *op1, 
-		int shift, 
-		/*out*/mg_uint256 *ret);
-```
+
+	void mg_uint256_right_shift_small(
+			const mg_uint256 *op1, 
+			int shift, 
+			/*out*/mg_uint256 *ret);
+
 
 値のビットを右シフトします。
 シフトするビット数が1ワードを超えないような小さいシフト専用です。
@@ -1114,10 +1114,10 @@ void mg_uint256_right_shift_small(
 : なし
 
 #### mg_uint256_get_bit_size()
-```
-int mg_uint256_get_bit_size(
-		const mg_uint256 *value);
-```
+
+	int mg_uint256_get_bit_size(
+			const mg_uint256 *value);
+
 
 `const mg_uint256 *value`
 : ビット数を計算する値
