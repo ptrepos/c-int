@@ -10,6 +10,10 @@
 #include <intrin.h>
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static inline uint8_t mg_uint64_add(uint8_t carryIn, uint64_t op1, uint64_t op2, uint64_t *ret)
 {
 #if defined(_MSC_VER) && defined(_M_AMD64)
@@ -42,3 +46,7 @@ static inline uint64_t mg_uint64_mul(uint64_t op1, uint64_t op2, uint64_t *high_
 	return (uint64_t)n;
 #endif
 }
+
+#ifdef __cplusplus
+}
+#endif

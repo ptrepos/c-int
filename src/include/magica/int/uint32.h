@@ -8,6 +8,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+	
 static inline int mg_uint32_get_bit_size(uint32_t value)
 {
 	int n = 0;
@@ -39,3 +43,7 @@ static inline int mg_uint32_get_bit_size(uint32_t value)
 
 	return n;
 }
+	
+#ifdef __cplusplus
+}
+#endif

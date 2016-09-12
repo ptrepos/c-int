@@ -8,6 +8,11 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #define MG_UINT256_SIZE	(8)
 #define MG_UINT256_WORD_BITS	(32)
 
@@ -24,3 +29,7 @@ typedef struct mg_uint256
 #define MG_UINT256_DIGITS_128	(4)
 #define MG_UINT256_DIGITS_192	(6)
 #define MG_UINT256_DIGITS_256	(8)
+
+#ifdef __cplusplus
+}
+#endif

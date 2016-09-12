@@ -14,6 +14,10 @@
 
 #include "intop.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static inline void mg_uint256_set_zero(/*out*/mg_uint256 *dest)
 {
 	dest->word[0] = 0;
@@ -333,3 +337,7 @@ static inline void mg_uint256_set_bit(mg_uint256 *op1, int bit)
 
 	op1->word[words] |= (uint64_t)1ULL << (uint64_t)bits;
 }
+
+#ifdef __cplusplus
+}
+#endif

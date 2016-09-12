@@ -14,6 +14,10 @@
 #include <magica/int/uint128.h>
 #include <magica/int/uint256_def.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+	
 /** 
  * value setter function.
  */
@@ -85,3 +89,7 @@ void mg_uint256_test_to_string(const mg_uint256 *value, char *buf);
 void mg_uint256_test_convert(const char *buf, mg_uint256 *value);
 void mg_uint256_test_to_hex_string(const mg_uint256 *value, char *buf);
 void mg_uint256_test_hex_convert(const char *buf, mg_uint256 *value);
+
+#ifdef __cplusplus
+}
+#endif

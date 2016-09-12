@@ -12,6 +12,10 @@
 
 #include <magica/int/mgcompat.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static inline uint8_t mg_uint32_add(uint8_t carryIn, uint32_t op1, uint32_t op2, uint32_t *ret)
 {
 #if defined(_MSC_VER)
@@ -46,3 +50,7 @@ static inline uint32_t mg_uint32_mul(uint32_t op1, uint32_t op2, uint32_t *highR
 	return (uint64_t)n;
 #endif
 }
+
+#ifdef __cplusplus
+}
+#endif

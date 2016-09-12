@@ -13,6 +13,11 @@
 
 #include <magica/int/uint128_def.h>
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+	
 /** 
  * value setter function.
  */
@@ -84,3 +89,7 @@ void mg_uint128_test_to_string(const mg_uint128 *value, char *buf);
 void mg_uint128_test_convert(const char *buf, mg_uint128 *value);
 void mg_uint128_test_to_hex_string(const mg_uint128 *value, char *buf);
 void mg_uint128_test_hex_convert(const char *buf, mg_uint128 *value);
+
+#ifdef __cplusplus
+}
+#endif
