@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<c-doc name="magica数値型ライブラリ">
+  <header-file name="magica/uint128.h">
+    <summary>128bit符号なし整数を定義するヘッダファイル</summary>
+    <function name="mg_uint256_set_zero">
+      <summary>0をセットします。</summary>
+      <definition>void mg_uint256_set_zero(
+	/*out*/mg_uint256 *dest);</definition>
+      <parameter name="dest">
+        <description>値をセットされるオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_set">
+      <summary>64bit符号なし整数をセットします。</summary>
+      <definition>void mg_uint256_set(
+	mg_uint256 *dest,
+	uint64_t value);</definition>
+      <parameter name="dest">
+        <description>値をセットされるオブジェクト</description>
+      </parameter>
+      <parameter name="value">
+        <description>セットする値</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_set_bit">
+      <summary>指定したビットに1を立てます。</summary>
+      <definition>void mg_uint256_set_bit(
+	mg_uint256 *dest, 
+	int bit_index);</definition>
+      <parameter name="dest">
+        <description>値をセットされるオブジェクト</description>
+      </parameter>
+      <parameter name="bit_index">
+        <description>ビットを立てるビットのインデックス</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_get_uint64">
+      <summary>64bit符号なし整数を取得します。</summary>
+      <definition>uint64_t mg_uint256_get_uint64(
+	const mg_uint256 *value);</definition>
+      <parameter name="value">
+        <description>値を取得するオブジェクト</description>
+      </parameter>
+      <return>取得される64bit符号なし整数</return>
+    </function>
+    <function name="mg_uint256_swap">
+      <summary>aとbに格納される値を交換します。</summary>
+      <definition>void mg_uint256_swap(
+	/*inout*/mg_uint256 **a, 
+	/*inout*/mg_uint256 **b);</definition>
+      <parameter name="a">
+        <description>値を交換するオブジェクトが入った変数のポインタ</description>
+      </parameter>
+      <parameter name="b">
+        <description>値を交換するオブジェクトが入った変数のポインタ</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_is_zero">
+      <summary>値がゼロであるかどうか判定します。</summary>
+      <definition>int mg_uint256_is_zero(
+	const mg_uint256 *value);</definition>
+      <parameter name="value">
+        <description>値を判定するオブジェクト</description>
+      </parameter>
+      <return>0でない場合は0、それ以外の場合は1を返す。</return>
+    </function>
+  </header-file>
+  <header-file name="magica/uint256.h">
+    <summary>256bit符号なし整数を定義するヘッダファイル</summary>
+    <type name="mg_uint256" kind="struct">
+      <summary>256bit符号無し整数を表現する構造体</summary>
+      <definition>typedef struct mg_uint256 {} mg_uint256;</definition>
+    </type>
+    <const name="MG_UINT256_SIZE" type="int">
+      <summary>mg_uint256を表現するワードのサイズです。</summary>
+    </const>
+    <const name="MG_UINT256_WORD_BITS" type="int">
+      <summary>mg_uint256を表現するワードのビット数です。</summary>
+    </const>
+    <const name="MG_UINT256_DIGITS_XXX" type="int">
+      <summary>計算対象のビット数指定時のワード数を示す定数です。</summary>
+      <description>: MG_UINT256_DIGITS_32
+	計算対象が32bitの時のワード数
+
+: MG_UINT256_DIGITS_64
+	計算対象が64bitの時のワード数
+
+: MG_UINT256_DIGITS_128
+	計算対象が128bitの時のワード数
+
+: MG_UINT256_DIGITS_192
+	計算対象が192bitの時のワード数
+
+: MG_UINT256_DIGITS_256
+	計算対象が256bitの時のワード数
+</description>
+    </const>
+    <function name="mg_uint256_set_zero">
+      <summary>0をセットします。</summary>
+      <definition>void mg_uint256_set_zero(
+	/*out*/mg_uint256 *dest);</definition>
+      <parameter name="dest">
+        <description>値をセットされるオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_set">
+      <summary>64bit符号なし整数をセットします。</summary>
+      <definition>void mg_uint256_set(
+	mg_uint256 *dest,
+	uint64_t value);</definition>
+      <parameter name="dest">
+        <description>値をセットされるオブジェクト</description>
+      </parameter>
+      <parameter name="value">
+        <description>セットする値</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_set_bit">
+      <summary>指定したビットに1を立てます。</summary>
+      <definition>void mg_uint256_set_bit(
+	mg_uint256 *dest, 
+	int bit_index);</definition>
+      <parameter name="dest">
+        <description>値をセットされるオブジェクト</description>
+      </parameter>
+      <parameter name="bit_index">
+        <description>ビットを立てるビットのインデックス</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_get_uint64">
+      <summary>64bit符号なし整数を取得します。</summary>
+      <definition>uint64_t mg_uint256_get_uint64(
+	const mg_uint256 *value);</definition>
+      <parameter name="value">
+        <description>値を取得するオブジェクト</description>
+      </parameter>
+      <return>取得される64bit符号なし整数</return>
+    </function>
+    <function name="mg_uint256_swap">
+      <summary>aとbに格納される値を交換します。</summary>
+      <definition>void mg_uint256_swap(
+	/*inout*/mg_uint256 **a, 
+	/*inout*/mg_uint256 **b);</definition>
+      <parameter name="a">
+        <description>値を交換するオブジェクトが入った変数のポインタ</description>
+      </parameter>
+      <parameter name="b">
+        <description>値を交換するオブジェクトが入った変数のポインタ</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_is_zero">
+      <summary>値がゼロであるかどうか判定します。</summary>
+      <definition>int mg_uint256_is_zero(
+	const mg_uint256 *value);</definition>
+      <parameter name="value">
+        <description>値を判定するオブジェクト</description>
+      </parameter>
+      <return>0でない場合は0、それ以外の場合は1を返す。</return>
+    </function>
+    <function name="mg_uint256_compare">
+      <summary>value1とvalue2を比較し、大小一致を示す値を返します。</summary>
+      <definition>int mg_uint256_compare(
+	const mg_uint256 *value1, 
+	const mg_uint256 *value2);</definition>
+      <parameter name="value1">
+        <description>値を判定するオブジェクト</description>
+      </parameter>
+      <parameter name="value2">
+        <description>値を判定するオブジェクト</description>
+      </parameter>
+      <return>`value1 &lt; value2`の場合: -1,
+`value1 = value2`の場合:0,
+`value1 &gt; value2`の場合:1</return>
+    </function>
+    <function name="mg_uint256_neg">
+      <summary>op1を2の補数化(符号の反転)して、結果をretへ返します。</summary>
+      <definition>void mg_uint256_neg(
+	const mg_uint256 *op1, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>符号を反転する値</description>
+      </parameter>
+      <parameter name="ret">
+        <description>符号を反転した値を格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_add">
+      <summary>op1とop2を加算して、結果をretへ返します。</summary>
+      <definition>int mg_uint256_add(
+	const mg_uint256 *op1, 
+	const mg_uint256 *op2, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>加算する値</description>
+      </parameter>
+      <parameter name="op2">
+        <description>加算する値</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+      <return>オーバーフローした場合: 1, それ以外の場合: 0</return>
+    </function>
+    <function name="mg_uint256_sub">
+      <summary>op1からop2を減算し、結果をretへ返します。</summary>
+      <definition>int mg_uint256_sub(
+	const mg_uint256 *op1, 
+	const mg_uint256 *op2, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>減算元の値</description>
+      </parameter>
+      <parameter name="op2">
+        <description>減算する値</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+      <return>アンダーフローした場合: 1, それ以外の場合: 0</return>
+    </function>
+    <function name="mg_uint256_mul">
+      <summary>op1とop2を乗算して結果をretへ返します。</summary>
+      <definition>int mg_uint256_mul(
+	const mg_uint256 *op1,
+	const mg_uint256 *op2,
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>乗算する値</description>
+      </parameter>
+      <parameter name="op2">
+        <description>乗算する値</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+      <return>オーバーフローした場合: 1, それ以外の場合: 0</return>
+      <description>乗算結果が256bitの範囲に収まらない場合、
+戻り値としてオーバーフローを返します。</description>
+    </function>
+    <function name="mg_uint256_mul_digits">
+      <summary>op1とop2を乗算して結果をretへ返します。
+op1_digits,とop2_digitsはそれぞれのワード数です。</summary>
+      <definition>int mg_uint256_mul_digits(
+	const mg_uint256 *op1, 
+	int op1_digits, 
+	const mg_uint256 *op2, 
+	int op2_digits, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>乗算する値1</description>
+      </parameter>
+      <parameter name="op1_digits">
+        <description>乗算する値1のワード数</description>
+      </parameter>
+      <parameter name="op2">
+        <description>乗算する値2</description>
+      </parameter>
+      <parameter name="op2_digits">
+        <description>乗算する値2のワード数</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+      <return>オーバーフローした場合: 1, それ以外の場合: 0</return>
+      <description>乗数のワード桁数が分かっている場合、こちらを使います。
+
+乗算結果が256bitの範囲に収まらない場合、
+戻り値としてオーバーフローを返します。</description>
+    </function>
+    <function name="mg_uint256_mul_1">
+      <summary>op1とop2を乗算して、結果の上位をhighへ、下位をlowへ返します。</summary>
+      <definition>void mg_uint256_mul_1(
+	const mg_uint256 *op1, 
+	const mg_uint256 *op2, 
+	/*out*/mg_uint256 *low, 
+	/*out*/mg_uint256 *high);</definition>
+      <parameter name="op1">
+        <description>乗算する値</description>
+      </parameter>
+      <parameter name="op2">
+        <description>乗算する値</description>
+      </parameter>
+      <parameter name="low">
+        <description>乗算結果の下位256bitを格納するオブジェクト</description>
+      </parameter>
+      <parameter name="high">
+        <description>乗算結果の上位256bitを格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_mul_digits_1">
+      <summary>op1とop2を乗算して、結果の上位をhighへ、下位をlowへ返します。
+</summary>
+      <definition>void mg_uint256_mul_digits_1(
+	const mg_uint256 *op1, 
+	int op1_digits, 
+	const mg_uint256 *op2, 
+	int op2_digits, 
+	/*out*/mg_uint256 *low, 
+	/*out*/mg_uint256 *high);</definition>
+      <parameter name="op1">
+        <description>乗算する値1</description>
+      </parameter>
+      <parameter name="op1_digits">
+        <description>乗算する値1のワード数</description>
+      </parameter>
+      <parameter name="op2">
+        <description>乗算する値2</description>
+      </parameter>
+      <parameter name="op2_digits">
+        <description>乗算する値2のワード数</description>
+      </parameter>
+      <parameter name="low">
+        <description>乗算結果の下位256bitを格納するオブジェクト</description>
+      </parameter>
+      <parameter name="high">
+        <description>乗算結果の上位256bitを格納するオブジェクト</description>
+      </parameter>
+      <description>乗数のワード桁数が分かっている場合、こちらを使います。</description>
+    </function>
+    <function name="mg_uint256_div">
+      <summary>op1をop2で除算し、商をquotientへ、余りをreminderへ返します。</summary>
+      <definition>int mg_uint256_div(
+	const mg_uint256 *op1, 
+	const mg_uint256 *op2, 
+	/*out*/mg_uint256 *quotient, 
+	/*out*/mg_uint256 *reminder);</definition>
+      <parameter name="op1">
+        <description>被除数</description>
+      </parameter>
+      <parameter name="op2">
+        <description>除数</description>
+      </parameter>
+      <parameter name="quotient">
+        <description>商を格納するオブジェクト</description>
+      </parameter>
+      <parameter name="reminder">
+        <description>余りを格納するオブジェクト</description>
+      </parameter>
+      <return>正常終了の場合: 0, ゼロによる除算の場合: 1</return>
+    </function>
+    <function name="mg_uint256_not">
+      <summary>op1のビットを否定し、結果をretへ返します。</summary>
+      <definition>void mg_uint256_not(
+	const mg_uint256 *op1, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>ビットを否定する値</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_and">
+      <summary>op1とop2のビット積を取り、結果をretへ返します。</summary>
+      <definition>void mg_uint256_and(
+	const mg_uint256 *op1, 
+	const mg_uint256 *op2, 
+	/*out*/mg_uint256 *ret);
+</definition>
+      <parameter name="op1">
+        <description>ビットの論理積を取る値</description>
+      </parameter>
+      <parameter name="op2">
+        <description>ビットの論理積を取る値</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_or">
+      <summary>op1とop2のビット和を取り、結果をretへ返します。</summary>
+      <definition>void mg_uint256_or(
+	const mg_uint256 *op1, 
+	const mg_uint256 *op2, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>ビットの論理和を取る値</description>
+      </parameter>
+      <parameter name="op2">
+        <description>ビットの論理和を取る値</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_xor">
+      <summary>op1とop2のビット排他的論理和を取り、結果をretへ返します。</summary>
+      <definition>void mg_uint256_xor(
+	const mg_uint256 *op1, 
+	const mg_uint256 *op2, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>ビットを排他的論理和を取る値</description>
+      </parameter>
+      <parameter name="op2">
+        <description>ビットを排他的論理和を取る値</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_left_shift">
+      <summary>op1をshift分だけ左シフトし、結果をretへ返します。</summary>
+      <definition>void mg_uint256_left_shift(
+	const mg_uint256 *op1, 
+	int shift, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>ビットシフトを行う値</description>
+      </parameter>
+      <parameter name="shift">
+        <description>シフトさせる値(0~127)</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_left_shift_small">
+      <summary>op1をshift分だけ左シフトし、結果をretへ返します。</summary>
+      <definition>void mg_uint256_left_shift_small(
+	const mg_uint256 *op1, 
+	int shift, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>ビットシフトを行う値</description>
+      </parameter>
+      <parameter name="shift">
+        <description>シフトさせる値(0~31)</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_right_shift">
+      <summary>op1をshift分だけ右シフトし、結果をretへ返します。</summary>
+      <definition>void mg_uint256_right_shift(
+	const mg_uint256 *op1, 
+	int shift, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>ビットシフトを行う値</description>
+      </parameter>
+      <parameter name="shift">
+        <description>シフトさせる値(0~127)</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_right_shift_small">
+      <summary>op1をshift分だけ右シフトし、結果をretへ返します。</summary>
+      <definition>void mg_uint256_right_shift_small(
+	const mg_uint256 *op1, 
+	int shift, 
+	/*out*/mg_uint256 *ret);</definition>
+      <parameter name="op1">
+        <description>ビットシフトを行う値</description>
+      </parameter>
+      <parameter name="shift">
+        <description>シフトさせる値(0~31)</description>
+      </parameter>
+      <parameter name="ret">
+        <description>結果を格納するオブジェクト</description>
+      </parameter>
+    </function>
+    <function name="mg_uint256_get_bit_size">
+      <summary>valueのビット数を取得し、結果を返します。</summary>
+      <definition>int mg_uint256_get_bit_size(
+	const mg_uint256 *value);</definition>
+      <parameter name="value">
+        <description>ビット数を計算する値</description>
+      </parameter>
+      <return>valueで指し示すオブジェクトのビット桁数</return>
+    </function>
+  </header-file>
+</c-doc>
