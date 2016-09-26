@@ -33,9 +33,6 @@
     <ClInclude Include="src\include\magica\int\uint64.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\magica\int.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="src\include\magica\int\uint256.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

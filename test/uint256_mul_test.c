@@ -67,9 +67,10 @@ static void mul256x64_test(const char *text1, const char *text2)
 
 	int overflow = mg_uint256_mul(&v1, &v2, &v3);
 	mg_assert(overflow == 0);
-
+#if 0
 	overflow = mg_uint256_mul256x64(&v1, &v2, &v4);
 	mg_assert(overflow == 0);
+#endif
 
 	mg_assert(mg_uint256_compare(&v3, &v4) == 0);
 
