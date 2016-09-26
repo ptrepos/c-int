@@ -221,6 +221,8 @@
     <ClInclude Include="src\include\magica\int\uint256.h" />
     <ClInclude Include="src\include\magica\int\uint32.h" />
     <ClInclude Include="src\include\magica\int\uint64.h" />
+    <ClInclude Include="src\include\magica\uint128.h" />
+    <ClInclude Include="src\include\magica\uint256.h" />
     <ClInclude Include="test\mg_assert.h" />
   </ItemGroup>
   <ItemGroup>

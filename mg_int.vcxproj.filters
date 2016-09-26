@@ -66,6 +66,12 @@
     <ClInclude Include="src\generic32\include\magica\int\uint256_impl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\magica\uint256.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\magica\uint128.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\generic64\uint128_div.c">

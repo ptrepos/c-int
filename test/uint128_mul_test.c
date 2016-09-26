@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <magica/int/uint128.h>
-#include <magica/int/uint128_impl.h>
+#include <magica/uint128.h>
 
 #include "mg_assert.h"
 

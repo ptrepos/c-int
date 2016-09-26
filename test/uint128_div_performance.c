@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <magica/int.h>
+#include <magica/uint128.h>
 
 #define COUNT		(10000000)
 
