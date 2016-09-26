@@ -8,7 +8,7 @@
 
 #include <magica/int/uint32.h>
 #include <magica/int/uint64.h>
-#include <magica/int/uint128.h>
+#include <magica/int/uint128_def.h>
 
 #include "intop.h"
 
@@ -16,6 +16,29 @@
 extern "C" {
 #endif
 
+int mg_uint128_mul_digits(const mg_uint128 *op1, int op1_digits, const mg_uint128 *op2, int op2_digits, /*out*/mg_uint128 *ret);
+void mg_uint128_mul_digits_1(const mg_uint128 *op1, int op1_words, const mg_uint128 *op2, int op2_words, /*out*/mg_uint128 *low, /*out*/mg_uint128 *high);
+
+int mg_uint128_div(
+	const mg_uint128 *op1, 
+	const mg_uint128 *op2, 
+	/*out*/mg_uint128 *quotient, 
+	/*out*/mg_uint128 *reminder);
+int mg_uint128_div_long_division(
+	const mg_uint128 *op1, 
+	const mg_uint128 *op2, 
+	/*out*/mg_uint128 *quotient, 
+	/*out*/mg_uint128 *reminder);
+int mg_uint128_div_maclaurin(
+	const mg_uint128 *op1, 
+	const mg_uint128 *op2, 
+	/*out*/mg_uint128 *quotient, 
+	/*out*/mg_uint128 *reminder);
+
+void mg_uint128_test_to_string(const mg_uint128 *value, char *buf);
+void mg_uint128_test_convert(const char *buf, mg_uint128 *value);
+void mg_uint128_test_to_hex_string(const mg_uint128 *value, char *buf);
+void mg_uint128_test_hex_convert(const char *buf, mg_uint128 *value);
 
 static inline void mg_uint128_set_zero(mg_uint128 *dest)
 {
@@ -76,6 +99,11 @@ static inline int mg_uint128_add(const mg_uint128 *op1, const mg_uint128 *op2, /
 	return c;
 }
 
+static inline int mg_uint128_add_1(/*inout*/mg_uint128 *op1, const mg_uint128 *op2)
+{
+	return mg_uint128_add(op1, op2, /*out*/op1);
+}
+
 static inline int mg_uint128_sub(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret)
 {
 	unsigned char b;
@@ -87,6 +115,11 @@ static inline int mg_uint128_sub(const mg_uint128 *op1, const mg_uint128 *op2, /
 	b = mg_uint32_sub(b, op1->word[3], op2->word[3], &ret->word[3]);
 
 	return b;
+}
+
+static inline int mg_uint128_sub_1(/*inout*/mg_uint128 *op1, const mg_uint128 *op2)
+{
+	return mg_uint128_sub(op1, op2, /*out*/op1);
 }
 
 static inline void mg_uint128_neg(const mg_uint128 *op1, mg_uint128 *ret)
@@ -103,6 +136,11 @@ static inline void mg_uint128_neg(const mg_uint128 *op1, mg_uint128 *ret)
 	c = mg_uint32_add(c, ret->word[1], 0, &ret->word[1]);
 	c = mg_uint32_add(c, ret->word[2], 0, &ret->word[2]);
 	c = mg_uint32_add(c, ret->word[3], 0, &ret->word[3]);
+}
+
+static inline void mg_uint128_neg_1(/*inout*/mg_uint128 *op1)
+{
+	mg_uint128_neg(op1, /*out*/op1);
 }
 
 static inline void mg_uint128_mul_1(
@@ -140,12 +178,22 @@ static inline void mg_uint128_and(const mg_uint128 *op1, const mg_uint128 *op2, 
 	ret->word[3] = op1->word[3] & op2->word[3];
 }
 
+static inline void mg_uint128_and_1(/*inout*/mg_uint128 *op1, const mg_uint128 *op2)
+{
+	mg_uint128_and(op1, op2, /*out*/op1);
+}
+
 static inline void mg_uint128_or(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret)
 {
 	ret->word[0] = op1->word[0] | op2->word[0];
 	ret->word[1] = op1->word[1] | op2->word[1];
 	ret->word[2] = op1->word[2] | op2->word[2];
 	ret->word[3] = op1->word[3] | op2->word[3];
+}
+
+static inline void mg_uint128_or_1(/*inout*/mg_uint128 *op1, const mg_uint128 *op2)
+{
+	mg_uint128_or(op1, op2, /*out*/op1);
 }
 
 static inline void mg_uint128_xor(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint128 *ret)
@@ -156,12 +204,22 @@ static inline void mg_uint128_xor(const mg_uint128 *op1, const mg_uint128 *op2, 
 	ret->word[3] = op1->word[3] ^ op2->word[3];
 }
 
+static inline void mg_uint128_xor_1(/*inout*/mg_uint128 *op1, const mg_uint128 *op2)
+{
+	mg_uint128_xor(op1, op2, /*out*/op1);
+}
+
 static inline void mg_uint128_not(const mg_uint128 *op1, /*out*/mg_uint128 *ret)
 {
 	ret->word[0] = ~op1->word[0];
 	ret->word[1] = ~op1->word[1];
 	ret->word[2] = ~op1->word[2];
 	ret->word[3] = ~op1->word[3];
+}
+
+static inline void mg_uint128_not_1(/*inout*/mg_uint128 *op1)
+{
+	mg_uint128_not(op1, /*out*/op1);
 }
 
 static inline void mg_uint128_left_shift(const mg_uint128 *op1, int shift, /*out*/mg_uint128 *ret)
@@ -191,12 +249,26 @@ static inline void mg_uint128_left_shift(const mg_uint128 *op1, int shift, /*out
 	ret->word[3] = buf[3];
 }
 
+static inline void mg_uint128_left_shift_1(/*inout*/mg_uint128 *op1, int shift)
+{
+	mg_uint128_left_shift(op1, shift, op1);
+}
+
 static inline void mg_uint128_left_shift_small(const mg_uint128 *op1, int shift, /*out*/mg_uint128 *ret)
 {
 	ret->word[0] = (op1->word[0] << shift);
 	ret->word[1] = (op1->word[1] << shift) | (op1->word[0] >> (MG_UINT128_WORD_BITS - shift));
 	ret->word[2] = (op1->word[2] << shift) | (op1->word[1] >> (MG_UINT128_WORD_BITS - shift));
 	ret->word[3] = (op1->word[3] << shift) | (op1->word[2] >> (MG_UINT128_WORD_BITS - shift));
+}
+
+static inline void mg_uint128_left_shift_small_1(/*inout*/mg_uint128 *op1, int shift)
+{
+	mg_uint128 ret;
+
+	mg_uint128_left_shift_small(op1, shift, &ret);
+
+	*op1 = ret;
 }
 
 static inline void mg_uint128_right_shift(const mg_uint128 *op1, int shift, /*out*/mg_uint128 *ret)
@@ -225,12 +297,26 @@ static inline void mg_uint128_right_shift(const mg_uint128 *op1, int shift, /*ou
 	ret->word[3] = buf[7];
 }
 
+static inline void mg_uint128_right_shift_1(/*inout*/mg_uint128 *op1, int shift)
+{
+	mg_uint128_right_shift(op1, shift, op1);
+}
+
 static inline void mg_uint128_right_shift_small(const mg_uint128 *op1, int shift, mg_uint128 *ret)
 {
 	ret->word[0] = (op1->word[0] >> shift) | (op1->word[1] << (MG_UINT128_WORD_BITS - shift));
 	ret->word[1] = (op1->word[1] >> shift) | (op1->word[2] << (MG_UINT128_WORD_BITS - shift));
 	ret->word[2] = (op1->word[2] >> shift) | (op1->word[3] << (MG_UINT128_WORD_BITS - shift));
 	ret->word[3] = (op1->word[3] >> shift);
+}
+
+static inline void mg_uint128_right_shift_small_1(/*inout*/mg_uint128 *op1, int shift)
+{
+	mg_uint128 ret;
+
+	mg_uint128_right_shift_small(op1, shift, &ret);
+
+	*op1 = ret;
 }
 
 static inline void mg_uint128_get_bits(/*inout*/mg_uint128 *op1, int op2)

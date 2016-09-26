@@ -8,7 +8,7 @@
 
 #include <magica/int/uint32.h>
 #include <magica/int/uint64.h>
-#include <magica/int/uint256.h>
+#include <magica/int/uint256_def.h>
 
 #include <magica/int/uint128_impl.h>
 
@@ -18,6 +18,25 @@
 extern "C" {
 #endif
 
+int mg_uint256_mul_digits(const mg_uint256 *op1, int op1_digits, const mg_uint256 *op2, int op2_digits, /*out*/mg_uint256 *ret);
+void mg_uint256_mul_digits_1(const mg_uint256 *op1, int op1_digits, const mg_uint256 *op2, int op2_digits, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high);
+
+int mg_uint256_div(
+		const mg_uint256 *op1, 
+		const mg_uint256 *op2, 
+		/*out*/mg_uint256 *quotient, 
+		/*out*/mg_uint256 *reminder);
+
+int mg_uint256_div_maclaurin(
+		const mg_uint256 *op1,
+		const mg_uint256 *op2,
+		/*out*/mg_uint256 *quotient,
+		/*out*/mg_uint256 *reminder);
+
+void mg_uint256_test_to_string(const mg_uint256 *value, char *buf);
+void mg_uint256_test_convert(const char *buf, mg_uint256 *value);
+void mg_uint256_test_to_hex_string(const mg_uint256 *value, char *buf);
+void mg_uint256_test_hex_convert(const char *buf, mg_uint256 *value);
 
 static inline void mg_uint256_set_zero(mg_uint256 *dest)
 {
@@ -99,6 +118,11 @@ static inline int mg_uint256_add(const mg_uint256 *op1, const mg_uint256 *op2, /
 	return c;
 }
 
+static inline int mg_uint256_add_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
+{
+	return mg_uint256_add(op1, op2, /*out*/op1);
+}
+
 static inline int mg_uint256_sub(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
 {
 	unsigned char b;
@@ -114,6 +138,11 @@ static inline int mg_uint256_sub(const mg_uint256 *op1, const mg_uint256 *op2, /
 	b = mg_uint32_sub(b, op1->word[7], op2->word[7], &ret->word[7]);
 
 	return b;
+}
+
+static inline int mg_uint256_sub_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
+{
+	return mg_uint256_sub(op1, op2, /*out*/op1);
 }
 
 static inline void mg_uint256_neg(const mg_uint256 *op1, mg_uint256 *ret)
@@ -140,6 +169,12 @@ static inline void mg_uint256_neg(const mg_uint256 *op1, mg_uint256 *ret)
 	c = mg_uint32_add(c, ret->word[7], 0, &ret->word[7]);
 }
 
+static inline void mg_uint256_neg_1(/*inout*/mg_uint256 *op1)
+{
+	mg_uint256_neg(op1, /*out*/op1);
+}
+
+#if 0	// •s—v‚É‚µ‚½‚¢
 static inline int mg_uint256_mul256x64(
 	const mg_uint256 *op1, 
 	const mg_uint256 *op2, 
@@ -155,6 +190,7 @@ static inline int mg_uint256_mul256x64(
 
 	return mg_uint256_mul_digits(op1, op1_digits, op2, op2_digits, /*out*/ret);
 }
+#endif
 
 static inline void mg_uint256_mul128(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint256 *ret)
 {
@@ -211,6 +247,11 @@ static inline void mg_uint256_and(const mg_uint256 *op1, const mg_uint256 *op2, 
 	ret->word[7] = op1->word[7] & op2->word[7];
 }
 
+static inline void mg_uint256_and_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
+{
+	mg_uint256_and(op1, op2, /*out*/op1);
+}
+
 static inline void mg_uint256_or(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
 {
 	ret->word[0] = op1->word[0] | op2->word[0];
@@ -221,6 +262,11 @@ static inline void mg_uint256_or(const mg_uint256 *op1, const mg_uint256 *op2, /
 	ret->word[5] = op1->word[5] | op2->word[5];
 	ret->word[6] = op1->word[6] | op2->word[6];
 	ret->word[7] = op1->word[7] | op2->word[7];
+}
+
+static inline void mg_uint256_or_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
+{
+	mg_uint256_or(op1, op2, /*out*/op1);
 }
 
 static inline void mg_uint256_xor(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
@@ -235,6 +281,11 @@ static inline void mg_uint256_xor(const mg_uint256 *op1, const mg_uint256 *op2, 
 	ret->word[7] = op1->word[7] ^ op2->word[7];
 }
 
+static inline void mg_uint256_xor_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
+{
+	mg_uint256_xor(op1, op2, /*out*/op1);
+}
+
 static inline void mg_uint256_not(const mg_uint256 *op1, /*out*/mg_uint256 *ret)
 {
 	ret->word[0] = ~op1->word[0];
@@ -245,6 +296,11 @@ static inline void mg_uint256_not(const mg_uint256 *op1, /*out*/mg_uint256 *ret)
 	ret->word[5] = ~op1->word[5];
 	ret->word[6] = ~op1->word[6];
 	ret->word[7] = ~op1->word[7];
+}
+
+static inline void mg_uint256_not_1(/*inout*/mg_uint256 *op1)
+{
+	mg_uint256_not(op1, /*out*/op1);
 }
 
 static inline void mg_uint256_left_shift(const mg_uint256 *op1, int shift, /*out*/mg_uint256 *ret)
@@ -285,6 +341,11 @@ static inline void mg_uint256_left_shift(const mg_uint256 *op1, int shift, /*out
 	ret->word[7] = buf[7];
 }
 
+static inline void mg_uint256_left_shift_1(/*inout*/mg_uint256 *op1, int shift)
+{
+	mg_uint256_left_shift(op1, shift, op1);
+}
+
 static inline void mg_uint256_left_shift_small(const mg_uint256 *op1, int shift, /*out*/mg_uint256 *ret)
 {
 	ret->word[0] = (op1->word[0] << shift);
@@ -295,6 +356,15 @@ static inline void mg_uint256_left_shift_small(const mg_uint256 *op1, int shift,
 	ret->word[5] = (op1->word[5] << shift) | (op1->word[4] >> (MG_UINT256_WORD_BITS - shift));
 	ret->word[6] = (op1->word[6] << shift) | (op1->word[5] >> (MG_UINT256_WORD_BITS - shift));
 	ret->word[7] = (op1->word[7] << shift) | (op1->word[6] >> (MG_UINT256_WORD_BITS - shift));
+}
+
+static inline void mg_uint256_left_shift_small_1(/*inout*/mg_uint256 *op1, int shift)
+{
+	mg_uint256 ret;
+
+	mg_uint256_left_shift_small(op1, shift, &ret);
+
+	*op1 = ret;
 }
 
 static inline void mg_uint256_right_shift(const mg_uint256 *op1, int shift, /*out*/mg_uint256 *ret)
@@ -335,6 +405,11 @@ static inline void mg_uint256_right_shift(const mg_uint256 *op1, int shift, /*ou
 	ret->word[7] = buf[15];
 }
 
+static inline void mg_uint256_right_shift_1(/*inout*/mg_uint256 *op1, int shift)
+{
+	mg_uint256_right_shift(op1, shift, op1);
+}
+
 static inline void mg_uint256_right_shift_small(const mg_uint256 *op1, int shift, mg_uint256 *ret)
 {
 	ret->word[0] = (op1->word[0] >> shift) | (op1->word[1] << (MG_UINT256_WORD_BITS - shift));
@@ -345,6 +420,15 @@ static inline void mg_uint256_right_shift_small(const mg_uint256 *op1, int shift
 	ret->word[5] = (op1->word[5] >> shift) | (op1->word[6] << (MG_UINT256_WORD_BITS - shift));
 	ret->word[6] = (op1->word[6] >> shift) | (op1->word[7] << (MG_UINT256_WORD_BITS - shift));
 	ret->word[7] = (op1->word[7] >> shift);
+}
+
+static inline void mg_uint256_right_shift_small_1(/*inout*/mg_uint256 *op1, int shift)
+{
+	mg_uint256 ret;
+
+	mg_uint256_right_shift_small(op1, shift, &ret);
+
+	*op1 = ret;
 }
 
 static inline int mg_uint256_get_bit_size(const mg_uint256 *value)

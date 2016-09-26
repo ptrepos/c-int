@@ -5,9 +5,10 @@
  * 256 bit integer for decimal.
  * this source includes decimal implementation.
  */
+#include <assert.h>
 #include <magica/int/mgcompat.h>
 #include <magica/int/uint64.h>
-#include <magica/int/uint256.h>
+#include <magica/int/uint256_def.h>
 #include <magica/int/uint256_impl.h>
 
 // ’·œ–@‚É‚æ‚éÀ‘•

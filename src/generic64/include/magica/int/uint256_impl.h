@@ -8,8 +8,8 @@
 #pragma once
 
 #include <magica/int/uint64.h>
-#include <magica/int/uint128.h>
-#include <magica/int/uint256.h>
+#include <magica/int/uint128_def.h>
+#include <magica/int/uint256_def.h>
 #include <magica/int/uint128_impl.h>
 
 #include "intop.h"
@@ -17,6 +17,26 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+int mg_uint256_mul_digits(const mg_uint256 *op1, int op1_digits, const mg_uint256 *op2, int op2_digits, /*out*/mg_uint256 *ret);
+void mg_uint256_mul_digits_1(const mg_uint256 *op1, int op1_digits, const mg_uint256 *op2, int op2_digits, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high);
+
+int mg_uint256_div(
+		const mg_uint256 *op1, 
+		const mg_uint256 *op2, 
+		/*out*/mg_uint256 *quotient, 
+		/*out*/mg_uint256 *reminder);
+
+int mg_uint256_div_maclaurin(
+		const mg_uint256 *op1,
+		const mg_uint256 *op2,
+		/*out*/mg_uint256 *quotient,
+		/*out*/mg_uint256 *reminder);
+
+void mg_uint256_test_to_string(const mg_uint256 *value, char *buf);
+void mg_uint256_test_convert(const char *buf, mg_uint256 *value);
+void mg_uint256_test_to_hex_string(const mg_uint256 *value, char *buf);
+void mg_uint256_test_hex_convert(const char *buf, mg_uint256 *value);
 
 static inline void mg_uint256_set_zero(/*out*/mg_uint256 *dest)
 {

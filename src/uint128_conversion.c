@@ -5,8 +5,9 @@
 * 128 bit integer for decimal.
 * this source includes decimal implementation.
 */
+#include <assert.h>
 #include <magica/int/mgcompat.h>
-#include <magica/int/uint128.h>
+#include <magica/int/uint128_def.h>
 #include <magica/int/uint128_impl.h>
 
 MG_PRIVATE void mg_uint128_test_to_string(const mg_uint128 *value, char *buf)

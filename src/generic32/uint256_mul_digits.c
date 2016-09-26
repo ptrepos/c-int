@@ -8,7 +8,7 @@
 #include <math.h>
 
 #include <magica/int/mgcompat.h>
-#include <magica/int/uint256.h>
+#include <magica/int/uint256_def.h>
 #include <magica/int/uint256_impl.h>
 
 MG_PRIVATE int mg_uint256_mul_digits(const mg_uint256 *op1, int op1_words, const mg_uint256 *op2, int op2_words, /*out*/mg_uint256 *ret)

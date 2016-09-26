@@ -6,9 +6,10 @@
  * this source includes decimal implementation.
  */
 #include <math.h>
+#include <assert.h>
 #include <magica/int/mgcompat.h>
 #include <magica/int/uint64.h>
-#include <magica/int/uint128.h>
+#include <magica/int/uint128_def.h>
 #include <magica/int/uint128_impl.h>
 
 // ’·œ–@‚É‚æ‚éÀ‘•
