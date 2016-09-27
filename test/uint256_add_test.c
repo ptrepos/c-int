@@ -10,13 +10,19 @@ static void add_sub_test(const char *text1, const char *text2)
 {
 	char strbuf[1024];
 	mg_uint256 v1, v2, v3;
-	int borrow;
 
 	mg_uint256_test_convert(text1, &v1);
 	mg_uint256_test_convert(text2, &v2);
 
-	mg_uint256_add(&v1, &v2, &v3);
-	borrow = mg_uint256_sub(&v3, &v2, &v1);
+	mg_assert(mg_uint256_add(&v1, &v2, &v3) == 0);
+	mg_assert(mg_uint256_sub(&v3, &v2, &v1) == 0);
+
+	mg_uint256_test_to_string(&v1, strbuf);
+
+	mg_assert(strcmp(text1, strbuf) == 0);
+
+	mg_assert(mg_uint256_add_1(/*inout*/&v1, &v2) == 0);
+	mg_assert(mg_uint256_sub_1(/*inout*/&v1, &v2) == 0);
 
 	mg_uint256_test_to_string(&v1, strbuf);
 
@@ -31,6 +37,8 @@ static void add_carry_test(const char *text1, const char *text2)
 	mg_uint256_test_convert(text2, &v2);
 
 	mg_assert(mg_uint256_add(&v1, &v2, /*out*/&v3) != 0);
+
+	mg_assert(mg_uint256_add_1(/*inout*/&v1, &v2) != 0);
 }
 
 static void sub_borrow_test(const char *text1, const char *text2)
@@ -41,6 +49,8 @@ static void sub_borrow_test(const char *text1, const char *text2)
 	mg_uint256_test_convert(text2, &v2);
 
 	mg_assert(mg_uint256_sub(&v1, &v2, /*out*/&v3) != 0);
+
+	mg_assert(mg_uint256_sub_1(/*inout*/&v1, &v2) != 0);
 }
 
 void mg_uint256_add_test()

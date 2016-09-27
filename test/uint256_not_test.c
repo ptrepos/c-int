@@ -18,6 +18,12 @@ static void not_test(const char *text1, const char *ret)
 	mg_uint256_test_to_hex_string(&v2, strbuf);
 
 	mg_assert(strcmp(ret, strbuf) == 0);
+
+	mg_uint256_not_1(/*inout*/&v1);
+
+	mg_uint256_test_to_hex_string(&v1, strbuf);
+
+	mg_assert(strcmp(ret, strbuf) == 0);
 }
 
 void mg_uint256_not_test()

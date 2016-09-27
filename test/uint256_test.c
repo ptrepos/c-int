@@ -31,7 +31,7 @@ void mg_uint256_test()
 	mg_uint256_div_test();
 #if defined(NDEBUG)
 	//mg_uint256_div_pattern_test();
-	mg_uint256_div_performance();
+	//mg_uint256_div_performance();
 #endif
 	mg_uint256_left_shift_test();
 	mg_uint256_right_shift_test();

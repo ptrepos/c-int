@@ -20,6 +20,13 @@ static void add_sub_test(const char *text1, const char *text2)
 	mg_uint128_test_to_string(&v1, strbuf);
 
 	mg_assert(strcmp(text1, strbuf) == 0);
+
+	mg_assert(mg_uint128_add_1(/*inout*/&v1, &v2) == 0);
+	mg_assert(mg_uint128_sub_1(/*inout*/&v1, &v2) == 0);
+
+	mg_uint128_test_to_string(&v1, strbuf);
+
+	mg_assert(strcmp(text1, strbuf) == 0);
 }
 
 static void add_carry_test(const char *text1, const char *text2)
@@ -30,6 +37,8 @@ static void add_carry_test(const char *text1, const char *text2)
 	mg_uint128_test_convert(text2, &v2);
 
 	mg_assert(mg_uint128_add(&v1, &v2, /*out*/&v3) != 0);
+
+	mg_assert(mg_uint128_add_1(/*inout*/&v1, &v2) != 0);
 }
 
 static void sub_borrow_test(const char *text1, const char *text2)
@@ -40,6 +49,8 @@ static void sub_borrow_test(const char *text1, const char *text2)
 	mg_uint128_test_convert(text2, &v2);
 
 	mg_assert(mg_uint128_sub(&v1, &v2, /*out*/&v3) != 0);
+
+	mg_assert(mg_uint128_sub_1(/*inout*/&v1, &v2) != 0);
 }
 
 void mg_uint128_add_test()

@@ -19,6 +19,12 @@ static void or_test(const char *text1, const char *text2, const char *ret)
 	mg_uint128_test_to_hex_string(&v3, strbuf);
 
 	mg_assert(strcmp(ret, strbuf) == 0);
+
+	mg_uint128_or_1(/*inout*/&v1, &v2);
+
+	mg_uint128_test_to_hex_string(&v1, strbuf);
+
+	mg_assert(strcmp(ret, strbuf) == 0);
 }
 
 void mg_uint128_or_test()

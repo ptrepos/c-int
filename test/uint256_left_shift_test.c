@@ -18,6 +18,12 @@ static void left_shift_test(const char *text1, int shift, const char *ret)
 	mg_uint256_test_to_hex_string(&v2, strbuf);
 
 	mg_assert(strcmp(ret, strbuf) == 0);
+
+	mg_uint256_left_shift_1(/*inout*/&v1, shift);
+
+	mg_uint256_test_to_hex_string(&v1, strbuf);
+
+	mg_assert(strcmp(ret, strbuf) == 0);
 }
 
 static void left_shift_small_test(const char *text1, int shift, const char *ret)
@@ -30,6 +36,12 @@ static void left_shift_small_test(const char *text1, int shift, const char *ret)
 	mg_uint256_left_shift_small(&v1, shift, &v2);
 
 	mg_uint256_test_to_hex_string(&v2, strbuf);
+
+	mg_assert(strcmp(ret, strbuf) == 0);
+
+	mg_uint256_left_shift_small_1(/*out*/&v1, shift);
+
+	mg_uint256_test_to_hex_string(&v1, strbuf);
 
 	mg_assert(strcmp(ret, strbuf) == 0);
 }
