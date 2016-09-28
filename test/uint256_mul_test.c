@@ -36,19 +36,15 @@ static void mul_test(const char *text1, const char *text2)
 
 static void mul128_test(const char *text1, const char *text2)
 {
-	mg_uint128 s1, s2;
 	mg_uint256 v1, v2, v3, v4, v5;
 
 	mg_uint256_test_convert(text1, &v1);
 	mg_uint256_test_convert(text2, &v2);
 
-	mg_uint128_test_convert(text1, &s1);
-	mg_uint128_test_convert(text2, &s2);
-
 	int overflow = mg_uint256_mul(&v1, &v2, /*out*/&v3);
 	mg_assert(overflow == 0);
 
-	mg_uint256_mul128(&s1, &s2, /*out*/&v4);
+	mg_uint256_mul128(&v1, &v2, /*out*/&v4);
 
 	mg_assert(mg_uint256_compare(&v3, &v4) == 0);
 	

@@ -194,24 +194,15 @@ static inline int mg_uint256_mul256x64(
 }
 #endif
 
-static inline void mg_uint256_mul128(const mg_uint128 *op1, const mg_uint128 *op2, /*out*/mg_uint256 *ret)
+static inline void mg_uint256_mul128(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
 {
-	mg_uint128 lo, hi;
+	mg_uint256 dummy;
 
-	mg_uint128_mul_1(op1, op2, /*out*/&lo, /*out*/&hi);
-
-	ret->word[0] = lo.word[0];
-	ret->word[1] = lo.word[1];
-	ret->word[2] = lo.word[2];
-	ret->word[3] = lo.word[3];
-	ret->word[4] = hi.word[0];
-	ret->word[5] = hi.word[1];
-	ret->word[6] = hi.word[2];
-	ret->word[7] = hi.word[3];
+	mg_uint256_mul_digits_1(op1, MG_UINT256_DIGITS_128, op2, MG_UINT256_DIGITS_128, /*out*/ret, /*out*/&dummy);
 }
 
 static inline void mg_uint256_mul_1(
-	const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *_lo, /*out*/mg_uint256 *_hi)
+	const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *low, /*out*/mg_uint256 *high)
 {
 	int op1_digits = MG_UINT256_SIZE;
 	while(op1_digits > 0 && op1->word[op1_digits-1] == 0)
@@ -221,7 +212,7 @@ static inline void mg_uint256_mul_1(
 	while(op2_digits > 0 && op2->word[op2_digits-1] == 0)
 		op2_digits--;
 
-	mg_uint256_mul_digits_1(op1, op1_digits, op2, op2_digits, /*out*/_lo, /*out*/_hi);
+	mg_uint256_mul_digits_1(op1, op1_digits, op2, op2_digits, /*out*/low, /*out*/high);
 }
 
 static inline int mg_uint256_mul(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
