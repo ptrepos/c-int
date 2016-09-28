@@ -7,6 +7,8 @@
  */
 #pragma once
 
+#include <assert.h>
+
 #include <magica/int/uint64.h>
 #include <magica/int/uint128_def.h>
 #include <magica/int/uint256_def.h>
@@ -422,6 +424,17 @@ static inline void mg_uint256_set_bit(mg_uint256 *op1, int bit)
 
 	op1->word[words] |= (uint64_t)1ULL << (uint64_t)bits;
 }
+
+extern const mg_uint256 *MG_UINT256_10eN_TABLE[];
+
+static inline const mg_uint256 *mg_uint256_get_10eN(int digits)
+{
+	assert(0 <= digits && digits < 78);
+
+	return MG_UINT256_10eN_TABLE[digits];
+}
+
+int mg_uint256_get_digits(const mg_uint256 *value);
 
 #ifdef __cplusplus
 }
