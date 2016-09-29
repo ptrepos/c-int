@@ -64,6 +64,11 @@ static inline void mg_uint256_set128(/*out*/mg_uint256 *dest, const mg_uint128 *
 	dest->word[3] = 0;
 }
 
+static inline uint32_t mg_uint256_get_uint32(const mg_uint256 *value)
+{
+	return (uint32_t)value->word[0];
+}
+
 static inline uint64_t mg_uint256_get_uint64(const mg_uint256 *value)
 {
 	return value->word[0];
