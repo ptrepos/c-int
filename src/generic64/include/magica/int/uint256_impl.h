@@ -64,6 +64,11 @@ static inline void mg_uint256_set128(/*out*/mg_uint256 *dest, const mg_uint128 *
 	dest->word[3] = 0;
 }
 
+static inline uint32_t mg_uint256_get_uint32(const mg_uint256 *value)
+{
+	return (uint32_t)value->word[0];
+}
+
 static inline uint64_t mg_uint256_get_uint64(const mg_uint256 *value)
 {
 	return value->word[0];
@@ -165,7 +170,7 @@ static inline int mg_uint256_sub128(const mg_uint256 *op1, const mg_uint256 *op2
 
 static inline int mg_uint256_sub128_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
 {
-	return mg_uint256_sub128_1(op1, op2, /*out*/op1);
+	return mg_uint256_sub128(op1, op2, /*out*/op1);
 }
 
 static inline void mg_uint256_neg(const mg_uint256 *op1, /*out*/mg_uint256 *ret)
@@ -203,7 +208,7 @@ static inline void mg_uint256_neg128(const mg_uint256 *op1, /*out*/mg_uint256 *r
 
 static inline void mg_uint256_neg128_1(/*inout*/mg_uint256 *op1)
 {
-	mg_uint128_neg(op1, /*out*/op1);
+	mg_uint256_neg128(op1, /*out*/op1);
 }
 
 static inline void mg_uint256_mul128(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
