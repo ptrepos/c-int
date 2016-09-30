@@ -189,7 +189,7 @@ static inline void mg_uint256_neg(const mg_uint256 *op1, /*out*/mg_uint256 *ret)
 	c = mg_uint64_add(c, ret->word[3], 0, &ret->word[3]);
 }
 
-static inline void mg_uint_neg_1(/*inout*/mg_uint256 *op1)
+static inline void mg_uint256_neg_1(/*inout*/mg_uint256 *op1)
 {
 	mg_uint256_neg(op1, /*out*/op1);
 }
