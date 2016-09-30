@@ -64,11 +64,6 @@ static inline void mg_uint256_set(mg_uint256 *dest, uint64_t value)
 	dest->word[7] = 0;
 }
 
-static inline uint32_t mg_uint256_get_uint32(const mg_uint256 *value)
-{
-	return value->word[0];
-}
-
 static inline uint64_t mg_uint256_get_uint64(const mg_uint256 *value)
 {
 	return (uint64_t)value->word[0] | ((uint64_t)value->word[1] << 32);
@@ -130,6 +125,24 @@ static inline int mg_uint256_add_1(/*inout*/mg_uint256 *op1, const mg_uint256 *o
 	return mg_uint256_add(op1, op2, /*out*/op1);
 }
 
+static inline int mg_uint256_add128(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
+{
+	unsigned char c;
+
+	c = 0;
+	c = mg_uint32_add(c, op1->word[0], op2->word[0], &ret->word[0]);
+	c = mg_uint32_add(c, op1->word[1], op2->word[1], &ret->word[1]);
+	c = mg_uint32_add(c, op1->word[2], op2->word[2], &ret->word[2]);
+	c = mg_uint32_add(c, op1->word[3], op2->word[3], &ret->word[3]);
+
+	return c;
+}
+
+static inline int mg_uint256_add128_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
+{
+	return mg_uint256_add128(op1, op2, /*out*/op1);
+}
+
 static inline int mg_uint256_sub(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
 {
 	unsigned char b;
@@ -150,6 +163,24 @@ static inline int mg_uint256_sub(const mg_uint256 *op1, const mg_uint256 *op2, /
 static inline int mg_uint256_sub_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
 {
 	return mg_uint256_sub(op1, op2, /*out*/op1);
+}
+
+static inline int mg_uint256_sub128(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
+{
+	unsigned char b;
+
+	b = 0;
+	b = mg_uint32_sub(b, op1->word[0], op2->word[0], &ret->word[0]);
+	b = mg_uint32_sub(b, op1->word[1], op2->word[1], &ret->word[1]);
+	b = mg_uint32_sub(b, op1->word[2], op2->word[2], &ret->word[2]);
+	b = mg_uint32_sub(b, op1->word[3], op2->word[3], &ret->word[3]);
+
+	return b;
+}
+
+static inline int mg_uint256_sub128_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
+{
+	return mg_uint256_sub128(op1, op2, /*out*/op1);
 }
 
 static inline void mg_uint256_neg(const mg_uint256 *op1, mg_uint256 *ret)
@@ -179,6 +210,27 @@ static inline void mg_uint256_neg(const mg_uint256 *op1, mg_uint256 *ret)
 static inline void mg_uint256_neg_1(/*inout*/mg_uint256 *op1)
 {
 	mg_uint256_neg(op1, /*out*/op1);
+}
+	
+static inline void mg_uint256_neg128(const mg_uint256 *op1, mg_uint256 *ret)
+{
+	unsigned char c;
+
+	ret->word[0] = ~op1->word[0];
+	ret->word[1] = ~op1->word[1];
+	ret->word[2] = ~op1->word[2];
+	ret->word[3] = ~op1->word[3];
+
+	c = 0;
+	c = mg_uint32_add(c, ret->word[0], 1, &ret->word[0]);
+	c = mg_uint32_add(c, ret->word[1], 0, &ret->word[1]);
+	c = mg_uint32_add(c, ret->word[2], 0, &ret->word[2]);
+	c = mg_uint32_add(c, ret->word[3], 0, &ret->word[3]);
+}
+
+static inline void mg_uint256_neg128_1(/*inout*/mg_uint256 *op1)
+{
+	mg_uint256_neg128(op1, /*out*/op1);
 }
 
 #if 0	// •s—v‚É‚µ‚½‚¢

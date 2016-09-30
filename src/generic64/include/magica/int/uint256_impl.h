@@ -64,11 +64,6 @@ static inline void mg_uint256_set128(/*out*/mg_uint256 *dest, const mg_uint128 *
 	dest->word[3] = 0;
 }
 
-static inline uint32_t mg_uint256_get_uint32(const mg_uint256 *value)
-{
-	return (uint32_t)value->word[0];
-}
-
 static inline uint64_t mg_uint256_get_uint64(const mg_uint256 *value)
 {
 	return value->word[0];
@@ -123,6 +118,22 @@ static inline int mg_uint256_add_1(/*inout*/mg_uint256 *op1, const mg_uint256 *o
 	return mg_uint256_add(op1, op2, /*out*/op1);
 }
 
+static inline int mg_uint256_add128(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
+{
+	unsigned char c;
+	
+	c = 0;
+	c = mg_uint64_add(c, op1->word[0], op2->word[0], &ret->word[0]);
+	c = mg_uint64_add(c, op1->word[1], op2->word[1], &ret->word[1]);
+
+	return c != 0;
+}
+
+static inline int mg_uint256_add128_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
+{
+	return mg_uint256_add128(op1, op2, /*out*/op1);
+}
+
 static inline int mg_uint256_sub(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
 {
 	unsigned char b;
@@ -141,6 +152,22 @@ static inline int mg_uint256_sub_1(/*inout*/mg_uint256 *op1, const mg_uint256 *o
 	return mg_uint256_sub(op1, op2, /*out*/op1);
 }
 
+static inline int mg_uint256_sub128(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
+{
+	unsigned char b;
+
+	b = 0;
+	b = mg_uint64_sub(b, op1->word[0], op2->word[0], &ret->word[0]);
+	b = mg_uint64_sub(b, op1->word[1], op2->word[1], &ret->word[1]);
+
+	return b != 0;
+}
+
+static inline int mg_uint256_sub128_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2)
+{
+	return mg_uint256_sub128_1(op1, op2, /*out*/op1);
+}
+
 static inline void mg_uint256_neg(const mg_uint256 *op1, /*out*/mg_uint256 *ret)
 {
 	unsigned char c;
@@ -157,54 +184,27 @@ static inline void mg_uint256_neg(const mg_uint256 *op1, /*out*/mg_uint256 *ret)
 	c = mg_uint64_add(c, ret->word[3], 0, &ret->word[3]);
 }
 
-static inline void mg_uint256_neg_1(/*inout*/mg_uint256 *op1)
+static inline void mg_uint_neg_1(/*inout*/mg_uint256 *op1)
 {
 	mg_uint256_neg(op1, /*out*/op1);
 }
 
-#if 0	// •s—v‚É‚µ‚½‚¢
-static inline int mg_uint256_mul256x64(
-		const mg_uint256 *op1, 
-		const mg_uint256 *op2, 
-		/*out*/mg_uint256 *ret)
+static inline void mg_uint256_neg128(const mg_uint256 *op1, /*out*/mg_uint256 *ret)
 {
-	unsigned char carry, carry2;
-	uint64_t hi, lo;
+	unsigned char c;
+	
+	ret->word[0] = ~op1->word[0];
+	ret->word[1] = ~op1->word[1];
 
-	mg_uint256_set_zero(ret);
-
-	carry2 = 0;
-
-	lo = mg_uint64_mul(op1->word[0], op2->word[0], &hi);
-
-	carry = mg_uint64_add(0, ret->word[0], lo, &ret->word[0]);
-	carry = mg_uint64_add(carry, ret->word[1], hi, &ret->word[1]);
-	carry2 = mg_uint64_add(carry, ret->word[2], carry2, &ret->word[2]);
-
-	lo = mg_uint64_mul(op1->word[1], op2->word[0], &hi);
-
-	carry = mg_uint64_add(0, ret->word[1], lo, &ret->word[1]);
-	carry = mg_uint64_add(carry, ret->word[2], hi, &ret->word[2]);
-	carry2 = mg_uint64_add(carry, ret->word[3], carry2, &ret->word[3]);
-
-	lo = mg_uint64_mul(op1->word[2], op2->word[0], &hi);
-
-	carry = mg_uint64_add(0, ret->word[2], lo, &ret->word[2]);
-	carry = mg_uint64_add(carry, ret->word[3], hi, &ret->word[3]);
-	if(carry != 0 || carry2 != 0) {
-		return 1;
-	}
-
-	lo = mg_uint64_mul(op1->word[3], op2->word[0], &hi);
-
-	carry = mg_uint64_add(0, ret->word[3], lo, &ret->word[3]);
-	if(carry != 0 || hi != 0) {
-		return 1;
-	}
-
-	return 0;
+	c = 0;
+	c = mg_uint64_add(c, ret->word[0], 1, &ret->word[0]);
+	c = mg_uint64_add(c, ret->word[1], 0, &ret->word[1]);
 }
-#endif
+
+static inline void mg_uint256_neg128_1(/*inout*/mg_uint256 *op1)
+{
+	mg_uint128_neg(op1, /*out*/op1);
+}
 
 static inline void mg_uint256_mul128(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
 {
