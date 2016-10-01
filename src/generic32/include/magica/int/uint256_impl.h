@@ -291,6 +291,11 @@ static inline int mg_uint256_mul(const mg_uint256 *op1, const mg_uint256 *op2, /
 	return mg_uint256_mul_digits(op1, op1_digits, op2, op2_digits, /*out*/ret);
 }
 
+static inline int mg_uint256_div_1(/*inout*/mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *quotient)
+{
+	return mg_uint256_div(op1, op2, /*out*/quotient, /*out*/op1);
+}
+
 static inline void mg_uint256_and(const mg_uint256 *op1, const mg_uint256 *op2, /*out*/mg_uint256 *ret)
 {
 	ret->word[0] = op1->word[0] & op2->word[0];
